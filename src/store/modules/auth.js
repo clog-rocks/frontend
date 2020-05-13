@@ -4,7 +4,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 const token = localStorage.getItem("token");
 const state = {
   activeComponent: "Login",
-  status: { loggedIn: false },
+  iaAuthenticated: false,
   user: user,
   token: token,
 };
@@ -17,7 +17,7 @@ const mutations = {
 
   // Set up user as logged in.
   loginSuccess(state, data) {
-    state.status = { loggedIn: true };
+    state.isAuthenticated = true;
     state.user = data.user;
     state.token = data.token;
     localStorage.setItem("user", JSON.stringify(data.user));
