@@ -33,7 +33,7 @@
       <v-row class="pt-5">
         <v-btn text @click="activateComponent('Register')">Register</v-btn>
         <v-spacer></v-spacer>
-        <v-btn :loading="loading ? true : false" type="submit">Login</v-btn>
+        <v-btn :loading="loading" type="submit">Login</v-btn>
       </v-row>
     </v-form>
   </v-container>
