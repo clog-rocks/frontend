@@ -20,6 +20,8 @@ const mutations = {
     state.status = { loggedIn: true };
     state.user = data.user;
     state.token = data.token;
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", data.token);
   },
 };
 
