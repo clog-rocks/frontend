@@ -23,6 +23,16 @@ const mutations = {
     localStorage.setItem("user", JSON.stringify(data.user));
     localStorage.setItem("token", data.token);
   },
+
+  logoutSuccess(state) {
+    state.isAuthenticated = false;
+    state.user = {};
+    state.token = null;
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("isAuthenticated");
+    state.isAuthenticated = false;
+  },
 };
 
 const actions = {
@@ -37,6 +47,22 @@ const actions = {
         (error) => {
           // commit("loginFailure", error);
           // dispatch("alert/error", error, { root: true });
+          reject(error);
+        }
+      );
+    });
+  },
+
+  logout: ({ commit }) => {
+    return new Promise((resolve, reject) => {
+      authService.logout().then(
+        (response) => {
+          commit("logoutSuccess");
+          console.log(response);
+          return resolve(response);
+        },
+        (error) => {
+          console.log(error);
           reject(error);
         }
       );
