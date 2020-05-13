@@ -127,7 +127,11 @@ export default {
     ...mapMutations(["activateComponent"]),
 
     submit() {
-      if (this.$refs.form.validate()) {
+      if (
+        this.$refs.form.validate() &&
+        !this.usernameError &&
+        !this.passwordError
+      ) {
         this.loading = true;
 
         // Reset error fields.
