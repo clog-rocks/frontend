@@ -13,11 +13,15 @@
 <script>
 export default {
   name: "app",
+  data: () => ({
+    isAuth: true,
+  }),
 
-  computed: {
-    // Center content of Auth components on screen.
-    isAuth() {
-      return this.$router.currentRoute.name === "Auth";
+  watch: {
+    $route(to) {
+      // Center content of Auth components on screen.
+      console.log(to);
+      this.isAuth = to.name === "Auth";
     },
   },
 };
