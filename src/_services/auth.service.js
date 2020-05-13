@@ -21,6 +21,20 @@ export const authService = {
     });
   },
 
+  // Logout user.
+  logout: () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post("http://127.0.0.1:8000/api/auth/logout/", {})
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+
   // Register new user.
   register: (username, email, password) => {
     const axiosOptions = {
