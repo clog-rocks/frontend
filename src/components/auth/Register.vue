@@ -10,7 +10,7 @@
       icon="mdi-alert-circle-outline"
       >{{ nonFieldError }}</v-alert
     >
-    <v-form @submit="submit" ref="form" v-model="valid" lazy-validation>
+    <v-form @submit.prevent="submit" ref="form" v-model="valid" lazy-validation>
       <v-text-field
         v-model="username"
         autocomplete="username"
