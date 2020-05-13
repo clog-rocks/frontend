@@ -17,6 +17,7 @@
         label="Username"
         :rules="[(v) => !!v || 'Username is required.']"
         :error-messages="usernameError"
+        :loading="loadingUsername"
         prepend-icon="mdi-account"
         required
       />
@@ -67,12 +68,15 @@
 <script>
 import { mapActions, mapMutations } from "vuex";
 import router from "../../router";
+import _ from "lodash";
+import axios from "axios";
 
 export default {
   name: "Register",
 
   data: () => ({
     loading: false,
+    loadingUsername: false,
     showPassword: false,
     valid: true,
 
@@ -98,6 +102,24 @@ export default {
     passwordMatchRule() {
       return () => this.password === this.password2 || "Passwords must match.";
     },
+  },
+
+  watch: {
+    // Whenever username changes, this function will run.
+    username: function() {
+      this.debouncedCheckUsername();
+    },
+  },
+
+  created: function() {
+    // _.debounce is a function provided by lodash to limit how
+    // often a particularly expensive operation can be run.
+    // In this case, we want to limit how often we access
+    // yesno.wtf/api, waiting until the user has completely
+    // finished typing before making the ajax request. To learn
+    // more about the _.debounce function (and its cousin
+    // _.throttle), visit: https://lodash.com/docs#debounce
+    this.debouncedCheckUsername = _.debounce(this.checkUsername, 500);
   },
 
   methods: {
@@ -134,6 +156,29 @@ export default {
             if (data.password) {
               this.passwordError = data.password.password;
             }
+          });
+      }
+    },
+
+    checkUsername: function() {
+      console.log("in checkUsername()");
+
+      if (this.username !== "") {
+        this.loadingUsername = true;
+        const vm = this;
+        axios
+          .post("http://127.0.0.1:8000/api/auth/user/exist/", {
+            username: this.username,
+          })
+          .then(function(response) {
+            vm.usernameError = response.data.available
+              ? null
+              : ["A user with that username already exists."];
+            vm.loadingUsername = false;
+          })
+          .catch(function(error) {
+            console.log("Error! Could not reach the API. " + error);
+            vm.loadingUsername = false;
           });
       }
     },
