@@ -57,7 +57,7 @@
         required
       />
       <v-row class="pt-5">
-        <v-btn text @click="activateComponent('Login')">Login</v-btn>
+        <v-btn text @click="switchComponent('Login')">Login</v-btn>
         <v-spacer></v-spacer>
         <v-btn :loading="loading" type="submit">Register</v-btn>
       </v-row>
@@ -66,10 +66,9 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
-import router from "../../router";
+import { mapActions } from "vuex";
 import _ from "lodash";
-import axios from "axios";
+import { authService } from "@/_services/auth.service";
 
 export default {
   name: "Register",
@@ -123,10 +122,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(["register"]),
-    ...mapMutations(["activateComponent"]),
+    ...mapActions(["register", "switchComponent"]),
 
     submit() {
+      console.log(this.$refs.form.validate());
       if (
         this.$refs.form.validate() &&
         !this.usernameError &&
@@ -143,7 +142,7 @@ export default {
         const { username, email, password } = this;
         this.register({ username, email, password })
           .then(() => {
-            router.push("/");
+            this.$router.push("/");
           })
           .catch((error) => {
             this.loading = false;
@@ -170,10 +169,8 @@ export default {
       if (this.username !== "") {
         this.loadingUsername = true;
         const vm = this;
-        axios
-          .post("http://127.0.0.1:8000/api/auth/user/exist/", {
-            username: this.username,
-          })
+        authService
+          .userExists(this.username)
           .then(function(response) {
             vm.usernameError = response.data.available
               ? null
