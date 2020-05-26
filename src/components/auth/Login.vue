@@ -31,7 +31,7 @@
         required
       />
       <v-row class="pt-5">
-        <v-btn text @click="activateComponent('Register')">Register</v-btn>
+        <v-btn text @click="switchComponent('Register')">Register</v-btn>
         <v-spacer></v-spacer>
         <v-btn :loading="loading" type="submit">Login</v-btn>
       </v-row>
@@ -40,8 +40,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
-import router from "../../router";
+import { mapActions } from "vuex";
 
 export default {
   name: "Login",
@@ -60,8 +59,7 @@ export default {
   }),
 
   methods: {
-    ...mapActions(["login"]),
-    ...mapMutations(["activateComponent"]),
+    ...mapActions(["login", "switchComponent"]),
 
     submit() {
       if (this.$refs.form.validate()) {
@@ -71,7 +69,7 @@ export default {
         const { username, password } = this;
         this.login({ username, password })
           .then(() => {
-            router.push("/");
+            this.$router.push("/");
           })
           .catch((error) => {
             this.loading = false;
