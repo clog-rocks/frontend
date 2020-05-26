@@ -49,4 +49,23 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
+
+.enlarged,
+.enlarged-big,
+.enlarged-huge {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 300;
+}
+
+.enlarged {
+  font-size: 120%;
+}
+
+.enlarged-big {
+  font-size: 200%;
+}
+
+.enlarged-huge {
+  font-size: 350%;
+}
 </style>
