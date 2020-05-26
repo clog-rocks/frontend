@@ -15,6 +15,17 @@ if (localStorage.getItem("token")) {
     "Token " + localStorage.getItem("token");
 }
 
+// Route guard. Redirect unathenticated requests to Login page.
+router.beforeEach((to, from, next) => {
+  // console.log("In router.beforeEach()");
+  // console.log("Route from: " + from.name);
+  // console.log("Route to: " + to.name);
+
+  const isAuthenticated = store.getters.IS_AUTHENTICATED;
+  if (to.name !== "Auth" && !isAuthenticated) next({ name: "Auth" });
+  else next();
+});
+
 new Vue({
   router,
   store,
