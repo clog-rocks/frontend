@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <transition name="fade" mode="out-in" appear>
     <div v-if="!DATA_RETRIEVED" class="data-loading">
-      Fetching your data, please wait…
+      Fetching your climbing data, please wait…
     </div>
-    <GlanceSummary />
-  </div>
+    <div v-else>
+      <GlanceSummary />
+    </div>
+  </transition>
 </template>
 
 <script>
