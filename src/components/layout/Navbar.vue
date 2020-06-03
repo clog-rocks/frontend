@@ -20,7 +20,7 @@
         <a class="p-2" href="/logbook/ascent/add/">New ascent</a>
         <a class="p-2" href="/logbook/locations/">Your crags</a>
         <a class="p-2" href="/logbook/countries/">Explore</a>
-        <a class="p-2" href="/training/">Training</a>
+        <router-link :to="{ name: 'Training' }">Training</router-link>
         <a class="p-2" href="/user/profile/">Your account </a>
         <a class="p-2" @click.prevent="LOGOUT" href="">Logout</a>
       </nav>
