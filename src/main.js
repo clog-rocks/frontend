@@ -23,6 +23,9 @@ router.beforeEach((to, from, next) => {
 
   const isAuthenticated = store.getters["auth/IS_AUTHENTICATED"];
   if (to.name !== "Auth" && !isAuthenticated) next({ name: "Auth" });
+  // Don't allow logged in users to see Auth View.
+  else if (to.name === "Auth" && isAuthenticated)
+    next({ name: "LogbookGlance" });
   else next();
 });
 
