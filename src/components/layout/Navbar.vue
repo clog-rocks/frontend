@@ -34,7 +34,7 @@
         <a class="p-2" href="/logbook/countries/">Explore</a>
         <a class="p-2" href="/training/">Training</a>
         <a class="p-2" href="/user/profile/">Your account </a>
-        <a class="p-2" @click.prevent="logout" href="">Logout</a>
+        <a class="p-2" @click.prevent="LOGOUT" href="">Logout</a>
       </nav>
     </div>
   </div>
@@ -47,11 +47,12 @@ export default {
   name: "Navbar",
 
   methods: {
-    ...mapActions(["logout"]),
+    ...mapActions("auth", ["LOGOUT"]),
   },
 
   computed: {
-    ...mapGetters(["LOADING"]),
+    ...mapGetters("auth", ["IS_AUTHENTICATED"]),
+  },
   },
 };
 </script>

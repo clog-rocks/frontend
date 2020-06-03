@@ -31,16 +31,16 @@ export default {
   },
 
   methods: {
-    ...mapActions(["dataNotRetrieved"]),
+    ...mapActions("logbook", ["DATA_NOT_RETRIEVED"]),
   },
 
   mounted() {
     // Force data retrievel upon next login.
-    this.dataNotRetrieved();
+    this.DATA_NOT_RETRIEVED();
   },
 
   computed: {
-    ...mapGetters(["AUTH_COMPONENT"]),
+    ...mapGetters("auth", ["AUTH_COMPONENT"]),
   },
 };
 </script>

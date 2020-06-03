@@ -21,7 +21,7 @@ router.beforeEach((to, from, next) => {
   // console.log("Route from: " + from.name);
   // console.log("Route to: " + to.name);
 
-  const isAuthenticated = store.getters.IS_AUTHENTICATED;
+  const isAuthenticated = store.getters["auth/IS_AUTHENTICATED"];
   if (to.name !== "Auth" && !isAuthenticated) next({ name: "Auth" });
   else next();
 });
