@@ -31,7 +31,7 @@
         required
       />
       <v-row class="pt-5">
-        <v-btn text @click="switchComponent('Register')">Register</v-btn>
+        <v-btn text @click="SHOW_COMPONENT('Register')">Register</v-btn>
         <v-spacer></v-spacer>
         <v-btn :loading="loading" type="submit">Login</v-btn>
       </v-row>
@@ -59,7 +59,7 @@ export default {
   }),
 
   methods: {
-    ...mapActions(["login", "switchComponent"]),
+    ...mapActions("auth", ["LOGIN", "SHOW_COMPONENT"]),
 
     submit() {
       if (this.$refs.form.validate()) {
@@ -67,7 +67,7 @@ export default {
 
         // Call login Vuex action.
         const { username, password } = this;
-        this.login({ username, password })
+        this.LOGIN({ username, password })
           .then(() => {
             this.$router.push("/");
           })

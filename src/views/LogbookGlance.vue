@@ -19,19 +19,22 @@ export default {
   components: { Navbar, GlanceSummary },
 
   methods: {
-    ...mapActions(["toggleLoading", "getLogbookData"]),
+    ...mapActions("core", ["TOGGLE_LOADING"]),
+    ...mapActions("logbook", ["GET_DATA"]),
   },
 
   computed: {
-    ...mapGetters(["DATA_RETRIEVED"]),
+    ...mapGetters("logbook", ["DATA_RETRIEVED"]),
   },
 
   mounted() {
-    this.toggleLoading();
+    if (!this.DATA_RETRIEVED) {
+      this.TOGGLE_LOADING();
 
-    this.getLogbookData().then(() => {
-      this.toggleLoading();
-    });
+      this.GET_DATA().then(() => {
+        this.TOGGLE_LOADING();
+      });
+    }
   },
 };
 </script>

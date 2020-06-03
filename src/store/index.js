@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import auth from "./modules/auth";
-import core from "./modules/core";
-import logbook from "./modules/logbook";
+import auth from "./auth";
+import core from "./core";
+import logbook from "./logbook";
+import training from "./training";
 
 Vue.use(Vuex);
 
@@ -12,5 +13,6 @@ export default new Vuex.Store({
     auth,
     core,
     logbook,
+    training,
   },
 });

@@ -57,7 +57,7 @@
         required
       />
       <v-row class="pt-5">
-        <v-btn text @click="switchComponent('Login')">Login</v-btn>
+        <v-btn text @click="SHOW_COMPONENT('Login')">Login</v-btn>
         <v-spacer></v-spacer>
         <v-btn :loading="loading" type="submit">Register</v-btn>
       </v-row>
@@ -68,7 +68,7 @@
 <script>
 import { mapActions } from "vuex";
 import _ from "lodash";
-import { authService } from "@/_services/auth.service";
+import { authService } from "@/_services";
 
 export default {
   name: "Register",
@@ -122,7 +122,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["register", "switchComponent"]),
+    ...mapActions("auth", ["REGISTER", "SHOW_COMPONENT"]),
 
     submit() {
       console.log(this.$refs.form.validate());

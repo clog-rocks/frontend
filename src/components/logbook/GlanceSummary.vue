@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
-    <div v-if="DATA_RETRIEVED" class="summary">
-      <h1>Hello {{ USERNAME }},</h1>
+    <div class="summary">
+      <h1>Hello {{ USER.username }},</h1>
       <p class="lead my-3">
         you have
         <span class="enlarged">{{ ASCENT_COUNT }}</span> ascents and
@@ -65,14 +65,13 @@ export default {
   name: "GlanceSummary",
 
   computed: {
-    ...mapGetters([
+    ...mapGetters("logbook", [
       "ASCENT_COUNT",
       "ASCENT_LAST_YEAR_COUNT",
       "CRAG_VISIT_COUNT",
       "CRAG_VISIT_LAST_YEAR_COUNT",
-      "USERNAME",
-      "DATA_RETRIEVED",
     ]),
+    ...mapGetters("auth", ["USER"]),
   },
 };
 </script>
