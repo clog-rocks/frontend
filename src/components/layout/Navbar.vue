@@ -1,29 +1,17 @@
 <template>
-  <div>
-    <div>
-      <v-progress-linear
-        :active="LOADING"
-        :indeterminate="LOADING"
-        absolute
-        bottom
-        color="black"
-        background-color="white"
-        height="1"
-        top
-      ></v-progress-linear>
-      <v-app-bar flat color="#fff">
-        <v-toolbar-title class="site-header-logo">clog</v-toolbar-title>
+  <div v-if="displayNavbar">
+    <v-app-bar flat color="#fff">
+      <v-toolbar-title class="site-header-logo">clog</v-toolbar-title>
 
-        <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
 
-        <v-btn :ripple="false" icon tile>
-          <v-icon color="red">mdi-filter</v-icon>
-        </v-btn>
-        <v-btn :ripple="false" icon tile>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </v-app-bar>
-    </div>
+      <v-btn :ripple="false" icon tile>
+        <v-icon color="red">mdi-filter</v-icon>
+      </v-btn>
+      <v-btn :ripple="false" icon tile>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+    </v-app-bar>
 
     <div class="nav-scroller">
       <nav class="nav">
@@ -46,6 +34,14 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Navbar",
 
+  data: () => ({
+    displayNavbar: null,
+  }),
+
+  mounted() {
+    this.displayNavbar = this.IS_AUTHENTICATED;
+  },
+
   methods: {
     ...mapActions("auth", ["LOGOUT"]),
   },
@@ -53,6 +49,17 @@ export default {
   computed: {
     ...mapGetters("auth", ["IS_AUTHENTICATED"]),
   },
+
+  watch: {
+    // Delay Navbar insertion to DOM.
+    // Avoid jittering structure before Auth Component is hidden.
+    IS_AUTHENTICATED(newValue) {
+      const timeout = newValue ? 500 : 0;
+      console.log("new: " + newValue);
+      setTimeout(() => {
+        this.displayNavbar = this.IS_AUTHENTICATED;
+      }, timeout);
+    },
   },
 };
 </script>
