@@ -13,7 +13,7 @@ const routes = [
     component: Auth,
   },
   {
-    path: "/",
+    path: "/logbook",
     name: "LogbookGlance",
     component: LogbookGlance,
   },

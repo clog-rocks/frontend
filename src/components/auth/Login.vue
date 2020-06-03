@@ -69,7 +69,7 @@ export default {
         const { username, password } = this;
         this.LOGIN({ username, password })
           .then(() => {
-            this.$router.push("/");
+            this.$router.push("/logbook");
           })
           .catch((error) => {
             this.loading = false;
