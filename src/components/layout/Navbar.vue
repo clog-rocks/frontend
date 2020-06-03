@@ -68,6 +68,6 @@ export default {
 @import "../../styles/navbar.css";
 
 .router-link-active {
-  font-weight: 400;
+  color: black !important;
 }
 </style>
