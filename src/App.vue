@@ -2,7 +2,7 @@
   <v-app>
     <v-content>
       <v-container
-        :class="{ 'fill-height': isAuth, fluid: isAuth }"
+        :class="{ 'fill-height': centerContainer, fluid: centerContainer }"
         class="pt-0"
       >
         <transition name="fade" appear mode="out-in">
@@ -18,11 +18,11 @@ export default {
   name: "app",
 
   data: () => ({
-    isAuth: null,
+    centerContainer: null,
   }),
 
   mounted() {
-    this.isAuth = this.$router.currentRoute.name === "Auth";
+    this.centerContainer = this.$router.currentRoute.name === "Auth";
   },
 
   watch: {
@@ -31,7 +31,7 @@ export default {
     // until transition finished.
     $route(to) {
       setTimeout(() => {
-        this.isAuth = to.name == "Auth";
+        this.centerContainer = to.name == "Auth";
       }, 500);
     },
   },
