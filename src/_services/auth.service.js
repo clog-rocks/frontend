@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const authService = {
+export default {
   // Login user.
   login: async (username, password) => {
     const axiosOptions = {
