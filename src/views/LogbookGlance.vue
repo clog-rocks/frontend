@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navbar />
     <div v-if="!DATA_RETRIEVED" class="data-loading">
       Fetching your data, please wait…
     </div>
@@ -11,12 +10,11 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 
-import Navbar from "@/components/layout/Navbar";
 import GlanceSummary from "@/components/logbook/GlanceSummary";
 
 export default {
   name: "LogbookGlance",
-  components: { Navbar, GlanceSummary },
+  components: { GlanceSummary },
 
   methods: {
     ...mapActions("core", ["TOGGLE_LOADING"]),

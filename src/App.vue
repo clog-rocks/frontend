@@ -1,10 +1,25 @@
 <template>
   <v-app>
+    <v-progress-linear
+      :active="LOADING"
+      :indeterminate="LOADING"
+      absolute
+      bottom
+      color="black"
+      background-color="white"
+      height="1"
+      top
+    ></v-progress-linear>
+
     <v-content>
       <v-container
         :class="{ 'fill-height': centerContainer, fluid: centerContainer }"
         class="pt-0"
       >
+        <transition name="fade" appear>
+          <Navbar />
+        </transition>
+
         <transition name="fade" appear mode="out-in">
           <router-view />
         </transition>
@@ -14,12 +29,21 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
+import Navbar from "@/components/layout/Navbar";
+
 export default {
   name: "app",
+  components: { Navbar },
 
   data: () => ({
     centerContainer: null,
   }),
+
+  computed: {
+    ...mapGetters("core", ["LOADING"]),
+  },
 
   mounted() {
     this.centerContainer = this.$router.currentRoute.name === "Auth";
