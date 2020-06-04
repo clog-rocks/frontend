@@ -17,7 +17,7 @@
         class="pt-0"
       >
         <transition name="fade" appear>
-          <Navbar />
+          <Navbar v-if="displayNavbar" />
         </transition>
 
         <transition name="fade" appear mode="out-in">
@@ -39,14 +39,17 @@ export default {
 
   data: () => ({
     centerContainer: null,
+    displayNavbar: null,
   }),
 
   computed: {
     ...mapGetters("core", ["LOADING"]),
+    ...mapGetters("auth", ["IS_AUTHENTICATED"]),
   },
 
   mounted() {
     this.centerContainer = this.$router.currentRoute.name === "Auth";
+    this.displayNavbar = this.IS_AUTHENTICATED;
   },
 
   watch: {
@@ -57,6 +60,16 @@ export default {
       setTimeout(() => {
         this.centerContainer = to.name == "Auth";
       }, 500);
+    },
+
+    // Delay Navbar insertion to DOM.
+    // Avoid jittering structure before Auth Component is hidden.
+    IS_AUTHENTICATED(newValue) {
+      const timeout = newValue ? 500 : 0;
+      console.log("new: " + newValue);
+      setTimeout(() => {
+        this.displayNavbar = this.IS_AUTHENTICATED;
+      }, timeout);
     },
   },
 };
