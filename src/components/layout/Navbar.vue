@@ -1,5 +1,5 @@
 <template>
-  <div v-if="displayNavbar">
+  <section class="navbar-container">
     <v-app-bar flat color="#fff">
       <v-toolbar-title class="site-header-logo">clog</v-toolbar-title>
 
@@ -25,49 +25,21 @@
         <a class="p-2" @click.prevent="LOGOUT" href="">Logout</a>
       </nav>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "Navbar",
 
-  data: () => ({
-    displayNavbar: null,
-  }),
-
-  mounted() {
-    this.displayNavbar = this.IS_AUTHENTICATED;
-  },
-
   methods: {
     ...mapActions("auth", ["LOGOUT"]),
-  },
-
-  computed: {
-    ...mapGetters("auth", ["IS_AUTHENTICATED"]),
-  },
-
-  watch: {
-    // Delay Navbar insertion to DOM.
-    // Avoid jittering structure before Auth Component is hidden.
-    IS_AUTHENTICATED(newValue) {
-      const timeout = newValue ? 500 : 0;
-      console.log("new: " + newValue);
-      setTimeout(() => {
-        this.displayNavbar = this.IS_AUTHENTICATED;
-      }, timeout);
-    },
   },
 };
 </script>
 
 <style scoped>
 @import "../../styles/navbar.css";
-
-.router-link-active {
-  color: black !important;
-}
 </style>
