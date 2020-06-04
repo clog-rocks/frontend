@@ -105,12 +105,12 @@ export default {
 
   watch: {
     // Whenever username changes, this function will run.
-    username: function() {
+    username: function () {
       this.debouncedCheckUsername();
     },
   },
 
-  created: function() {
+  created: function () {
     // _.debounce is a function provided by lodash to limit how
     // often a particularly expensive operation can be run.
     // In this case, we want to limit how often we access
@@ -163,7 +163,7 @@ export default {
       }
     },
 
-    checkUsername: function() {
+    checkUsername: function () {
       console.log("in checkUsername()");
 
       if (this.username !== "") {
@@ -171,13 +171,13 @@ export default {
         const vm = this;
         authService
           .userExists(this.username)
-          .then(function(response) {
+          .then(function (response) {
             vm.usernameError = response.data.available
               ? null
               : ["A user with that username already exists."];
             vm.loadingUsername = false;
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log("Error! Could not reach the API. " + error);
             vm.loadingUsername = false;
           });
