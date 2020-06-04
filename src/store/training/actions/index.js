@@ -1,6 +1,7 @@
 import { trainingService } from "@/_services";
 
 import { Action, Mutation } from "../types";
+import { Action as CoreAction } from "../../core/types";
 
 export default {
   [Action.DATA_RETRIEVED]: ({ commit }) => {
@@ -13,6 +14,7 @@ export default {
 
   [Action.GET_DATA]: ({ dispatch }) => {
     const p = Promise.all([
+      dispatch(`core/${[CoreAction.GET_CITIES]}`, null, { root: true }),
       dispatch("_getGyms"),
       dispatch("_getSessions"),
     ]).then(() => {

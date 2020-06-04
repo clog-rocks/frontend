@@ -6,6 +6,6 @@ export default {
   },
 
   getCities: async () => {
-    return await axios.get("http://127.0.0.1:800/api/core/city/");
+    return await axios.get("http://127.0.0.1:8000/api/core/city/");
   },
 };
