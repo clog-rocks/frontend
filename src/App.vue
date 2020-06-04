@@ -4,11 +4,9 @@
       :active="LOADING"
       :indeterminate="LOADING"
       absolute
-      bottom
-      color="black"
+      color="#aea7af"
       background-color="white"
       height="1"
-      top
     ></v-progress-linear>
 
     <v-content>
