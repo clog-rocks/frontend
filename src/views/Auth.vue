@@ -11,14 +11,14 @@
     </v-col>
     <v-col align-self="center" cols="12" md="4">
       <transition mode="out-in" name="component-fade">
-        <component :is="AUTH_COMPONENT" />
+        <component :is="activeComponent" />
       </transition>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 import Login from "@/components/auth/Login";
 import Register from "@/components/auth/Register";
@@ -31,16 +31,20 @@ export default {
   },
 
   methods: {
-    ...mapActions("logbook", ["DATA_NOT_RETRIEVED"]),
+    ...mapActions({
+      LOGBOOK_DATA_NOT_RETRIEVED: "logbook/DATA_NOT_RETRIEVED",
+      TRAINING_DATA_NOT_RETRIEVED: "training/DATA_NOT_RETRIEVED",
+    }),
   },
 
   mounted() {
     // Force data retrievel upon next login.
-    this.DATA_NOT_RETRIEVED();
+    this.LOGBOOK_DATA_NOT_RETRIEVED();
+    this.TRAINING_DATA_NOT_RETRIEVED();
   },
 
   computed: {
-    ...mapGetters("auth", ["AUTH_COMPONENT"]),
+    ...mapState("auth", ["activeComponent"]),
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in" appear>
-    <div v-if="!DATA_RETRIEVED" class="data-loading">
+    <div v-if="!dataRetrieved" class="data-loading">
       Fetching your training data, please wait…
     </div>
     <div v-else>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "Training",
@@ -22,11 +22,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters("training", ["DATA_RETRIEVED"]),
+    ...mapState("training", ["dataRetrieved"]),
   },
 
   mounted() {
-    if (!this.DATA_RETRIEVED) {
+    if (!this.dataRetrieved) {
       this.TOGGLE_LOADING();
 
       this.GET_DATA().then(() => {
