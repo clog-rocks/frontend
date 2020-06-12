@@ -28,7 +28,7 @@
 
 <script>
 import { mapState } from "vuex";
-
+import _ from "lodash";
 import Navbar from "@/components/layout/Navbar";
 
 export default {
@@ -46,24 +46,32 @@ export default {
   },
 
   mounted() {
-    this.centerContainer =
-      this.$router.currentRoute.name === "Auth" && this.windowWidth > 959;
+    window.addEventListener("resize", _.debounce(this.on_resize, 250));
+
+    this.centerContainer = this.shouldCenter();
     this.displayNavbar = this.isAuthenticated;
+  },
+
+  methods: {
+    shouldCenter() {
+      return (
+        this.$route.name == "Auth" && document.documentElement.clientWidth > 959
+      );
+    },
+
+    on_resize() {
+      this.centerContainer = this.shouldCenter();
+    },
   },
 
   watch: {
     // Center content of Auth components on screen.
     // Timeout required to delay fill-height class change
     // until transition finished.
-    $route(to) {
+    $route() {
       setTimeout(() => {
-        this.centerContainer = to.name == "Auth" && this.windowWidth > 959;
+        this.centerContainer = this.shouldCenter();
       }, 500);
-    },
-
-    windowWidth() {
-      this.centerContainer =
-        this.$route.name == "Auth" && this.windowWidth > 959;
     },
 
     // Delay Navbar insertion to DOM.
