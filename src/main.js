@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
+import VueWindowSize from "vue-window-size";
 
 import axios from "axios";
 
@@ -35,3 +36,5 @@ new Vue({
   vuetify,
   render: (h) => h(App),
 }).$mount("#app");
+
+Vue.use(VueWindowSize);
