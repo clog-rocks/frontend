@@ -46,7 +46,8 @@ export default {
   },
 
   mounted() {
-    this.centerContainer = this.$router.currentRoute.name === "Auth";
+    this.centerContainer =
+      this.$router.currentRoute.name === "Auth" && this.windowWidth > 959;
     this.displayNavbar = this.isAuthenticated;
   },
 
@@ -56,8 +57,13 @@ export default {
     // until transition finished.
     $route(to) {
       setTimeout(() => {
-        this.centerContainer = to.name == "Auth";
+        this.centerContainer = to.name == "Auth" && this.windowWidth > 959;
       }, 500);
+    },
+
+    windowWidth() {
+      this.centerContainer =
+        this.$route.name == "Auth" && this.windowWidth > 959;
     },
 
     // Delay Navbar insertion to DOM.
