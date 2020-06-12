@@ -1,6 +1,6 @@
 <template>
   <div class="summary">
-    <h1>Hello {{ USER.username }},</h1>
+    <h1>Hello {{ user.username }},</h1>
     <p class="lead my-3">
       you have
       <span class="enlarged">{{ ASCENT_COUNT }}</span> ascents and
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "GlanceSummary",
@@ -69,7 +69,7 @@ export default {
       "CRAG_VISIT_COUNT",
       "CRAG_VISIT_LAST_YEAR_COUNT",
     ]),
-    ...mapGetters("auth", ["USER"]),
+    ...mapState("auth", ["user"]),
   },
 };
 </script>

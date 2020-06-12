@@ -1,3 +1,1 @@
-export default {
-  LOADING: (state) => state.loading,
-};
+export default {};

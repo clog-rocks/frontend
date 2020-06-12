@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-progress-linear
-      :active="LOADING"
-      :indeterminate="LOADING"
+      :active="loading"
+      :indeterminate="loading"
       absolute
       color="#aea7af"
       background-color="white"
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 import Navbar from "@/components/layout/Navbar";
 
@@ -41,13 +41,13 @@ export default {
   }),
 
   computed: {
-    ...mapGetters("core", ["LOADING"]),
-    ...mapGetters("auth", ["IS_AUTHENTICATED"]),
+    ...mapState("core", ["loading"]),
+    ...mapState("auth", ["isAuthenticated"]),
   },
 
   mounted() {
     this.centerContainer = this.$router.currentRoute.name === "Auth";
-    this.displayNavbar = this.IS_AUTHENTICATED;
+    this.displayNavbar = this.isAuthenticated;
   },
 
   watch: {
@@ -62,11 +62,11 @@ export default {
 
     // Delay Navbar insertion to DOM.
     // Avoid jittering structure before Auth Component is hidden.
-    IS_AUTHENTICATED(newValue) {
+    isAuthenticated(newValue) {
       const timeout = newValue ? 500 : 0;
       console.log("new: " + newValue);
       setTimeout(() => {
-        this.displayNavbar = this.IS_AUTHENTICATED;
+        this.displayNavbar = this.isAuthenticated;
       }, timeout);
     },
   },

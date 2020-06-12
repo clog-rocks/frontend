@@ -1,7 +1,6 @@
 import { differenceInDays, parseISO } from "date-fns";
 
 export default {
-  DATA_RETRIEVED: (state) => state.dataRetrieved,
 
   ASCENT_COUNT: (state) => Object.keys(state.ascents).length,
 

@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in" appear>
-    <div v-if="!DATA_RETRIEVED" class="data-loading">
+    <div v-if="!dataRetrieved" class="data-loading">
       Fetching your climbing data, please wait…
     </div>
     <div v-else>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 import GlanceSummary from "@/components/logbook/GlanceSummary";
 
@@ -24,11 +24,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters("logbook", ["DATA_RETRIEVED"]),
+    ...mapState("logbook", ["dataRetrieved"]),
   },
 
   mounted() {
-    if (!this.DATA_RETRIEVED) {
+    if (!this.dataRetrieved) {
       this.TOGGLE_LOADING();
 
       this.GET_DATA().then(() => {
