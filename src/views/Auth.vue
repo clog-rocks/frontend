@@ -10,7 +10,13 @@
       <span class="logo font-weight-thin">clog</span>
     </v-col>
     <v-col align-self="center" cols="12" md="4">
-      <transition mode="out-in" name="component-fade">
+      <transition
+        mode="out-in"
+        name="component-fade"
+        @beforeLeave="beforeLeave"
+        @enter="enter"
+        @afterEnter="afterEnter"
+      >
         <component :is="activeComponent" />
       </transition>
     </v-col>
@@ -35,6 +41,25 @@ export default {
       LOGBOOK_DATA_NOT_RETRIEVED: "logbook/DATA_NOT_RETRIEVED",
       TRAINING_DATA_NOT_RETRIEVED: "training/DATA_NOT_RETRIEVED",
     }),
+
+    // Component switch transition.
+    beforeLeave(element) {
+      this.prevHeight = getComputedStyle(element).height;
+    },
+
+    enter(element) {
+      const { height } = getComputedStyle(element);
+
+      element.style.height = this.prevHeight;
+
+      setTimeout(() => {
+        element.style.height = height;
+      });
+    },
+
+    afterEnter(element) {
+      element.style.height = "auto";
+    },
   },
 
   mounted() {
@@ -62,7 +87,10 @@ export default {
 
 .component-fade-enter-active,
 .component-fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition-duration: 0.3s;
+  transition-property: height, opacity;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  overflow: hidden;
 }
 .component-fade-enter,
 .component-fade-leave-to {
