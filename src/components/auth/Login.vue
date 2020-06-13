@@ -1,42 +1,46 @@
 <template>
-  <v-container>
-    <span class="headline font-weight-thin">Login</span>
-    <v-alert
-      outlined
-      dismissible
-      :value="nonFieldError ? true : false"
-      color="error"
-      border="left"
-      icon="mdi-alert-circle-outline"
-      >{{ nonFieldError }}</v-alert
-    >
+  <v-card flat>
     <v-form @submit.prevent="submit" ref="form" v-model="valid" lazy-validation>
-      <v-text-field
-        v-model="username"
-        label="Username"
-        autocomplete="username"
-        :rules="[(v) => !!v || 'Username is required.']"
-        prepend-icon="mdi-account"
-        required
-      />
-      <v-text-field
-        v-model="password"
-        autocomplete="current-password"
-        :type="showPassword ? 'text' : 'password'"
-        :rules="[(v) => !!v || 'Password is required.']"
-        label="Password"
-        prepend-icon="mdi-lock"
-        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-        @click:append="showPassword = !showPassword"
-        required
-      />
-      <v-row class="pt-5">
+      <h5 class="headline text-center font-weight-thin">
+        Login
+      </h5>
+      <v-card-text>
+        <v-alert
+          outlined
+          dismissible
+          :value="nonFieldError ? true : false"
+          color="error"
+          border="left"
+          icon="mdi-alert-circle-outline"
+          >{{ nonFieldError }}</v-alert
+        >
+        <v-text-field
+          v-model="username"
+          label="Username"
+          autocomplete="username"
+          :rules="[(v) => !!v || 'Username is required.']"
+          prepend-icon="mdi-account"
+          required
+        />
+        <v-text-field
+          v-model="password"
+          autocomplete="current-password"
+          :type="showPassword ? 'text' : 'password'"
+          :rules="[(v) => !!v || 'Password is required.']"
+          label="Password"
+          prepend-icon="mdi-lock"
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append="showPassword = !showPassword"
+          required
+        />
+      </v-card-text>
+      <v-card-actions>
         <v-btn text @click="SHOW_COMPONENT('Register')">Register</v-btn>
         <v-spacer></v-spacer>
         <v-btn :loading="loading" type="submit">Login</v-btn>
-      </v-row>
+      </v-card-actions>
     </v-form>
-  </v-container>
+  </v-card>
 </template>
 
 <script>

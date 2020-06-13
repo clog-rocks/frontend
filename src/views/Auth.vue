@@ -5,11 +5,17 @@
       align-self="center"
       cols="12"
       md="4"
-      class="text-center"
+      class="text-center px-9 px-sm-0"
     >
       <span class="logo font-weight-thin">clog</span>
     </v-col>
-    <v-col align-self="center" cols="12" md="4">
+    <v-col
+      align-self="center"
+      cols="12"
+      md="4"
+      style="max-width: 500px;"
+      class="px-9 px-sm-0"
+    >
       <transition
         mode="out-in"
         name="component-fade"
@@ -79,7 +85,7 @@ export default {
   font-size: 8rem;
 }
 
-@media (max-width: 599.98px) {
+@media (max-width: 959.99px) {
   .logo {
     font-size: 6rem;
   }
