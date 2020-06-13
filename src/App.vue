@@ -11,7 +11,8 @@
 
     <v-content>
       <v-container
-        :class="{ 'fill-height': centerContainer, fluid: centerContainer }"
+        :class="{ 'fill-height': centerContainer }"
+        :fluid="centerContainer"
         class="pt-0"
       >
         <transition name="fade" appear>
@@ -28,8 +29,8 @@
 
 <script>
 import { mapState } from "vuex";
-import _ from "lodash";
 import Navbar from "@/components/layout/Navbar";
+import { isMobileOnly } from "mobile-device-detect";
 
 export default {
   name: "app",
@@ -46,21 +47,13 @@ export default {
   },
 
   mounted() {
-    window.addEventListener("resize", _.debounce(this.on_resize, 250));
-
     this.centerContainer = this.shouldCenter();
     this.displayNavbar = this.isAuthenticated;
   },
 
   methods: {
     shouldCenter() {
-      return (
-        this.$route.name == "Auth" && document.documentElement.clientWidth > 959
-      );
-    },
-
-    on_resize() {
-      this.centerContainer = this.shouldCenter();
+      return this.$route.name == "Auth" && !isMobileOnly;
     },
   },
 
