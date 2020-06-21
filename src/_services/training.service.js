@@ -1,11 +1,11 @@
-import axios from "axios";
+import api from "./api";
 
 export default {
   getGyms: async () => {
-    return await axios.get("http://127.0.0.1:8000/api/training/gym/");
+    return await api.get("/api/training/gym/");
   },
 
   getSessions: async () => {
-    return await axios.get("http://127.0.0.1:8000/api/training/session/");
+    return await api.get("/api/training/session/");
   },
 };
