@@ -7,6 +7,7 @@ export const Action = {
 export const Mutation = {
   SET_DATA_NOT_RETRIEVED: "SET_DATA_NOT_RETRIEVED",
   SET_DATA_RETRIEVED: "SET_DATA_RETRIEVED",
+  SET_DATA: "SET_DATA",
   SET_GYMS: "SET_GYMS",
   SET_SESSIONS: "SET_SESSIONS",
 };

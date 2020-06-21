@@ -12,6 +12,10 @@ export default {
     );
   },
 
+  [Mutation.SET_DATA]: (state, payload) => {
+    state.data = payload.reduce((acc, cur) => ((acc[cur.id] = cur), acc), {});
+  },
+
   [Mutation.SET_DATA_RETRIEVED]: (state) => {
     state.dataRetrieved = true;
   },

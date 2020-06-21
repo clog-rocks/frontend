@@ -1,7 +1,6 @@
 import { logbookService } from "@/_services";
 
 import { Action, Mutation } from "../types";
-import { Action as CoreAction } from "../../core/types";
 
 export default {
   [Action.DATA_RETRIEVED]: ({ commit }) => {
@@ -14,13 +13,9 @@ export default {
 
   [Action.GET_DATA]: ({ dispatch }) => {
     const p = Promise.all([
-      dispatch(`core/${[CoreAction.GET_COUNTRIES]}`, null, { root: true }),
-      dispatch("_getCrags"),
-      dispatch("_getSectors"),
-      dispatch("_getRoutes"),
-      dispatch("_getAscents"),
       dispatch("_getGrades"),
       dispatch("_getStyles"),
+      dispatch("_getData"),
     ]).then(() => {
       dispatch(`${[Action.DATA_RETRIEVED]}`);
     });
@@ -91,6 +86,15 @@ export default {
       // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
+    }
+  },
+
+  _getData: async ({ commit }) => {
+    try {
+      let response = await logbookService.getData();
+      commit(`${[Mutation.SET_DATA]}`, response.data);
+    } catch (error) {
+      return Promise.reject(error);
     }
   },
 };

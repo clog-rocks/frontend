@@ -6,12 +6,14 @@
       </h5>
       <v-card-text>
         <v-alert
+          :value="nonFieldError"
+          transition="fade"
+          elevation="3"
+          type="error"
+          class="px-5"
           outlined
-          dismissible
-          :value="nonFieldError ? true : false"
-          color="error"
-          border="left"
-          icon="mdi-alert-circle-outline"
+          dense
+          tile
           >{{ nonFieldError }}</v-alert
         >
         <v-text-field

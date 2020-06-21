@@ -1,7 +1,6 @@
 import { trainingService } from "@/_services";
 
 import { Action, Mutation } from "../types";
-import { Action as CoreAction } from "../../core/types";
 
 export default {
   [Action.DATA_RETRIEVED]: ({ commit }) => {
@@ -12,16 +11,15 @@ export default {
     commit(`${[Mutation.SET_DATA_NOT_RETRIEVED]}`);
   },
 
-  [Action.GET_DATA]: ({ dispatch }) => {
-    const p = Promise.all([
-      dispatch(`core/${[CoreAction.GET_CITIES]}`, null, { root: true }),
-      dispatch("_getGyms"),
-      dispatch("_getSessions"),
-    ]).then(() => {
+  [Action.GET_DATA]: async ({ commit, dispatch }) => {
+    try {
+      let response = await trainingService.getData();
+      commit(`${[Mutation.SET_DATA]}`, response.data);
       dispatch(`${[Action.DATA_RETRIEVED]}`);
-    });
-
-    return p;
+      return Promise.resolve(response);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   },
 
   _getGyms: async ({ commit }) => {

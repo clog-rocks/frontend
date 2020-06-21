@@ -37,6 +37,7 @@ import Register from "@/components/auth/Register";
 
 export default {
   name: "Auth",
+
   components: {
     Login,
     Register,

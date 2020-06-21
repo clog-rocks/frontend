@@ -8,4 +8,8 @@ export default {
   getSessions: async () => {
     return await api.get("/api/training/session/");
   },
+
+  getData: async () => {
+    return await api.get("/api/training/");
+  },
 };

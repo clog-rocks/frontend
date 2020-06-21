@@ -4,7 +4,7 @@
       :active="loading"
       :indeterminate="loading"
       absolute
-      color="#aea7af"
+      color="#000"
       background-color="white"
       height="1"
     ></v-progress-linear>
@@ -93,6 +93,7 @@ export default {
 }
 
 /* Transitions */
+/* Fade */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
@@ -103,23 +104,23 @@ export default {
   opacity: 0;
 }
 
-/* Typography */
-.enlarged,
-.enlarged-big,
-.enlarged-huge {
-  font-family: "Source Sans Pro", sans-serif;
-  font-weight: 300;
+/* Bounce */
+.bounce-enter-active {
+  animation: bounce-in 1s;
+}
+.bounce-leave-active {
+  animation: bounce-in 1s reverse;
 }
 
-.enlarged {
-  font-size: 120%;
-}
-
-.enlarged-big {
-  font-size: 200%;
-}
-
-.enlarged-huge {
-  font-size: 350%;
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

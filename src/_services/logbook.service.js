@@ -24,4 +24,8 @@ export default {
   getAscents: async () => {
     return await api.get("/api/logbook/ascent/");
   },
+
+  getData: async () => {
+    return await api.get("/api/logbook/");
+  },
 };

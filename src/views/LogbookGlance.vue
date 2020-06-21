@@ -1,10 +1,10 @@
 <template>
   <transition name="fade" mode="out-in" appear>
     <div v-if="!dataRetrieved" class="data-loading">
-      Fetching your climbing data, please wait…
+      <Loading message="Fetching your climbing data, please wait…" />
     </div>
     <div v-else>
-      <GlanceSummary />
+      <Summary />
     </div>
   </transition>
 </template>
@@ -12,11 +12,12 @@
 <script>
 import { mapActions, mapState } from "vuex";
 
-import GlanceSummary from "@/components/logbook/GlanceSummary";
+import Loading from "@/components/layout/Loading";
+import Summary from "@/components/logbook/Summary";
 
 export default {
   name: "LogbookGlance",
-  components: { GlanceSummary },
+  components: { Summary, Loading },
 
   methods: {
     ...mapActions("core", ["TOGGLE_LOADING"]),

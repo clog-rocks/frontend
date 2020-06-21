@@ -1,11 +1,15 @@
 import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-import vuetify from "./plugins/vuetify";
+import App from "@/App.vue";
+import router from "@/router";
+import store from "@/store";
+import vuetify from "@/plugins/vuetify";
 
 import api from "@/_services/api";
-import { Mutation } from "./store/auth/types";
+import { Mutation } from "@/store/auth/types";
+
+// Import common SCSS styles.
+import "@/scss/transitions/swing-in-bottom-fwd.scss";
+import "@/scss/counter-summary.scss";
 
 Vue.config.productionTip = false;
 
@@ -37,7 +41,7 @@ api.interceptors.response.use(
           });
           break;
       }
-      return Promise.reject(error.response);
+      return Promise.reject(error);
     }
   }
 );

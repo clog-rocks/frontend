@@ -1,10 +1,12 @@
 <template>
   <transition name="fade" mode="out-in" appear>
-    <div v-if="!dataRetrieved" class="data-loading">
-      Fetching your training data, please wait…
+    <div v-if="!dataRetrieved">
+      <Loading message="Fetching your training data, please wait…" />
     </div>
     <div v-else>
-      <h1>Placeholder</h1>
+      <Summary />
+      <SessionsTable />
+      <Table />
     </div>
   </transition>
 </template>
@@ -12,14 +14,15 @@
 <script>
 import { mapActions, mapState } from "vuex";
 
+import Loading from "@/components/layout/Loading";
+import Summary from "@/components/training/Summary";
+import SessionsTable from "@/components/training/SessionsTable";
+import Table from "@/components/training/top-gyms/Table";
+
 export default {
   name: "Training",
-  components: {},
 
-  methods: {
-    ...mapActions("core", ["TOGGLE_LOADING"]),
-    ...mapActions("training", ["GET_DATA"]),
-  },
+  components: { Loading, SessionsTable, Summary, Table },
 
   computed: {
     ...mapState("training", ["dataRetrieved"]),
@@ -33,6 +36,11 @@ export default {
         this.TOGGLE_LOADING();
       });
     }
+  },
+
+  methods: {
+    ...mapActions("core", ["TOGGLE_LOADING"]),
+    ...mapActions("training", ["GET_DATA"]),
   },
 };
 </script>
