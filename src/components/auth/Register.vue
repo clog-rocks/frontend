@@ -147,9 +147,9 @@ export default {
 
         // Call register Vuex action.
         const { username, email, password } = this;
-        this.register({ username, email, password })
+        this.REGISTER({ username, email, password })
           .then(() => {
-            this.$router.push("/");
+            this.$router.push("/logbook");
           })
           .catch((error) => {
             this.loading = false;
