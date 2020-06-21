@@ -36,16 +36,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.data-loading {
-  position: fixed;
-  text-align: center;
-  top: 50%;
-  left: 50%;
-  font-size: 1.5rem;
-  transform: translate(-50%, -50%);
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
-}
-</style>

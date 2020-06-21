@@ -1,7 +1,7 @@
 <template>
   <div class="summary">
-    <h1>Hello {{ user.username }},</h1>
-    <p class="lead my-3">
+    <h1 class="font-weight-thin">Hello {{ user.username }},</h1>
+    <p class="my-3">
       you have
       <span class="enlarged">{{ ASCENT_COUNT }}</span> ascents and
       <span class="enlarged">{{ CRAG_VISIT_COUNT }}</span> crag visits (<span
@@ -56,15 +56,11 @@ export default {
 
 <style scoped>
 .summary {
-  max-width: 600px;
   justify-self: center;
+  line-height: 1.6;
   margin: auto;
+  max-width: 600px;
   padding-top: 2rem;
-  text-align: center;
-}
-
-.lead {
-  line-height: 2;
   text-align: center;
 }
 </style>

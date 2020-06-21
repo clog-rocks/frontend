@@ -80,17 +80,20 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "~vuetify/src/styles/styles.sass";
+
 .logo {
   font-size: 8rem;
 }
 
-@media (max-width: 959.99px) {
+@media #{map-get($display-breakpoints, 'md-and-down')} {
   .logo {
     font-size: 6rem;
   }
 }
 
+/* Transitions */
 .component-fade-enter-active,
 .component-fade-leave-active {
   transition-duration: 0.3s;
@@ -98,6 +101,7 @@ export default {
   transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
   overflow: hidden;
 }
+
 .component-fade-enter,
 .component-fade-leave-to {
   opacity: 0;
