@@ -71,7 +71,6 @@ export default {
     // Avoid jittering structure before Auth Component is hidden.
     isAuthenticated(newValue) {
       const timeout = newValue ? 500 : 0;
-      console.log("new: " + newValue);
       setTimeout(() => {
         this.displayNavbar = this.isAuthenticated;
       }, timeout);
