@@ -82,15 +82,28 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400&display=swap");
 
+.data-loading {
+  position: fixed;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  font-size: 1.2rem;
+  transform: translate(-50%, -50%);
+  font-weight: 300;
+}
+
+/* Transitions */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
 }
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
 }
 
+/* Typography */
 .enlarged,
 .enlarged-big,
 .enlarged-huge {
