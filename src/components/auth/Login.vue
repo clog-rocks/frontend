@@ -86,9 +86,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.logo {
-  font-size: 8rem;
-}
-</style>
