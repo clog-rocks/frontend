@@ -39,8 +39,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$color-active: #000;
 $background-color: #f37272;
-$transition-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
 .navbar-container {
   padding-bottom: 1rem;
@@ -83,52 +83,38 @@ $transition-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
     text-transform: uppercase;
     text-decoration: none;
     padding-bottom: 8px;
-
-    &:before,
-    &:after {
-      content: "";
-      opacity: 0;
-      position: absolute;
-      bottom: 2px;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background-color: $background-color;
-    }
-
-    &:before {
-      transform: translateY(-8px);
-    }
-
-    &:after {
-      transform: translateY(4px);
-    }
+    transition: all 0.3s;
 
     &:hover {
-      &:before,
-      &:after {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      color: $color-active !important;
     }
 
-    &:hover:before {
-      transition: transform 0.2s $transition-function, opacity 0.2s;
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 0%;
+      background: $background-color;
+      height: 1px;
+      transition: all 0.3s;
     }
 
     &:hover:after {
-      transition: transform 0s $transition-function, opacity 0s 0.2s;
+      width: 100%;
     }
 
     /* vue-router */
     &.router-link-active,
     &.router-link-exact-active {
+      color: $color-active !important;
       cursor: default !important;
 
-      &:before,
       &:after {
-        opacity: 1;
-        transform: translateY(0);
+        width: 100%;
+        background: #adadad;
       }
     }
   }
