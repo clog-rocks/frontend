@@ -33,7 +33,7 @@ export default {
       let response = await logbookService.getGrades();
       commit(`${[Mutation.SET_GRADES]}`, response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }
@@ -44,7 +44,7 @@ export default {
       let response = await logbookService.getStyles();
       commit(`${[Mutation.SET_STYLES]}`, response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }
@@ -55,7 +55,7 @@ export default {
       let response = await logbookService.getCrags();
       commit(`${[Mutation.SET_CRAGS]}`, response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }
@@ -66,7 +66,7 @@ export default {
       let response = await logbookService.getSectors();
       commit(`${[Mutation.SET_SECTORS]}`, response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }
@@ -77,7 +77,7 @@ export default {
       let response = await logbookService.getRoutes();
       commit(`${[Mutation.SET_ROUTES]}`, response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }
@@ -88,7 +88,7 @@ export default {
       let response = await logbookService.getAscents();
       commit(`${[Mutation.SET_ASCENTS]}`, response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }

@@ -10,8 +10,7 @@ export default {
       let response = await authService.login(username, password);
       commit(`${[Mutation.LOGIN_SUCCESS]}`, response.data);
     } catch (error) {
-      console.log(error);
-      return Promise.reject(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }
@@ -23,7 +22,7 @@ export default {
       commit(`${[Mutation.LOGOUT_SUCCESS]}`);
       router.push({ name: "Auth" });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }
@@ -34,8 +33,7 @@ export default {
       let response = await authService.register(username, email, password);
       commit(`${[Mutation.LOGIN_SUCCESS]}`, response.data);
     } catch (error) {
-      console.log(error);
-      return Promise.reject(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }

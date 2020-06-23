@@ -29,7 +29,7 @@ export default {
       let response = await trainingService.getGyms();
       commit(`${[Mutation.SET_GYMS]}`, response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }
@@ -40,7 +40,7 @@ export default {
       let response = await trainingService.getSessions();
       commit(`${[Mutation.SET_SESSIONS]}`, response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // commit("loginFailure", error);
       // dispatch("alert/error", error, { root: true });
     }
