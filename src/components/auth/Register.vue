@@ -171,8 +171,6 @@ export default {
     },
 
     checkUsername: function () {
-      console.log("in checkUsername()");
-
       if (this.username !== "") {
         this.loadingUsername = true;
         const vm = this;

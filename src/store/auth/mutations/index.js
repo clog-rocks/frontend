@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { Mutation } from "../types";
+import api from "@/_services/api";
 
 export default {
   // Change component displayed on Auth view.
@@ -9,7 +10,7 @@ export default {
 
   // Set up user as logged in.
   [Mutation.LOGIN_SUCCESS]: (state, payload) => {
-    axios.defaults.headers.common["Authorization"] = "Token " + payload.token;
+    api.defaults.headers.common["Authorization"] = "Token " + payload.token;
     state.user = payload.user;
     state.token = payload.token;
     localStorage.setItem("user", JSON.stringify(payload.user));
