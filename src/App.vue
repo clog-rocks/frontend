@@ -9,7 +9,7 @@
       height="1"
     ></v-progress-linear>
 
-    <v-content>
+    <v-main>
       <v-container
         :class="{ 'fill-height': centerContainer }"
         :fluid="centerContainer"
@@ -23,7 +23,7 @@
           <router-view />
         </transition>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
