@@ -5,36 +5,28 @@
     name="fade"
   >
     <div v-if="!dataRetrieved">
-      <Loading message="Fetching your training data, please wait…" />
+      <Loading message="Fetching your climbing data, please wait…" />
     </div>
     <div v-else>
       <Counters />
-      <SessionsTable />
-      <TopGymsTable />
     </div>
   </transition>
 </template>
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
-import Counters from "@/components/training/Counters";
+import Counters from "@/components/logbook/Counters";
 import Loading from "@/components/layout/Loading";
-import SessionsTable from "@/components/training/SessionsTable";
-import TopGymsTable from "@/components/training/top-gyms/TopGymsTable";
 
 export default {
-  name: "Training",
+  name: "Logbook",
 
   components: {
-    Loading,
-    SessionsTable,
-    TopGymsTable,
     Counters,
+    Loading,
   },
 
-  computed: {
-    ...mapState("training", ["dataRetrieved"]),
-  },
+  computed: { ...mapState("logbook", ["dataRetrieved"]) },
 
   mounted: function() {
     if (!this.dataRetrieved) {
@@ -48,7 +40,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("training", ["GET_DATA"]),
+    ...mapActions("logbook", ["GET_DATA"]),
     ...mapMutations("core", ["LOADING_START", "LOADING_STOP"]),
   },
 };

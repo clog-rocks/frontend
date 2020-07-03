@@ -1,32 +1,24 @@
+import { Action, Mutation } from "../types";
 import { trainingService } from "@/_services";
 
-import { Action, Mutation } from "../types";
-import { Action as CoreAction } from "../../core/types";
-
 export default {
-  [Action.DATA_RETRIEVED]: ({ commit }) => {
-    commit(`${[Mutation.SET_DATA_RETRIEVED]}`);
-  },
+  [Action.GET_DATA]: async ({ commit }) => {
+    try {
+      const response = await trainingService.getData();
 
-  [Action.DATA_NOT_RETRIEVED]: ({ commit }) => {
-    commit(`${[Mutation.SET_DATA_NOT_RETRIEVED]}`);
-  },
+      commit(`${[Mutation.SET_DATA]}`, response.data);
+      commit(`${[Mutation.SET_DATA_RETRIEVED]}`);
 
-  [Action.GET_DATA]: ({ dispatch }) => {
-    const p = Promise.all([
-      dispatch(`core/${[CoreAction.GET_CITIES]}`, null, { root: true }),
-      dispatch("_getGyms"),
-      dispatch("_getSessions"),
-    ]).then(() => {
-      dispatch(`${[Action.DATA_RETRIEVED]}`);
-    });
-
-    return p;
+      return Promise.resolve(response);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   },
 
   _getGyms: async ({ commit }) => {
     try {
-      let response = await trainingService.getGyms();
+      const response = await trainingService.getGyms();
+
       commit(`${[Mutation.SET_GYMS]}`, response.data);
     } catch (error) {
       // console.log(error);
@@ -37,7 +29,8 @@ export default {
 
   _getSessions: async ({ commit }) => {
     try {
-      let response = await trainingService.getSessions();
+      const response = await trainingService.getSessions();
+
       commit(`${[Mutation.SET_SESSIONS]}`, response.data);
     } catch (error) {
       // console.log(error);

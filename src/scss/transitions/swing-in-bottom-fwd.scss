@@ -1,0 +1,53 @@
+.swing-in-bottom-fwd-enter-active {
+  -webkit-animation:
+    swing-in-bottom-fwd 1s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275) 300ms both;
+  animation:
+    swing-in-bottom-fwd 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    300ms both;
+}
+
+.swing-in-bottom-fwd-enter-leave {
+  -webkit-animation:
+    swing-in-bottom-fwd 1s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275) 300ms both reverse;
+  animation:
+    swing-in-bottom-fwd 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    300ms both reverse;
+}
+
+@-webkit-keyframes swing-in-bottom-fwd {
+  0% {
+    opacity: 0;
+    -webkit-transform: rotateX(100deg);
+    transform: rotateX(100deg);
+    -webkit-transform-origin: bottom;
+    transform-origin: bottom;
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    -webkit-transform-origin: bottom;
+    transform-origin: bottom;
+  }
+}
+
+@keyframes swing-in-bottom-fwd {
+  0% {
+    opacity: 0;
+    -webkit-transform: rotateX(100deg);
+    transform: rotateX(100deg);
+    -webkit-transform-origin: bottom;
+    transform-origin: bottom;
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+    -webkit-transform-origin: bottom;
+    transform-origin: bottom;
+  }
+}

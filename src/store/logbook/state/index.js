@@ -5,6 +5,7 @@ export default {
   sectors: {},
   routes: {},
   ascents: {},
+  data: {},
 
   dataRetrieved: false,
 };

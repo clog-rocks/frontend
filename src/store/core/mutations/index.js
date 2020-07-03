@@ -1,18 +1,20 @@
 import { Mutation } from "../types";
 
 export default {
-  [Mutation.TOGGLE_LOADING]: (state) => {
-    state.loading = !state.loading;
-  },
+  [Mutation.LOADING_START]: (state) => state.loading = true,
+  [Mutation.LOADING_STOP]: (state) => state.loading = false,
 
   [Mutation.SET_COUNTRIES]: (state, payload) => {
     state.countries = payload.reduce(
-      (acc, cur) => ((acc[cur.id] = cur), acc),
-      {}
+      (acc, cur) => Object.assign(acc, { [cur.id]: cur }),
+      {},
     );
   },
 
   [Mutation.SET_CITIES]: (state, payload) => {
-    state.cities = payload.reduce((acc, cur) => ((acc[cur.id] = cur), acc), {});
+    state.cities = payload.reduce(
+      (acc, cur) => Object.assign(acc, { [cur.id]: cur }),
+      {},
+    );
   },
 };

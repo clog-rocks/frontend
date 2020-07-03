@@ -1,11 +1,9 @@
 import api from "./api";
 
 export default {
-  getGyms: async () => {
-    return await api.get("/api/training/gym/");
-  },
+  getGyms: async () => await api.get("/api/training/gym/"),
 
-  getSessions: async () => {
-    return await api.get("/api/training/session/");
-  },
+  getSessions: async () => await api.get("/api/training/session/"),
+
+  getData: async () => await api.get("/api/training/"),
 };
