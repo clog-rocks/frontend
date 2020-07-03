@@ -1,25 +1,31 @@
 <template>
   <div>
-    <v-row
-      align="center"
-      class="px-2 py-5"
-      justify="center"
-    >
-      <v-col class="text-center">
-        <h3 class="font-weight-light">
-          Training sessions
-        </h3>
-      </v-col>
-      <v-col>
+    <div class="d-flex flex-row-reverse">
+      <v-btn
+        class="align-self-center"
+        color="primary"
+        dark
+        fab
+        outlined
+        x-small
+        @click="toggleSearch"
+      >
+        <v-icon dark>
+          mdi-magnify
+        </v-icon>
+      </v-btn>
+      <transition name="fade">
         <v-text-field
+          v-show="showSearch"
           v-model="search"
-          append-icon="mdi-magnify"
-          clearable
+          autofocus
+          class="align-self-center mt-0 pr-2 pt-0"
           hide-details
           label="Search"
+          style="max-width: 300px;"
         />
-      </v-col>
-    </v-row>
+      </transition>
+    </div>
     <v-data-table
       calculate-widths
       :headers="headers"
@@ -53,7 +59,9 @@ export default {
 
   data: () => {
     return {
+      showSearch: false,
       search: null,
+
       headers: [
         {
           text: "Date",
@@ -90,6 +98,13 @@ export default {
             gym: `${session.gym.city.name} / ${session.gym.name}`,
           };
         });
+    },
+  },
+
+  methods: {
+    toggleSearch: function() {
+      this.showSearch = !this.showSearch;
+      this.search = null;
     },
   },
 };
