@@ -1,31 +1,17 @@
 import api from "./api";
 
 export default {
-  getGrades: async () => {
-    return await api.get("/api/logbook/grade/");
-  },
+  getGrades: async () => await api.get("/api/logbook/grade/"),
 
-  getStyles: async () => {
-    return await api.get("/api/logbook/style/");
-  },
+  getStyles: async () => await api.get("/api/logbook/style/"),
 
-  getCrags: async () => {
-    return await api.get("/api/logbook/crag/");
-  },
+  getCrags: async () => await api.get("/api/logbook/crag/"),
 
-  getSectors: async () => {
-    return await api.get("/api/logbook/sector/");
-  },
+  getSectors: async () => await api.get("/api/logbook/sector/"),
 
-  getRoutes: async () => {
-    return await api.get("/api/logbook/route/");
-  },
+  getRoutes: async () => await api.get("/api/logbook/route/"),
 
-  getAscents: async () => {
-    return await api.get("/api/logbook/ascent/");
-  },
+  getAscents: async () => await api.get("/api/logbook/ascent/"),
 
-  getData: async () => {
-    return await api.get("/api/logbook/");
-  },
+  getData: async () => await api.get("/api/logbook/"),
 };

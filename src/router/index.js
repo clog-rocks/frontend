@@ -1,8 +1,8 @@
+import Auth from "@/views/Auth";
+import Logbook from "@/views/Logbook";
+import Training from "@/views/Training";
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Auth from "@/views/Auth";
-import LogbookGlance from "@/views/LogbookGlance";
-import Training from "@/views/Training";
 
 Vue.use(VueRouter);
 
@@ -14,8 +14,8 @@ const routes = [
   },
   {
     path: "/logbook",
-    name: "LogbookGlance",
-    component: LogbookGlance,
+    name: "Logbook",
+    component: Logbook,
   },
   {
     path: "/training",
@@ -32,13 +32,11 @@ const routes = [
   },
   {
     path: "/*",
-    redirect: { name: "LogbookGlance" },
+    redirect: { name: "Logbook" },
   },
 ];
 
-const router = new VueRouter({
+export default new VueRouter({
   mode: "history",
   routes,
 });
-
-export default router;

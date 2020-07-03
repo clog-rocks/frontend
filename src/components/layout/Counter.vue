@@ -1,15 +1,25 @@
 <template>
   <div class="counter">
+    <span
+      v-if="staticValue"
+      class="value"
+    >
+      {{ staticValue }}
+    </span>
     <ICountUp
-      v-if="!staticValue"
+      v-else
       class="value"
       :delay="delay"
-      :endVal="value"
+      :end-val="value"
       :options="options"
     />
-    <span v-else class="value">{{ staticValue }} </span>
-    <transition name="bounce" appear>
-      <p class="legend">{{ legend }}</p>
+    <transition
+      appear
+      name="bounce"
+    >
+      <p class="legend">
+        {{ legend }}
+      </p>
     </transition>
   </div>
 </template>
@@ -20,21 +30,35 @@ import ICountUp from "vue-countup-v2";
 export default {
   name: "Counter",
 
-  components: {
-    ICountUp,
-  },
+  components: { ICountUp },
 
   props: {
-    delay: { type: Number, default: 0 },
-    value: { type: Number, default: null },
+    delay: {
+      type: Number,
+      default: 0,
+    },
+
+    value: {
+      type: Number,
+      default: null,
+    },
+
     options: {
       type: Object,
-      default: function () {
+      default: function() {
         return {};
       },
     },
-    legend: { type: String, default: null },
-    staticValue: { type: String, default: null },
+
+    legend: {
+      type: String,
+      default: null,
+    },
+
+    staticValue: {
+      type: String,
+      default: null,
+    },
   },
 };
 </script>
@@ -47,10 +71,10 @@ export default {
   }
 
   .legend {
-    font-size: 1.2em !important;
-    font-weight: 200;
     position: relative;
     top: -15px;
+    font-size: 1.2em !important;
+    font-weight: 200;
     letter-spacing: 1px;
   }
 }

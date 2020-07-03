@@ -1,27 +1,27 @@
 <template>
   <v-row justify="center">
     <v-col
-      justify="center"
       align-self="center"
+      class="px-9 px-sm-0 text-center"
       cols="12"
+      justify="center"
       md="4"
-      class="text-center px-9 px-sm-0"
     >
-      <span class="logo font-weight-thin">clog</span>
+      <span class="font-weight-thin logo">clog</span>
     </v-col>
     <v-col
       align-self="center"
+      class="px-9 px-sm-0"
       cols="12"
       md="4"
       style="max-width: 500px;"
-      class="px-9 px-sm-0"
     >
       <transition
         mode="out-in"
         name="component-fade"
+        @afterEnter="afterEnter"
         @beforeLeave="beforeLeave"
         @enter="enter"
-        @afterEnter="afterEnter"
       >
         <component :is="activeComponent" />
       </transition>
@@ -30,8 +30,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-
+import { mapMutations, mapState } from "vuex";
 import Login from "@/components/auth/Login";
 import Register from "@/components/auth/Register";
 
@@ -43,18 +42,28 @@ export default {
     Register,
   },
 
+  computed: {
+    ...mapState("auth", ["activeComponent"]),
+  },
+
+  mounted: function() {
+    // Force data retrievel upon next login.
+    this.LOGBOOK_DATA_MISSING();
+    this.TRAINING_DATA_MISSING();
+  },
+
   methods: {
-    ...mapActions({
-      LOGBOOK_DATA_NOT_RETRIEVED: "logbook/DATA_NOT_RETRIEVED",
-      TRAINING_DATA_NOT_RETRIEVED: "training/DATA_NOT_RETRIEVED",
+    ...mapMutations({
+      LOGBOOK_DATA_MISSING: "logbook/SET_DATA_MISSING",
+      TRAINING_DATA_MISSING: "training/SET_DATA_MISSING",
     }),
 
     // Component switch transition.
-    beforeLeave(element) {
+    beforeLeave: function(element) {
       this.prevHeight = getComputedStyle(element).height;
     },
 
-    enter(element) {
+    enter: function(element) {
       const { height } = getComputedStyle(element);
 
       element.style.height = this.prevHeight;
@@ -64,19 +73,9 @@ export default {
       });
     },
 
-    afterEnter(element) {
+    afterEnter: function(element) {
       element.style.height = "auto";
     },
-  },
-
-  mounted() {
-    // Force data retrievel upon next login.
-    this.LOGBOOK_DATA_NOT_RETRIEVED();
-    this.TRAINING_DATA_NOT_RETRIEVED();
-  },
-
-  computed: {
-    ...mapState("auth", ["activeComponent"]),
   },
 };
 </script>
@@ -97,10 +96,10 @@ export default {
 /* Transitions */
 .component-fade-enter-active,
 .component-fade-leave-active {
+  overflow: hidden;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
   transition-duration: 0.3s;
   transition-property: height, opacity;
-  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-  overflow: hidden;
 }
 
 .component-fade-enter,

@@ -12,7 +12,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(count, gym) in TOP_GYMS" :key="gym">
+        <tr
+          v-for="(count, gym) in TOP_GYMS"
+          :key="gym"
+        >
           <td>{{ gym }}</td>
           <td>{{ count }}</td>
         </tr>
@@ -25,7 +28,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "Table",
+  name: "TopGymsTable",
 
   computed: {
     ...mapGetters("training", ["TOP_GYMS"]),

@@ -1,15 +1,14 @@
 .counter-summary {
   justify-self: center;
-  line-height: 1.6;
-  margin: auto;
   max-width: 900px;
   padding-top: 2rem;
+  margin: auto;
+  line-height: 1.6;
   text-align: center;
 
   .header {
-    /* font-size: 120%; */
-    letter-spacing: 5px;
     font-weight: 300;
     text-transform: uppercase;
+    letter-spacing: 5px;
   }
 }

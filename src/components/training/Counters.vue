@@ -2,25 +2,45 @@
   <div>
     <div class="counter-summary">
       <v-row>
-        <v-col cols="12" sm="6" class="py-0">
+        <v-col
+          class="py-0"
+          cols="12"
+          sm="6"
+        >
           <v-row>
             <v-col class="py-1">
-              <Counter legend="sessions" :delay="300" :value="SESSIONS_COUNT" />
-            </v-col>
-            <v-col class="py-1">
-              <Counter legend="gyms" :delay="400" :value="GYMS_COUNT" />
-            </v-col>
-          </v-row>
-        </v-col>
-        <v-col cols="12" sm="6" class="py-0">
-          <v-row>
-            <v-col class="py-1">
-              <Counter legend="cities" :delay="500" :value="CITIES_COUNT" />
+              <Counter
+                :delay="300"
+                legend="sessions"
+                :value="SESSIONS_COUNT"
+              />
             </v-col>
             <v-col class="py-1">
               <Counter
-                legend="countries"
+                :delay="400"
+                legend="gyms"
+                :value="GYMS_COUNT"
+              />
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col
+          class="py-0"
+          cols="12"
+          sm="6"
+        >
+          <v-row>
+            <v-col class="py-1">
+              <Counter
+                :delay="500"
+                legend="cities"
+                :value="CITIES_COUNT"
+              />
+            </v-col>
+            <v-col class="py-1">
+              <Counter
                 :delay="600"
+                legend="countries"
                 :value="COUNTRIES_COUNT"
               />
             </v-col>
@@ -32,16 +52,13 @@
 </template>
 
 <script>
+import Counter from "@/components/layout/Counter";
 import { mapGetters } from "vuex";
 
-import Counter from "@/components/layout/Counter";
-
 export default {
-  name: "Summary",
+  name: "Counters",
 
-  components: {
-    Counter,
-  },
+  components: { Counter },
 
   computed: {
     ...mapGetters("training", [

@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
 import auth from "./auth";
 import core from "./core";
 import logbook from "./logbook";

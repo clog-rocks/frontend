@@ -1,38 +1,45 @@
 <template>
   <div>
-    <v-row align="center" justify="center" class="py-5 px-2">
+    <v-row
+      align="center"
+      class="px-2 py-5"
+      justify="center"
+    >
       <v-col class="text-center">
-        <h3 class="font-weight-light">Training sessions</h3>
+        <h3 class="font-weight-light">
+          Training sessions
+        </h3>
       </v-col>
       <v-col>
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Search"
-          hide-details
           clearable
-        ></v-text-field>
+          hide-details
+          label="Search"
+        />
       </v-col>
     </v-row>
     <v-data-table
+      calculate-widths
       :headers="headers"
       :items="sessions"
       :items-per-page="5"
       :search="search"
       sort-by="date"
       sort-desc
-      calculate-widths
     >
       <template v-slot:item.tags="{ item }">
         <v-chip
           v-for="(tag, id) in item.tags"
           :key="id"
-          :search="search"
           color="primary"
           outlined
+          :search="search"
           small
-          >{{ tag }}</v-chip
         >
+          {{ tag }}
+        </v-chip>
       </template>
     </v-data-table>
   </div>
@@ -44,14 +51,29 @@ import { mapState } from "vuex";
 export default {
   name: "SessionsTable",
 
-  data() {
+  data: () => {
     return {
-      search: "",
+      search: null,
       headers: [
-        { text: "Date", value: "date", width: "20%" },
-        { text: "Gym", value: "gym", width: "30%" },
-        { text: "Tags", value: "tags", width: "25%" },
-        { text: "Comment", value: "comment" },
+        {
+          text: "Date",
+          value: "date",
+          width: "20%",
+        },
+        {
+          text: "Gym",
+          value: "gym",
+          width: "30%",
+        },
+        {
+          text: "Tags",
+          value: "tags",
+          width: "25%",
+        },
+        {
+          text: "Comment",
+          value: "comment",
+        },
       ],
     };
   },
@@ -59,13 +81,15 @@ export default {
   computed: {
     ...mapState("training", ["data"]),
 
-    sessions: function () {
-      return Object.values(this.data).map((session) => {
-        return {
-          ...session,
-          gym: `${session.gym.city.name} / ${session.gym.name}`,
-        };
-      });
+    sessions: function() {
+      // This functions overrides `gym` property so it also contains city.
+      return Object.values(this.data)
+        .map((session) => {
+          return {
+            ...session,
+            gym: `${session.gym.city.name} / ${session.gym.name}`,
+          };
+        });
     },
   },
 };
