@@ -13,11 +13,11 @@
       </thead>
       <tbody>
         <tr
-          v-for="(count, gym) in TOP_GYMS"
-          :key="gym"
+          v-for="entry in TOP_GYMS"
+          :key="entry[0]"
         >
-          <td>{{ gym }}</td>
-          <td>{{ count }}</td>
+          <td>{{ entry[0] }}</td>
+          <td>{{ entry[1] }}</td>
         </tr>
       </tbody>
     </template>
