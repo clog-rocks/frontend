@@ -4,6 +4,7 @@ import "@/scss/transitions/swing-in-bottom-fwd.scss";
 import App from "@/App.vue";
 import { Mutation as AuthMutation } from "@/store/auth/types";
 import { Mutation as CoreMutation } from "@/store/core/types";
+import Loading from "@/components/layout/Loading";
 import Vue from "vue";
 import api from "@/_services/api";
 import router from "@/router";
@@ -71,3 +72,6 @@ new Vue({
   render: (h) => h(App),
 })
   .$mount("#app");
+
+// Register commonly used components.
+Vue.component("Loading", Loading);
