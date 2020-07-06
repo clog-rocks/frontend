@@ -4,9 +4,10 @@
     mode="out-in"
     name="fade"
   >
-    <div v-if="!dataRetrieved">
-      <Loading message="Fetching your climbing data, please wait…" />
-    </div>
+    <Loading
+      v-if="!dataRetrieved"
+      message="Fetching your climbing data, please wait…"
+    />
     <div v-else>
       <Counters />
     </div>
@@ -15,15 +16,14 @@
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
+import Ascent from "@/components/logbook/Ascent";
 import Counters from "@/components/logbook/Counters";
-import Loading from "@/components/layout/Loading";
 
 export default {
   name: "Logbook",
 
   components: {
     Counters,
-    Loading,
   },
 
   computed: { ...mapState("logbook", ["dataRetrieved"]) },

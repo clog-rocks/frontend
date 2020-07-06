@@ -4,9 +4,10 @@
     mode="out-in"
     name="fade"
   >
-    <div v-if="!dataRetrieved">
-      <Loading message="Fetching your training data, please wait…" />
-    </div>
+    <Loading
+      v-if="!dataRetrieved"
+      message="Fetching your training data, please wait…"
+    />
     <div v-else>
       <Counters />
       <SessionsTable />
@@ -18,7 +19,6 @@
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
 import Counters from "@/components/training/Counters";
-import Loading from "@/components/layout/Loading";
 import SessionsTable from "@/components/training/SessionsTable";
 import TopGymsTable from "@/components/training/top-gyms/TopGymsTable";
 
@@ -26,7 +26,6 @@ export default {
   name: "Training",
 
   components: {
-    Loading,
     SessionsTable,
     TopGymsTable,
     Counters,
