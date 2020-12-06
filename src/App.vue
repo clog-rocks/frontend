@@ -10,6 +10,25 @@
     />
 
     <v-main>
+      <v-overlay
+        v-show="showEditOverlay"
+      >
+        <v-btn
+          absolute=""
+          color="black"
+          fixed
+          icon
+          large
+          right
+          tile
+          top
+          @click="TOGGLE_EDIT_OVERLAY"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <TrainingSessionForm />
+      </v-overlay>
+
       <v-container class="py-0">
         <transition
           appear
@@ -31,22 +50,22 @@
 </template>
 
 <script>
-import Navbar from "@/components/layout/Navbar";
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
+import Navbar from "@/components/layout/Navbar.vue";
+import TrainingSessionForm from "@/components/training/forms/TrainingSessionForm.vue";
 
 export default {
   name: "App",
 
-  components: { Navbar },
+  components: { Navbar, TrainingSessionForm },
 
   data: () => {
     return {
       displayNavbar: null,
     };
   },
-
   computed: {
-    ...mapState("core", ["loading"]),
+    ...mapState("core", ["loading", "showEditOverlay"]),
     ...mapState("auth", ["isAuthenticated"]),
   },
 
@@ -62,6 +81,10 @@ export default {
 
   mounted: function() {
     this.displayNavbar = this.isAuthenticated;
+  },
+
+  methods: {
+    ...mapMutations("core", ["TOGGLE_EDIT_OVERLAY"]),
   },
 };
 </script>
