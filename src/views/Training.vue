@@ -8,6 +8,7 @@
       <Loading message="Fetching your training data, please wait…" />
     </div>
     <div v-else>
+      <TrainingSessionForm />
       <Counters />
       <SessionsTable />
       <TopGymsTable />
@@ -21,15 +22,17 @@ import Counters from "@/components/training/Counters";
 import Loading from "@/components/layout/Loading";
 import SessionsTable from "@/components/training/SessionsTable";
 import TopGymsTable from "@/components/training/top-gyms/TopGymsTable";
+import TrainingSessionForm from "@/components/training/forms/TrainingSessionForm.vue";
 
 export default {
   name: "Training",
 
   components: {
+    Counters,
     Loading,
     SessionsTable,
     TopGymsTable,
-    Counters,
+    TrainingSessionForm,
   },
 
   computed: {

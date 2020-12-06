@@ -31,7 +31,9 @@
         :ripple="false"
         tile
       >
-        <v-icon>mdi-plus</v-icon>
+        <v-icon @click="TOGGLE_EDIT_OVERLAY">
+          mdi-plus
+        </v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -60,13 +62,14 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   name: "Navbar",
 
   methods: {
     ...mapActions("auth", ["LOGOUT"]),
+    ...mapMutations("core", ["TOGGLE_EDIT_OVERLAY"]),
   },
 };
 </script>
