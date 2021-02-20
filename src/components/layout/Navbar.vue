@@ -1,10 +1,10 @@
 <template>
-  <section class="navbar-container">
+  <section>
     <v-app-bar
       color="#fff"
       flat
     >
-      <v-toolbar-title class="logo">
+      <v-toolbar-title class="navbar__logo">
         clog
       </v-toolbar-title>
 
@@ -35,7 +35,7 @@
       </v-btn>
     </v-app-bar>
 
-    <nav class="nav">
+    <nav>
       <router-link :to="{ name: 'Logbook' }">
         Logbook
       </router-link>
@@ -75,16 +75,16 @@ export default {
 $color-active: #000;
 $background-color: #f37272;
 
-.navbar-container {
+section {
   padding-bottom: 1rem;
 
-  .logo {
+  .navbar__logo {
     font-size: 2rem !important;
     font-weight: 100;
   }
 }
 
-.nav {
+nav {
   position: relative;
   z-index: 2;
   display: flex;
@@ -117,6 +117,7 @@ $background-color: #f37272;
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
+    outline: none;
     transition: width 0.3s;
 
     &:hover {
@@ -136,7 +137,8 @@ $background-color: #f37272;
       transition: width 0.3s;
     }
 
-    &:hover::after {
+    &:hover::after,
+    &:focus::after {
       width: 100%;
     }
 
@@ -149,6 +151,10 @@ $background-color: #f37272;
       &::after {
         width: 100%;
         background: #adadad;
+      }
+
+      &:focus::after {
+        background: $background-color !important;
       }
     }
   }
