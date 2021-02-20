@@ -6,9 +6,9 @@
       lazy-validation
       @submit.prevent="submit"
     >
-      <h5 class="font-weight-thin headline text-center">
+      <h2 class="font-weight-thin text-center">
         Login
-      </h5>
+      </h2>
       <v-card-text>
         <v-alert
           class="px-5"
@@ -26,20 +26,16 @@
           v-model="username"
           autocomplete="username"
           label="Username"
-          prepend-icon="mdi-account"
           required
           :rules="[(v) => !!v || 'Username is required.']"
         />
         <v-text-field
           v-model="password"
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           autocomplete="current-password"
           label="Password"
-          prepend-icon="mdi-lock"
           required
           :rules="[(v) => !!v || 'Password is required.']"
-          :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
+          type="password"
         />
       </v-card-text>
       <v-card-actions>
@@ -70,7 +66,6 @@ export default {
   data: () => {
     return {
       loading: false,
-      showPassword: false,
       valid: true,
 
       // Form fields.
