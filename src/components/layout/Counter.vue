@@ -2,13 +2,13 @@
   <div class="counter">
     <span
       v-if="staticValue"
-      class="value"
+      class="counter__value"
     >
       {{ staticValue }}
     </span>
     <ICountUp
       v-else
-      class="value"
+      class="counter__value"
       :delay="delay"
       :end-val="value"
       :options="options"
@@ -17,9 +17,9 @@
       appear
       name="bounce"
     >
-      <p class="legend">
+      <span class="counter__legend">
         {{ legend }}
-      </p>
+      </span>
     </transition>
   </div>
 </template>
@@ -65,17 +65,20 @@ export default {
 
 <style lang="scss" scoped>
 .counter {
-  .value {
-    font-size: 3em;
-    font-weight: 200;
+  font-weight: 200;
+  text-align: center;
+
+  &__value {
+    display: block;
+    font-size: 3rem;
   }
 
-  .legend {
+  &__legend {
     position: relative;
-    top: -15px;
-    font-size: 1.2em !important;
-    font-weight: 200;
-    letter-spacing: 1px;
+    bottom: 0.6em;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 4px;
   }
 }
 </style>
