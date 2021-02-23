@@ -92,7 +92,6 @@ nav {
   justify-content: space-between;
   overflow-x: auto;
   overflow-y: hidden;
-  text-align: center;
   white-space: nowrap;
   border-top: 1px solid #e5e5e5;
   -webkit-overflow-scrolling: touch;
@@ -118,7 +117,6 @@ nav {
     text-transform: uppercase;
     letter-spacing: 1px;
     outline: none;
-    transition: width 0.3s;
 
     &:hover {
       color: $color-active !important;
@@ -129,17 +127,16 @@ nav {
       right: 0;
       bottom: 0;
       left: 0;
-      width: 0%;
       height: 1px;
-      margin: auto;
       content: "";
       background: $background-color;
-      transition: width 0.3s;
+      transition: transform ease-in-out 250ms;
+      transform: scale(0, 1);
     }
 
     &:hover::after,
     &:focus::after {
-      width: 100%;
+      transform: scale(1, 1);
     }
 
     /* vue-router */
@@ -149,8 +146,8 @@ nav {
       cursor: default !important;
 
       &::after {
-        width: 100%;
         background: #adadad;
+        transform: scale(1, 1);
       }
 
       &:focus::after {
