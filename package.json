@@ -14,7 +14,6 @@
     "countup.js": "^2.0.5",
     "date-fns": "^2.14.0",
     "lodash": "^4.17.15",
-    "mobile-device-detect": "^0.4.3",
     "vue": "^2.6.11",
     "vue-countup-v2": "^4.0.0",
     "vue-router": "^3.3.4",
