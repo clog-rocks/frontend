@@ -29,11 +29,7 @@
         <TrainingSessionForm />
       </v-overlay>
 
-      <v-container
-        class="pt-0"
-        :class="{ 'fill-height': centerContainer }"
-        :fluid="centerContainer"
-      >
+      <v-container class="py-0">
         <transition
           appear
           name="fade"
@@ -66,7 +62,6 @@ export default {
 
   data: () => {
     return {
-      centerContainer: null,
       displayNavbar: null,
     };
   },
@@ -76,12 +71,6 @@ export default {
   },
 
   watch: {
-    // Center content of Auth components on screen.
-    // Timeout required to delay fill-height class change until transition finished.
-    $route() {
-      setTimeout(() => (this.centerContainer = this.shouldCenter()), 500);
-    },
-
     // Delay Navbar insertion to DOM.
     // Avoid jittering structure before Auth Component is hidden.
     isAuthenticated(newValue) {
@@ -92,7 +81,6 @@ export default {
   },
 
   mounted: function() {
-    this.centerContainer = this.shouldCenter();
     this.displayNavbar = this.isAuthenticated;
   },
 
