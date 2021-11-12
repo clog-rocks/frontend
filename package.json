@@ -28,8 +28,8 @@
     "@vue/cli-plugin-vuex": "^4.4.6",
     "@vue/cli-service": "^4.4.6",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint": "^7.20.0",
+    "eslint-plugin-vue": "^7.6.0",
     "eslint-plugin-vuetify": "^1.0.0-beta.6",
     "sass": "^1.26.9",
     "sass-loader": "^8.0.0",
@@ -101,7 +101,10 @@
         "error",
         "vm"
       ],
-      "curly": "warn",
+      "curly": [
+        "warn",
+        "multi-or-nest"
+      ],
       "dot-location": [
         "warn",
         "property"
@@ -124,7 +127,10 @@
       ],
       "indent": [
         "warn",
-        2
+        2,
+        {
+          "SwitchCase": 1
+        }
       ],
       "jsx-quotes": "warn",
       "key-spacing": [
@@ -346,7 +352,13 @@
       "vue/require-direct-export": "error",
       "vue/require-name-property": "error",
       "vue/static-class-names-order": "error",
-      "vue/v-on-function-call": "error"
+      "vue/v-on-function-call": "error",
+      "vue/valid-v-slot": [
+        "error",
+        {
+          "allowModifiers": true
+        }
+      ]
     }
   },
   "stylelint": {
