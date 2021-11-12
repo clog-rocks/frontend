@@ -30,18 +30,18 @@ api.interceptors.response.use(
   (error) => {
     if (error.response.status) {
       switch (error.response.status) {
-      case 401:
-      case 403:
-        // Stop loading indicator and logout.
-        store.commit(`core/${[CoreMutation.LOADING_STOP]}`);
-        store.commit(`auth/${[AuthMutation.LOGOUT_SUCCESS]}`);
+        case 401:
+        case 403:
+          // Stop loading indicator and logout.
+          store.commit(`core/${[CoreMutation.LOADING_STOP]}`);
+          store.commit(`auth/${[AuthMutation.LOGOUT_SUCCESS]}`);
 
-        router.replace({
-          name: "Auth",
-          query: { redirect: router.currentRoute.fullPath },
-        });
+          router.replace({
+            name: "Auth",
+            query: { redirect: router.currentRoute.fullPath },
+          });
 
-        break;
+          break;
       }
 
       return Promise.reject(error);
