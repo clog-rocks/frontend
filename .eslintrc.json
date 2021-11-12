@@ -55,10 +55,7 @@
       "error",
       "vm"
     ],
-    "curly": [
-      "warn",
-      "multi-or-nest"
-    ],
+    "curly": "warn",
     "dot-location": [
       "warn",
       "property"
