@@ -28,7 +28,7 @@
       offset-y
       transition="scale-transition"
     >
-      <template v-slot:activator="{ on, attrs }">
+      <template #activator="{ on, attrs }">
         <v-text-field
           v-model="date"
           v-bind="attrs"
@@ -98,7 +98,9 @@ export default {
       // If (!newVal) return;
 
       // Items have already been requested
-      if (this.gymIsLoading) return;
+      if (this.gymIsLoading) {
+        return;
+      }
 
       this.APIQueryGym(newVal);
     }, 1000),
