@@ -10,12 +10,18 @@
     />
     <div v-else>
       <LogbookCounters />
+      <AscentItem
+        v-for="ascent in lastFiveAscents"
+        :key="ascent.id"
+        :ascent="ascent"
+      />
     </div>
   </transition>
 </template>
 
 <script>
 import { mapActions, mapState, mapWritableState } from "pinia";
+import AscentItem from "@/components/logbook/AscentItem";
 import LogbookCounters from "@/components/logbook/LogbookCounters";
 import { useCoreStore } from "@/stores/core";
 import { useLogbookStore } from "@/stores/logbook";
@@ -24,12 +30,19 @@ export default {
   name: "LogbookView",
 
   components: {
+    AscentItem,
     LogbookCounters,
   },
 
   computed: {
     ...mapState(useLogbookStore, ["dataRetrieved"]),
     ...mapWritableState(useCoreStore, ["loading"]),
+
+    // Because data is an object we can't slice() it directly.
+    lastFiveAscents: function() {
+      return Object.values(this.$store.state.logbook.data)
+        .slice(-5);
+    },
   },
 
   mounted: function() {
