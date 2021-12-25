@@ -1,21 +1,9 @@
 <template>
-  <v-row justify="center">
-    <v-col
-      align-self="center"
-      class="px-9 px-sm-0 text-center"
-      cols="12"
-      justify="center"
-      md="4"
-    >
-      <span class="font-weight-thin logo">clog</span>
-    </v-col>
-    <v-col
-      align-self="center"
-      class="px-9 px-sm-0"
-      cols="12"
-      md="4"
-      style="max-width: 500px;"
-    >
+  <div class="auth">
+    <div class="auth__logo">
+      clog
+    </div>
+    <div class="auth__form">
       <transition
         mode="out-in"
         name="component-fade"
@@ -25,8 +13,8 @@
       >
         <component :is="activeComponent" />
       </transition>
-    </v-col>
-  </v-row>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -83,13 +71,39 @@ export default {
 <style lang="scss" scoped>
 @import "~vuetify/src/styles/styles.sass";
 
-.logo {
-  font-size: 8rem;
-}
+.auth {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100vw;
+  height: 100vh;
 
-@media #{map-get($display-breakpoints, 'md-and-down')} {
-  .logo {
+  &__logo {
+    justify-self: center;
     font-size: 6rem;
+    font-weight: 100;
+  }
+
+  &__form {
+    width: 90vw;
+  }
+
+  @media #{map-get($display-breakpoints, 'sm-and-up')} {
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+
+    &__logo {
+      font-size: 10rem;
+    }
+
+    &__form {
+      max-width: 25rem;
+    }
   }
 }
 
