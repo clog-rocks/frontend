@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "extends": [
+    "stylelint-config-recess-order",
+    "stylelint-config-standard",
+    "stylelint-config-recommended",
+    "stylelint-config-recommended-scss"
+  ]
+}
