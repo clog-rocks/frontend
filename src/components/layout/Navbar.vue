@@ -1,10 +1,10 @@
 <template>
-  <section class="navbar-container">
+  <section>
     <v-app-bar
       color="#fff"
       flat
     >
-      <v-toolbar-title class="logo">
+      <v-toolbar-title class="navbar__logo">
         clog
       </v-toolbar-title>
 
@@ -35,7 +35,7 @@
       </v-btn>
     </v-app-bar>
 
-    <nav class="nav">
+    <nav>
       <router-link :to="{ name: 'Logbook' }">
         Logbook
       </router-link>
@@ -75,16 +75,16 @@ export default {
 $color-active: #000;
 $background-color: #f37272;
 
-.navbar-container {
+section {
   padding-bottom: 1rem;
 
-  .logo {
+  .navbar__logo {
     font-size: 2rem !important;
     font-weight: 100;
   }
 }
 
-.nav {
+nav {
   position: relative;
   z-index: 2;
   display: flex;
@@ -92,7 +92,6 @@ $background-color: #f37272;
   justify-content: space-between;
   overflow-x: auto;
   overflow-y: hidden;
-  text-align: center;
   white-space: nowrap;
   border-top: 1px solid #e5e5e5;
   -webkit-overflow-scrolling: touch;
@@ -117,7 +116,7 @@ $background-color: #f37272;
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: width 0.3s;
+    outline: none;
 
     &:hover {
       color: $color-active !important;
@@ -128,16 +127,16 @@ $background-color: #f37272;
       right: 0;
       bottom: 0;
       left: 0;
-      width: 0%;
       height: 1px;
-      margin: auto;
       content: "";
       background: $background-color;
-      transition: width 0.3s;
+      transition: transform ease-in-out 250ms;
+      transform: scale(0, 1);
     }
 
-    &:hover::after {
-      width: 100%;
+    &:hover::after,
+    &:focus::after {
+      transform: scale(1, 1);
     }
 
     /* vue-router */
@@ -147,8 +146,12 @@ $background-color: #f37272;
       cursor: default !important;
 
       &::after {
-        width: 100%;
         background: #adadad;
+        transform: scale(1, 1);
+      }
+
+      &:focus::after {
+        background: $background-color !important;
       }
     }
   }
