@@ -6,9 +6,9 @@
       lazy-validation
       @submit.prevent="submit"
     >
-      <h5 class="font-weight-thin headline text-center">
-        Register
-      </h5>
+      <h2 class="font-weight-thin text-center">
+        Open new account
+      </h2>
       <v-card-text>
         <v-alert
           class="px-5"
@@ -28,24 +28,20 @@
           :error-messages="usernameError"
           label="Username"
           :loading="loadingUsername"
-          prepend-icon="mdi-account"
           required
           :rules="[(v) => !!v || 'Username is required.']"
         />
         <v-text-field
           v-model="email"
           label="E-mail"
-          prepend-icon="mdi-email-outline"
           required
           :rules="emailRules"
         />
         <v-text-field
           v-model="password"
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           autocomplete="new-password"
           :error-messages="passwordError"
           label="Password"
-          prepend-icon="mdi-lock"
           required
           :rules="[
             (v) => !!v || 'Password is required.',
@@ -53,22 +49,18 @@
               (v && v.length >= 8) ||
               'Password must be at least 8 characters long.',
           ]"
-          :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
+          type="password"
         />
         <v-text-field
           v-model="password2"
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           autocomplete="new-password"
           label="Confirm password"
-          prepend-icon="mdi-lock"
           required
           :rules="[
             (v) => !!v || 'Password must be confirmed',
             passwordMatchRule,
           ]"
-          :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
+          type="password"
         />
       </v-card-text>
       <v-card-actions>
@@ -102,7 +94,6 @@ export default {
     return {
       loading: false,
       loadingUsername: false,
-      showPassword: false,
       valid: true,
 
       // Form fields.
