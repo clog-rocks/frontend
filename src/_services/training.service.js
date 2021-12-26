@@ -1,9 +1,14 @@
 import api from "./api";
 
 export default {
-  getGyms: async () => await api.get("/api/training/gym/"),
+  // TODO: validate search
+  getGyms: async (search) => {
+    const url = `/api/training/gym?name=${search}`;
 
-  getSessions: async () => await api.get("/api/training/session/"),
+    return await api.get(url);
+  },
 
   getData: async () => await api.get("/api/training/"),
+
+  addSession: async (payload) => await api.post("/api/training/", payload),
 };
