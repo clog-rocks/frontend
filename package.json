@@ -9,7 +9,7 @@
     "lint:css": "stylelint --fix 'src/**/*.{vue,scss,html}'"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.24.0",
     "core-js": "^3.6.4",
     "countup.js": "^2.0.5",
     "date-fns": "^2.14.0",
