@@ -9,9 +9,15 @@
       message="Fetching your training data, please wait…"
     />
     <div v-else>
-      <TrainingSessionForm />
       <TrainingCounters />
+      <div class="thin-header">
+        Training sessions
+      </div>
+      <TrainingSessionForm />
       <SessionsTable />
+      <div class="thin-header">
+        Top gyms
+      </div>
       <TopGymsTable />
     </div>
   </transition>

@@ -1,3 +1,4 @@
+import "@/scss/thin-header.scss";
 import "@/scss/transitions/bounce.scss";
 import "@/scss/transitions/fade.scss";
 import "@/scss/transitions/swing-in-bottom-fwd.scss";
