@@ -4,7 +4,7 @@
       color="#fff"
       flat
     >
-      <v-toolbar-title class="navbar__logo">
+      <v-toolbar-title class="logo">
         clog
       </v-toolbar-title>
 
@@ -78,7 +78,7 @@ $background-color: #f37272;
 section {
   padding-bottom: 1rem;
 
-  .navbar__logo {
+  .logo {
     font-size: 2rem !important;
     font-weight: 100;
   }
@@ -95,6 +95,8 @@ nav {
   white-space: nowrap;
   border-top: 1px solid #e5e5e5;
   -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 
   /* Hide scrollbars *
    * Chrome, Safari and Opera */
@@ -102,9 +104,6 @@ nav {
     display: none;
     width: 0;
   }
-
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 
   a {
     position: relative;

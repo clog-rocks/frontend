@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~vuetify/src/styles/styles.sass";
+@import "~vuetify/src/styles/styles";
 
 .auth {
   position: absolute;
@@ -92,10 +92,10 @@ export default {
     width: 90vw;
   }
 
-  @media #{map-get($display-breakpoints, 'sm-and-up')} {
+  @media #{map-get($display-breakpoints, "sm-and-up")} {
     flex-direction: row;
-    justify-content: center;
     gap: 2rem;
+    justify-content: center;
 
     &__logo {
       font-size: 10rem;

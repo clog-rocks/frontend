@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/grids/counters.scss";
+@import "@/scss/grids/counters";
 
 .training-stats {
   &__item {
@@ -62,7 +62,7 @@ export default {
     "sessions gyms"
     "cities countries";
 
-  @media #{map-get($display-breakpoints, 'sm-and-up')} {
+  @media #{map-get($display-breakpoints, "sm-and-up")} {
     grid-template-areas: "sessions gyms cities countries";
     grid-template-columns: repeat(4, minmax(145px, 215px));
   }
