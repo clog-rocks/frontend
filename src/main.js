@@ -68,7 +68,7 @@ router.beforeEach((to, _from, next) => {
 Vue.component("LoadingOverlay", LoadingOverlay);
 
 new Vue({
-  name: "Clog",
+  name: "ClogApp",
   router,
   store,
   vuetify,
