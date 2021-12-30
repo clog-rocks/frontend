@@ -64,6 +64,9 @@ router.beforeEach((to, _from, next) => {
   }
 });
 
+// Register commonly used components.
+Vue.component("Loading", Loading);
+
 new Vue({
   name: "Clog",
   router,
@@ -72,6 +75,3 @@ new Vue({
   render: (h) => h(App),
 })
   .$mount("#app");
-
-// Register commonly used components.
-Vue.component("Loading", Loading);
