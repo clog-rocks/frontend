@@ -198,6 +198,7 @@ $cb-transition: cubic-bezier(0.165, 0.84, 0.44, 1);
 
     &__style {
       min-width: 3.5rem;
+      margin-right: 0.5em;
       font-size: 1.5rem;
 
       &--repeat { font-size: 0.75rem; }
@@ -205,9 +206,7 @@ $cb-transition: cubic-bezier(0.165, 0.84, 0.44, 1);
 
     &__grade {
       min-width: 70px;
-
-      // margin-right: 0.75rem;
-      font-size: 2.5rem;
+      font-size: 2.1rem;
     }
 
     &__controls {
