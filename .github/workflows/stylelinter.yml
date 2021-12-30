@@ -1,0 +1,4 @@
+- name: stylelinter
+  uses: actions-hub/stylelint@v1.1.3
+  env:
+    PATTERN: "src/**/*.{vue,css,scss,html}"
