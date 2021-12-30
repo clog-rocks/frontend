@@ -78,8 +78,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~vuetify/src/styles/styles.sass";
-@import "@/scss/grids/counters.scss";
+@import "~vuetify/src/styles/styles";
+@import "@/scss/grids/counters";
 
 .history-sums {
   &__item {
@@ -97,7 +97,7 @@ export default {
     "header_last header_last"
     "val_last_asc val_last_vis";
 
-  @media #{map-get($display-breakpoints, 'sm-and-up')} {
+  @media #{map-get($display-breakpoints, "sm-and-up")} {
     grid-template-areas:
       "header_all header_all header_last header_last"
       "val_all_asc val_all_vis val_last_asc val_last_vis";

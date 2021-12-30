@@ -1,5 +1,7 @@
 {
-  "customSyntax": "postcss-html",
+  "processors": [
+    "postcss-html"
+  ],
   "plugins": [
     "stylelint-scss"
   ],
