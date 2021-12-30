@@ -12,5 +12,8 @@
     "stylelint-config-recommended",
     "stylelint-config-recommended-scss",
     "stylelint-config-recommended-vue/scss"
+  ],
+  "ignoreFiles": [
+    "**/*.js"
   ]
 }
