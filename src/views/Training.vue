@@ -9,6 +9,7 @@
       message="Fetching your training data, please wait…"
     />
     <div v-else>
+      <TrainingSessionForm />
       <Counters />
       <SessionsTable />
       <TopGymsTable />
@@ -21,14 +22,16 @@ import { mapActions, mapMutations, mapState } from "vuex";
 import Counters from "@/components/training/Counters";
 import SessionsTable from "@/components/training/SessionsTable";
 import TopGymsTable from "@/components/training/top-gyms/TopGymsTable";
+import TrainingSessionForm from "@/components/training/forms/TrainingSessionForm.vue";
 
 export default {
   name: "Training",
 
   components: {
+    Counters,
     SessionsTable,
     TopGymsTable,
-    Counters,
+    TrainingSessionForm,
   },
 
   computed: {

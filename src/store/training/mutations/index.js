@@ -24,4 +24,7 @@ export default {
 
   [Mutation.SET_DATA_RETRIEVED]: (state) => state.dataRetrieved = true,
   [Mutation.SET_DATA_MISSING]: (state) => state.dataRetrieved = false,
+  [Mutation.ADD_SESSION]: (state, session) => (
+    state.data = { ...state.data, [session.id]: session }
+  ),
 };
