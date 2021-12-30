@@ -44,6 +44,6 @@
     "stylelint-webpack-plugin": "^2.1.0",
     "vue-cli-plugin-vuetify": "^2.4.5",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.5.0"
+    "vuetify-loader": "^1.7.3"
   }
 }
