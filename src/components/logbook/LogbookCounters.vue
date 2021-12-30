@@ -4,13 +4,13 @@
       <div class="counters__header history-sums__item">
         all time
       </div>
-      <Counter
+      <CounterItem
         class="history-sums__item"
         :delay="300"
         legend="ascents"
         :value="ASCENT_COUNT"
       />
-      <Counter
+      <CounterItem
         class="history-sums__item"
         :delay="400"
         legend="crag visits"
@@ -19,13 +19,13 @@
       <div class="counters__header history-sums__item">
         last year
       </div>
-      <Counter
+      <CounterItem
         class="history-sums__item"
         :delay="500"
         legend="ascents"
         :value="ASCENT_LAST_YEAR_COUNT"
       />
-      <Counter
+      <CounterItem
         class="history-sums__item"
         :delay="600"
         legend="crag visits"
@@ -46,7 +46,7 @@
           appear
           name="swing-in-bottom-fwd"
         >
-          <Counter
+          <CounterItem
             :legend="TOP_GRADES[id].style"
             :static-value="TOP_GRADES[id].fr_route"
           />
@@ -57,13 +57,13 @@
 </template>
 
 <script>
-import Counter from "@/components/layout/Counter";
+import CounterItem from "@/components/layout/CounterItem";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "Counters",
+  name: "LogbookCounters",
 
-  components: { Counter },
+  components: { CounterItem },
 
   computed: {
     ...mapGetters("logbook", [

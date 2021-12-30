@@ -1,24 +1,24 @@
 <template>
   <section class="counters training-stats">
-    <Counter
+    <CounterItem
       class="training-stats__item"
       :delay="300"
       legend="sessions"
       :value="SESSIONS_COUNT"
     />
-    <Counter
+    <CounterItem
       class="training-stats__item"
       :delay="400"
       legend="gyms"
       :value="GYMS_COUNT"
     />
-    <Counter
+    <CounterItem
       class="training-stats__item"
       :delay="500"
       legend="cities"
       :value="CITIES_COUNT"
     />
-    <Counter
+    <CounterItem
       class="training-stats__item"
       :delay="600"
       legend="countries"
@@ -28,13 +28,13 @@
 </template>
 
 <script>
-import Counter from "@/components/layout/Counter";
+import CounterItem from "@/components/layout/CounterItem";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "Counters",
+  name: "TrainingCounters",
 
-  components: { Counter },
+  components: { CounterItem },
 
   computed: {
     ...mapGetters("training", [

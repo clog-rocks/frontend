@@ -66,7 +66,7 @@
       <v-card-actions>
         <v-btn
           text
-          @click="SHOW_COMPONENT('Login')"
+          @click="SHOW_COMPONENT('LoginForm')"
         >
           Login
         </v-btn>
@@ -88,7 +88,7 @@ import { authService } from "@/_services";
 import { mapActions } from "vuex";
 
 export default {
-  name: "Register",
+  name: "RegisterForm",
 
   data: () => {
     return {

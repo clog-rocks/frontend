@@ -15,7 +15,7 @@
           appear
           name="fade"
         >
-          <Navbar v-if="displayNavbar" />
+          <NavigationBar v-if="displayNavbar" />
         </transition>
 
         <transition
@@ -31,13 +31,13 @@
 </template>
 
 <script>
-import Navbar from "@/components/layout/Navbar";
+import NavigationBar from "@/components/layout/NavigationBar";
 import { mapState } from "vuex";
 
 export default {
   name: "App",
 
-  components: { Navbar },
+  components: { NavigationBar },
 
   data: () => {
     return {

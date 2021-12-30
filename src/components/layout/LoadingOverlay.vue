@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "Loading",
+  name: "LoadingOverlay",
 
   props: {
     message: {

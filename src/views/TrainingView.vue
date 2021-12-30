@@ -4,13 +4,13 @@
     mode="out-in"
     name="fade"
   >
-    <Loading
+    <LoadingOverlay
       v-if="!dataRetrieved"
       message="Fetching your training data, please wait…"
     />
     <div v-else>
       <TrainingSessionForm />
-      <Counters />
+      <TrainingCounters />
       <SessionsTable />
       <TopGymsTable />
     </div>
@@ -19,16 +19,16 @@
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
-import Counters from "@/components/training/Counters";
 import SessionsTable from "@/components/training/SessionsTable";
 import TopGymsTable from "@/components/training/top-gyms/TopGymsTable";
+import TrainingCounters from "@/components/training/TrainingCounters";
 import TrainingSessionForm from "@/components/training/forms/TrainingSessionForm.vue";
 
 export default {
-  name: "Training",
+  name: "TrainingView",
 
   components: {
-    Counters,
+    TrainingCounters,
     SessionsTable,
     TopGymsTable,
     TrainingSessionForm,
