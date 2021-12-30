@@ -37,8 +37,8 @@ export default {
     } catch (error) {
       console.log(error);
 
-      // Commit("loginFailure", error);
-      // Dispatch("alert/error", error, { root: true });
+      // commit("loginFailure", error);
+      // dispatch("alert/error", error, { root: true });
     }
   },
 };

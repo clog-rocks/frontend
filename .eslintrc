@@ -43,7 +43,6 @@
         "allowSingleLine": true
       }
     ],
-    "capitalized-comments": "warn",
     "comma-dangle": [
       "warn",
       "always-multiline"
