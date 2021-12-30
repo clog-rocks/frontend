@@ -4,7 +4,7 @@ import "@/scss/transitions/swing-in-bottom-fwd.scss";
 import App from "@/App.vue";
 import { Mutation as AuthMutation } from "@/store/auth/types";
 import { Mutation as CoreMutation } from "@/store/core/types";
-import Loading from "@/components/layout/Loading";
+import LoadingOverlay from "@/components/layout/LoadingOverlay";
 import Vue from "vue";
 import api from "@/_services/api";
 import router from "@/router";
@@ -65,7 +65,7 @@ router.beforeEach((to, _from, next) => {
 });
 
 // Register commonly used components.
-Vue.component("Loading", Loading);
+Vue.component("LoadingOverlay", LoadingOverlay);
 
 new Vue({
   name: "Clog",

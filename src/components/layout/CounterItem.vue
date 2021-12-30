@@ -28,7 +28,7 @@
 import ICountUp from "vue-countup-v2";
 
 export default {
-  name: "Counter",
+  name: "CounterItem",
 
   components: { ICountUp },
 

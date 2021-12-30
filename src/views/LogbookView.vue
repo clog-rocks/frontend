@@ -4,25 +4,25 @@
     mode="out-in"
     name="fade"
   >
-    <Loading
+    <LoadingOverlay
       v-if="!dataRetrieved"
       message="Fetching your climbing data, please wait…"
     />
     <div v-else>
-      <Counters />
+      <LogbookCounters />
     </div>
   </transition>
 </template>
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
-import Counters from "@/components/logbook/Counters";
+import LogbookCounters from "@/components/logbook/LogbookCounters";
 
 export default {
-  name: "Logbook",
+  name: "LogbookView",
 
   components: {
-    Counters,
+    LogbookCounters,
   },
 
   computed: { ...mapState("logbook", ["dataRetrieved"]) },

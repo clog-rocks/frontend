@@ -63,7 +63,7 @@
 import { mapActions } from "vuex";
 
 export default {
-  name: "Navbar",
+  name: "NavigationBar",
 
   methods: {
     ...mapActions("auth", ["LOGOUT"]),

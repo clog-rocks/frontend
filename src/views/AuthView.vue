@@ -19,15 +19,15 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
-import Login from "@/components/auth/Login";
-import Register from "@/components/auth/Register";
+import LoginForm from "@/components/auth/LoginForm";
+import RegisterForm from "@/components/auth/RegisterForm";
 
 export default {
-  name: "Auth",
+  name: "AuthView",
 
   components: {
-    Login,
-    Register,
+    LoginForm,
+    RegisterForm,
   },
 
   computed: {
