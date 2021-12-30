@@ -3,9 +3,9 @@ export const Action = {
 };
 
 export const Mutation = {
+  ADD_SESSION: "ADD_SESSION",
   SET_DATA: "SET_DATA",
   SET_DATA_MISSING: "SET_DATA_MISSING",
   SET_DATA_RETRIEVED: "SET_DATA_RETRIEVED",
   SET_GYMS: "SET_GYMS",
-  SET_SESSIONS: "SET_SESSIONS",
 };

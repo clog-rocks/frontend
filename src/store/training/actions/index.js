@@ -27,15 +27,18 @@ export default {
     }
   },
 
-  _getSessions: async ({ commit }) => {
+  _addSession: async ({ commit }, payload) => {
     try {
-      const response = await trainingService.getSessions();
+      const response = await trainingService.addSession(payload);
 
-      commit(`${[Mutation.SET_SESSIONS]}`, response.data);
+      commit(`${[Mutation.ADD_SESSION]}`, response.data);
+
+      return Promise.resolve(response);
     } catch (error) {
-      // console.log(error);
-      // commit("loginFailure", error);
-      // dispatch("alert/error", error, { root: true });
+      console.log(error);
+
+      // Commit("loginFailure", error);
+      // Dispatch("alert/error", error, { root: true });
     }
   },
 };
