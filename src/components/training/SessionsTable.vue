@@ -35,7 +35,7 @@
       sort-by="date"
       sort-desc
     >
-      <template v-slot:item.tags="{ item }">
+      <template #item.tags="{ item }">
         <v-chip
           v-for="(tag, id) in item.tags"
           :key="id"
