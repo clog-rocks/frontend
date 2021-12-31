@@ -1,9 +1,9 @@
 .counters {
-  display: grid;
   justify-content: space-around;
-  justify-items: center;
   max-width: 800px;
+  justify-items: center;
   margin-inline: auto;
+  display: grid;
   font-weight: 300;
 
   &__header {
