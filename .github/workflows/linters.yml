@@ -9,7 +9,7 @@ on:
 
 jobs:
   linters:
-    name: stylelint
+    name: Linters
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +20,9 @@ jobs:
         with:
           node-version: "17"
       - uses: xt0rted/stylelint-problem-matcher@v1
-      - run: npm install
-      - run: npx stylelint 'src/**/*.{vue,scss}'
-      - run: npx eslint . --ext .js,.jsx,.ts,.tsx,.vue
+      - name: npm install
+        run: npm install
+      - name: stylelint
+        run: npx stylelint 'src/**/*.{vue,scss}'
+      - name: eslint
+        run: npx eslint . --ext .js,.jsx,.ts,.tsx,.vue --max-warnings 0
