@@ -106,6 +106,7 @@ nav {
   }
 
   a {
+    position: relative;
     padding: 0.75rem;
     padding-bottom: 8px;
     font-size: 0.9rem;
@@ -115,7 +116,6 @@ nav {
     text-transform: uppercase;
     letter-spacing: 1px;
     outline: none;
-    position: relative;
 
     &:hover {
       color: $color-active !important;

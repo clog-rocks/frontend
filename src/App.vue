@@ -34,6 +34,8 @@
 import NavigationBar from "@/components/layout/NavigationBar";
 import { mapState } from "vuex";
 
+
+
 export default {
   name: "App",
 
