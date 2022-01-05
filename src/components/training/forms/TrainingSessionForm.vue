@@ -1,11 +1,29 @@
 <template>
   <v-form
     ref="form"
+    v-model="valid"
     class="py-4"
     lazy-validation
     @submit.prevent="submit"
   >
     <v-container>
+      <v-row>
+        <!-- TODO: Create component for those errors. -->
+        <v-card-text>
+          <v-alert
+            class="px-5"
+            dense
+            elevation="3"
+            outlined
+            tile
+            transition="fade"
+            type="error"
+            :value="nonFieldError"
+          >
+            {{ nonFieldError }}
+          </v-alert>
+        </v-card-text>
+      </v-row>
       <v-row>
         <v-col
           cols="12"
@@ -23,6 +41,7 @@
             :loading="gymIsLoading"
             required
             return-object
+            :rules="[(v) => !!v || 'Gym is required.']"
             :search-input.sync="searchGym"
           />
         </v-col>
@@ -44,6 +63,8 @@
                 v-bind="attrs"
                 label="Date"
                 readonly
+                required
+                :rules="[(v) => !!v || 'Date is required.']"
                 v-on="on"
               />
             </template>
@@ -108,7 +129,11 @@ export default {
       gymIsLoading: false,
       formSubmitting: false,
       dateMenu: false,
+      valid: null,
       submitted: false,
+
+      // Errors (will be populated by API).
+      nonFieldError: null,
     };
   },
 
@@ -158,6 +183,13 @@ export default {
           .then(() => {
             this.$refs.form.reset();
             this.$refs.form.resetValidation();
+          })
+          .catch((error) => {
+            this.loading = false;
+            if (error.response.data.non_field_errors) {
+              console.log(error.response);
+              this.nonFieldError = error.response.data.non_field_errors[0];
+            }
           });
 
         this.formSubmitting = false;
