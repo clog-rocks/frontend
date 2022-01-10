@@ -10,7 +10,7 @@ export default {
     return await api.get(url + params.toString());
   },
 
-  getData: async () => await api.get("/api/training/"),
+  getData: async () => await api.get("/api/training/sessions/"),
 
   addSession: async (payload) => await api.post("/api/training/", payload),
 };

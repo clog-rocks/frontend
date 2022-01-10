@@ -13,5 +13,5 @@ export default {
 
   getAscents: async () => await api.get("/api/logbook/ascent/"),
 
-  getData: async () => await api.get("/api/logbook/"),
+  getData: async () => await api.get("/api/logbook/ascents/"),
 };
