@@ -1,11 +1,13 @@
 import api from "./api";
 
 export default {
-  // TODO: validate search
   getGyms: async (search) => {
-    const url = `/api/training/gym?name=${search}`;
+    const url = "/api/training/gym/?";
+    const params = new URLSearchParams();
 
-    return await api.get(url);
+    params.append("name", search);
+
+    return await api.get(url + params.toString());
   },
 
   getData: async () => await api.get("/api/training/"),

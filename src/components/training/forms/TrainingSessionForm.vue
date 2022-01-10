@@ -7,8 +7,8 @@
     @submit.prevent="submit"
   >
     <v-container>
-      <v-row>
-        <!-- TODO: Create component for those errors. -->
+      <!-- TODO: Create component for those errors. -->
+      <v-row v-if="nonFieldError">
         <v-card-text>
           <v-alert
             class="px-5"
@@ -27,8 +27,9 @@
       <v-row>
         <v-col
           cols="12"
-          sm="4"
+          sm="3"
         >
+          <!-- TODO: are item-text and item-id needed? -->
           <v-autocomplete
             v-model="gym"
             autofocus
@@ -36,23 +37,22 @@
             hide-selected
             item-text="name"
             item-value="id"
-            :items="gyms"
+            :items="gymsRetrieved"
             label="Gym"
-            :loading="gymIsLoading"
+            :loading="gymLoading"
             required
             return-object
             :rules="[(v) => !!v || 'Gym is required.']"
-            :search-input.sync="searchGym"
+            :search-input.sync="gymInput"
           />
         </v-col>
         <v-col
           cols="12"
-          sm="4"
+          sm="2"
         >
           <v-menu
             v-model="dateMenu"
             :close-on-content-click="false"
-            min-width="290px"
             :nudge-right="40"
             offset-y
             transition="scale-transition"
@@ -76,7 +76,7 @@
         </v-col>
         <v-col
           cols="12"
-          sm="4"
+          sm="3"
         >
           <v-textarea
             v-model="comment"
@@ -85,19 +85,94 @@
             rows="1"
           />
         </v-col>
-      </v-row>
-      <v-row>
-        <v-spacer class="d-none d-sm-block" />
         <v-col
           cols="12"
-          sm="4"
+          sm="3"
+        >
+          <v-combobox
+            v-model="tags"
+            deletable-chips
+            hide-selected
+            :items="tagsRetrieved"
+            label="Tags"
+            :loading="tagLoading"
+            multiple
+            :search-input.sync="tagInput"
+            @input="tagInput = null"
+          >
+            <template #selection="{ attrs, item, parent, selected }">
+              <v-chip
+                v-bind="attrs"
+                :color="`blue lighten-3`"
+                :input-value="selected"
+                label
+                small
+              >
+                <span class="pr-2">{{ item }}</span>
+                <v-icon
+                  small
+                  @click="parent.selectItem(item)"
+                >
+                  $delete
+                </v-icon>
+              </v-chip>
+            </template>
+            <template #no-data>
+              <v-list-item v-if="tagInput !== null">
+                <span class="subheading">Create&nbsp;</span>
+                <v-chip
+                  :color="`blue lighten-3`"
+                  label
+                  small
+                >
+                  {{ tagInput }}
+                </v-chip>
+                <v-spacer />
+                <kbd>enter</kbd>
+              </v-list-item>
+              <v-list-item
+                v-else
+                class="subheading"
+              >
+                <v-list-item-content>
+                  <v-list-item-title>
+                    Type to search or press <kbd>enter</kbd> to create a new one
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+            <template #item="{ item }">
+              <v-chip
+                :color="`blue lighten-3`"
+                label
+                small
+              >
+                {{ item }}
+              </v-chip>
+            </template>
+          </v-combobox>
+        </v-col>
+        <v-col
+          align-self="center"
+          cols="12"
+          sm="1"
         >
           <v-btn
-            block
+            :block="$vuetify.breakpoint.mobile"
+            color="primary"
+            :disabled="formSubmitting"
             :loading="formSubmitting"
             @click="submitSession"
           >
-            Add new session
+            <span v-if="$vuetify.breakpoint.xsOnly">
+              add new session
+            </span>
+            <v-icon
+              v-else
+              dark
+            >
+              mdi-plus-circle
+            </v-icon>
           </v-btn>
         </v-col>
       </v-row>
@@ -106,9 +181,9 @@
 </template>
 
 <script>
+import { coreService, trainingService } from "@/_services";
 import _ from "lodash";
 import { mapActions } from "vuex";
-import { trainingService } from "@/_services";
 
 export default {
   name: "TrainingSessionForm",
@@ -124,13 +199,19 @@ export default {
       comment: null,
 
       // Form helpers.
-      gyms: [],
-      searchGym: null,
-      gymIsLoading: false,
       formSubmitting: false,
       dateMenu: false,
       valid: null,
-      submitted: false,
+
+      // gym widget
+      gymInput: null,
+      gymsRetrieved: [],
+      gymLoading: false,
+
+      // tags widget
+      tagInput: null,
+      tagsRetrieved: [],
+      tagLoading: false,
 
       // Errors (will be populated by API).
       nonFieldError: null,
@@ -138,30 +219,55 @@ export default {
   },
 
   watch: {
-    searchGym: _.debounce(function(newVal) {
+    gymInput: _.debounce(function(newVal) {
       // TODO: What's that for?
       if (!newVal) {
         return;
       }
 
       // Items have already been requested
-      if (this.gymIsLoading) {
+      if (this.gymLoading) {
         return;
       }
 
-      this.APIQueryGym(newVal);
+      this.fetchGyms(newVal);
+    }, 500),
+
+    tagInput: _.debounce(function(newVal) {
+      // TODO: What's that for?
+      if (!newVal) {
+        return;
+      }
+
+      // Items have already been requested
+      if (this.tagLoading) {
+        return;
+      }
+
+      this.fetchTags(newVal);
     }, 500),
   },
 
   methods: {
     ...mapActions("training", ["_addSession"]),
 
-    async APIQueryGym(val) {
-      this.gymIsLoading = true;
-      const retrievedGyms = await trainingService.getGyms(val);
+    async fetchGyms(val) {
+      this.gymLoading = true;
+      const result = await trainingService.getGyms(val);
 
-      this.gyms = this.gyms.concat(retrievedGyms.data);
-      this.gymIsLoading = false;
+      this.gymsRetrieved = this.gymsRetrieved.concat(result.data);
+      this.gymLoading = false;
+    },
+
+    async fetchTags(val) {
+      this.tagLoading = true;
+      const result = await coreService.getTags(val);
+
+      this.tagsRetrieved = this.tagsRetrieved.concat(
+        result.data.map((item) => item.name),
+      );
+
+      this.tagLoading = false;
     },
 
     submitSession: function() {
@@ -170,9 +276,6 @@ export default {
 
         const { gym, date, comment, tags } = this;
         const payload = {
-          // TODO: add tags to form
-          // TODO: evaluate is user needs/should be passed with payload
-          // User: this.$store.state.auth.user.id,
           gym: gym,
           date,
           comment,
