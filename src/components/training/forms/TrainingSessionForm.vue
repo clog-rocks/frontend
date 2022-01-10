@@ -93,7 +93,7 @@
             v-model="tags"
             deletable-chips
             hide-selected
-            :items="tagRetrieved"
+            :items="tagsRetrieved"
             label="Tags"
             :loading="tagLoading"
             multiple
@@ -210,7 +210,7 @@ export default {
 
       // tags widget
       tagInput: null,
-      tagRetrieved: [],
+      tagsRetrieved: [],
       tagLoading: false,
 
       // Errors (will be populated by API).
@@ -263,7 +263,7 @@ export default {
       this.tagLoading = true;
       const result = await coreService.getTags(val);
 
-      this.tagRetrieved = this.tagRetrieved.concat(
+      this.tagsRetrieved = this.tagsRetrieved.concat(
         result.data.map((item) => item.name),
       );
 
