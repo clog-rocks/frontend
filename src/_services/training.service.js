@@ -12,5 +12,5 @@ export default {
 
   getData: async () => await api.get("/api/training/sessions/"),
 
-  addSession: async (payload) => await api.post("/api/training/", payload),
+  addSession: async (payload) => await api.post("/api/training/sessions/", payload),
 };
