@@ -8,11 +8,11 @@ export default {
 
   // Set user as logged in.
   [Mutation.LOGIN_SUCCESS]: (state, payload) => {
-    api.defaults.headers.common.Authorization = "Token " + payload.token;
+    api.defaults.headers.common.Authorization = "Bearer " + payload.token.access;
     state.user = payload.user;
     state.token = payload.token;
     localStorage.setItem("user", JSON.stringify(payload.user));
-    localStorage.setItem("token", payload.token);
+    localStorage.setItem("token", JSON.stringify(payload.token));
     localStorage.setItem("isAuthenticated", true);
     state.isAuthenticated = true;
   },
@@ -22,6 +22,7 @@ export default {
     axios.defaults.headers.common.Authorization = null;
     state.user = {};
     state.token = null;
+    state.activeComponent = "LoginForm";
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("isAuthenticated");
