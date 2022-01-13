@@ -5,6 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "ci:lint": "vue-cli-service lint --no-fix --format compact --max-warnings 0",
+    "ci:lint:css": "npx stylelint 'src/**/*.{vue,css,scss,html}'",
     "lint": "vue-cli-service lint",
     "lint:css": "npx stylelint --fix 'src/**/*.{vue,css,scss,html}'"
   },
