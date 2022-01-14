@@ -21,7 +21,7 @@ Vue.prototype.$http = api;
 // Set up global header for Axios if user is authenticated when application starts.
 const token = JSON.parse(localStorage.getItem("token"));
 
-if (token.access) {
+if (token?.access) {
   api.defaults.headers.common.Authorization = "Bearer " + token.access;
 }
 
