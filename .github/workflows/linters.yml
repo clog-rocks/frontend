@@ -1,7 +1,7 @@
 name: Linters
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - edited
@@ -23,6 +23,6 @@ jobs:
       - name: npm install
         run: npm install
       - name: stylelint
-        run: npx stylelint 'src/**/*.{vue,scss}'
+        run: npm run ci:lint:css
       - name: eslint
-        run: npx eslint . --ext .js,.jsx,.ts,.tsx,.vue --max-warnings 0
+        run: npm run ci:lint
