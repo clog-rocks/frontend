@@ -2,6 +2,7 @@ import "@/scss/thin-header.scss";
 import "@/scss/transitions/bounce.scss";
 import "@/scss/transitions/fade.scss";
 import "@/scss/transitions/swing-in-bottom-fwd.scss";
+import { PiniaVuePlugin, createPinia } from "pinia";
 import App from "@/App.vue";
 import { Mutation as AuthMutation } from "@/store/auth/types";
 import { Mutation as CoreMutation } from "@/store/core/types";
@@ -66,6 +67,10 @@ router.beforeEach((to, _from, next) => {
   }
 });
 
+// Create store
+Vue.use(PiniaVuePlugin);
+const pinia = createPinia();
+
 // Register commonly used components.
 Vue.component("LoadingOverlay", LoadingOverlay);
 
@@ -74,6 +79,7 @@ new Vue({
   router,
   store,
   vuetify,
+  pinia,
   render: (h) => h(App),
 })
   .$mount("#app");
