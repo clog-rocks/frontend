@@ -13,16 +13,9 @@ export default {
     }
   },
 
-  [Action.LOGOUT]: async ({ commit }) => {
-    try {
-      await authService.logout();
-      commit(`${[Mutation.LOGOUT_SUCCESS]}`);
-      router.push({ name: "Auth" });
-    } catch (error) {
-      // console.log(error);
-      // commit("loginFailure", error);
-      // dispatch("alert/error", error, { root: true });
-    }
+  [Action.LOGOUT]: ({ commit }) => {
+    commit(`${[Mutation.LOGOUT_SUCCESS]}`);
+    router.push({ name: "Auth" });
   },
 
   [Action.REGISTER]: async ({ commit }, { username, email, password }) => {

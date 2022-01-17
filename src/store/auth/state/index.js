@@ -4,5 +4,5 @@ export default {
   activeComponent: "LoginForm",
   isAuthenticated: localStorage.getItem("isAuthenticated") || false,
   user: JSON.parse(localStorage.getItem("user") || "{}"),
-  token: localStorage.getItem("token"),
+  token: JSON.parse(localStorage.getItem("token") || "{}"),
 };

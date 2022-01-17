@@ -19,10 +19,10 @@ Vue.config.productionTip = false;
 Vue.prototype.$http = api;
 
 // Set up global header for Axios if user is authenticated when application starts.
-const token = localStorage.getItem("token");
+const token = JSON.parse(localStorage.getItem("token"));
 
-if (token) {
-  api.defaults.headers.common.Authorization = "Token " + token;
+if (token?.access) {
+  api.defaults.headers.common.Authorization = "Bearer " + token.access;
 }
 
 // Set up request/response interceptors.
@@ -33,6 +33,7 @@ api.interceptors.response.use(
       switch (error.response.status) {
         case 401:
         case 403:
+          // Use `refresh` to refresh token?
           // Stop loading indicator and logout.
           store.commit(`core/${[CoreMutation.LOADING_STOP]}`);
           store.commit(`auth/${[AuthMutation.LOGOUT_SUCCESS]}`);
