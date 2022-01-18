@@ -48,15 +48,17 @@ if (token?.access) {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    const authStore = useAuthStore();
+    const coreStore = useCoreStore();
+
     if (error.response.status) {
       switch (error.response.status) {
         case 401:
         case 403:
           // Use `refresh` to refresh token?
           // Stop loading indicator and logout.
-          useCoreStore().loading = false;
-          useAuthStore()
-            .logout();
+          coreStore.loading = false;
+          authStore.logout();
 
           router.replace({
             name: "Auth",
@@ -74,7 +76,8 @@ api.interceptors.response.use(
 // Vue-router: route guard.
 // Redirect unathenticated requests to Login page.
 router.beforeEach((to, _from, next) => {
-  const isAuthenticated = useAuthStore().isAuthenticated;
+  const authStore = useAuthStore();
+  const isAuthenticated = authStore.isAuthenticated;
 
   if (to.name !== "Auth" && !isAuthenticated) {
     next({ name: "Auth" });
