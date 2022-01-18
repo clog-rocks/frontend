@@ -18,9 +18,11 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
 import LoginForm from "@/components/auth/LoginForm";
 import RegisterForm from "@/components/auth/RegisterForm";
+import { mapMutations } from "vuex";
+import { mapState } from "pinia";
+import { useAuthStore } from "@/stores/auth";
 
 export default {
   name: "AuthView",
@@ -31,7 +33,7 @@ export default {
   },
 
   computed: {
-    ...mapState("auth", ["activeComponent"]),
+    ...mapState(useAuthStore, ["activeComponent"]),
   },
 
   mounted: function() {

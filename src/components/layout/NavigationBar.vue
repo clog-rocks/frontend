@@ -53,20 +53,21 @@
       <a
         class="p-2"
         href=""
-        @click.prevent="LOGOUT"
+        @click.prevent="logout"
       >Logout</a>
     </nav>
   </section>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from "pinia";
+import { useAuthStore } from "@/stores/auth";
 
 export default {
   name: "NavigationBar",
 
   methods: {
-    ...mapActions("auth", ["LOGOUT"]),
+    ...mapActions(useAuthStore, ["logout"]),
   },
 };
 </script>
