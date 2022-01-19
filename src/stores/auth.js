@@ -20,15 +20,11 @@ const store = {
   unset(store) {
     api.defaults.headers.common.Authorization = null;
 
-    store.user = {};
-    store.token = null;
-    store.isAuthenticated = false;
-    store.activeComponent = "LoginForm";
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("isAuthenticated");
 
-    // store.$reset();
+    store.$reset();
   },
 };
 
