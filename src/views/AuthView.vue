@@ -18,11 +18,12 @@
 </template>
 
 <script>
+import { mapState, mapWritableState } from "pinia";
 import LoginForm from "@/components/auth/LoginForm";
 import RegisterForm from "@/components/auth/RegisterForm";
 import { mapMutations } from "vuex";
-import { mapState } from "pinia";
 import { useAuthStore } from "@/stores/auth";
+import { useLogbookStore } from "@/stores/logbook";
 
 export default {
   name: "AuthView",
@@ -34,17 +35,17 @@ export default {
 
   computed: {
     ...mapState(useAuthStore, ["activeComponent"]),
+    ...mapWritableState(useLogbookStore, { logbookDataRetrieved: "dataRetrieved" }),
   },
 
   mounted: function() {
     // Force data retrievel upon next login.
-    this.LOGBOOK_DATA_MISSING();
+    this.logbookDataRetrieved = false;
     this.TRAINING_DATA_MISSING();
   },
 
   methods: {
     ...mapMutations({
-      LOGBOOK_DATA_MISSING: "logbook/SET_DATA_MISSING",
       TRAINING_DATA_MISSING: "training/SET_DATA_MISSING",
     }),
 
