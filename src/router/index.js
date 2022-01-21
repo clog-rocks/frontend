@@ -1,6 +1,3 @@
-import AuthView from "@/views/AuthView";
-import LogbookView from "@/views/LogbookView";
-import TrainingView from "@/views/TrainingView";
 import Vue from "vue";
 import VueRouter from "vue-router";
 
@@ -10,17 +7,17 @@ const routes = [
   {
     path: "/auth",
     name: "Auth",
-    component: AuthView,
+    component: () => import("@/views/AuthView"),
   },
   {
     path: "/logbook",
     name: "Logbook",
-    component: LogbookView,
+    component: () => import("@/views/LogbookView"),
   },
   {
     path: "/training",
     name: "Training",
-    component: TrainingView,
+    component: () => import("@/views/TrainingView"),
   },
   {
     path: "/*",
