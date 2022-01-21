@@ -53,7 +53,7 @@
       <a
         class="p-2"
         href=""
-        @click.prevent="logout"
+        @click.prevent="performLogout"
       >Logout</a>
     </nav>
   </section>
@@ -61,6 +61,7 @@
 
 <script>
 import { mapActions } from "pinia";
+import router from "@/router";
 import { useAuthStore } from "@/stores/auth";
 
 export default {
@@ -68,6 +69,14 @@ export default {
 
   methods: {
     ...mapActions(useAuthStore, ["logout"]),
+
+    // FIX: Need to find a way to move router.push() back into Pinia's action.
+    // It was failing and this is just workaround fix.
+    performLogout() {
+      this.logout();
+
+      router.push({ name: "Auth" });
+    },
   },
 };
 </script>

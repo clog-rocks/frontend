@@ -1,7 +1,6 @@
 import api from "@/_services/api";
 import { authService } from "@/_services";
 import { defineStore } from "pinia";
-import router from "@/router";
 
 // Helper action to set thingies.
 const store = {
@@ -54,7 +53,6 @@ export const useAuthStore = defineStore("auth", {
 
     logout() {
       store.unset(this);
-      router.push({ name: "Auth" });
     },
 
     async register(username, email, password) {
