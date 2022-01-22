@@ -24,13 +24,13 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import SessionsTable from "@/components/training/SessionsTable";
 import TopGymsTable from "@/components/training/top-gyms/TopGymsTable";
 import TrainingCounters from "@/components/training/TrainingCounters";
 import TrainingSessionForm from "@/components/training/forms/TrainingSessionForm.vue";
-import { mapWritableState } from "pinia";
 import { useCoreStore } from "@/stores/core";
+import { useTrainingStore } from "@/stores/training";
 
 export default {
   name: "TrainingView",
@@ -43,7 +43,7 @@ export default {
   },
 
   computed: {
-    ...mapState("training", ["dataRetrieved"]),
+    ...mapState(useTrainingStore, ["dataRetrieved"]),
     ...mapWritableState(useCoreStore, ["loading"]),
   },
 
@@ -59,7 +59,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("training", ["GET_DATA"]),
+    ...mapActions(useTrainingStore, ["GET_DATA"]),
   },
 };
 </script>

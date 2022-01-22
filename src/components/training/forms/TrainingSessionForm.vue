@@ -183,7 +183,8 @@
 <script>
 import { coreService, trainingService } from "@/_services";
 import _ from "lodash";
-import { mapActions } from "vuex";
+import { mapActions } from "pinia";
+import { useTrainingStore } from "@/stores/training";
 
 export default {
   name: "TrainingSessionForm",
@@ -249,7 +250,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("training", ["_addSession"]),
+    ...mapActions(useTrainingStore, ["_addSession"]),
 
     async fetchGyms(val) {
       this.gymLoading = true;

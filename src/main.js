@@ -8,7 +8,6 @@ import LoadingOverlay from "@/components/layout/LoadingOverlay";
 import Vue from "vue";
 import api from "@/_services/api";
 import router from "@/router";
-import store from "@/store";
 import { useAuthStore } from "@/stores/auth";
 import { useCoreStore } from "@/stores/core";
 import vuetify from "@/plugins/vuetify";
@@ -30,7 +29,6 @@ Vue.component("LoadingOverlay", LoadingOverlay);
 new Vue({
   name: "ClogApp",
   router,
-  store,
   vuetify,
   pinia,
   render: (h) => h(App),

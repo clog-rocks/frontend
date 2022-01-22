@@ -21,9 +21,9 @@
 import { mapState, mapWritableState } from "pinia";
 import LoginForm from "@/components/auth/LoginForm";
 import RegisterForm from "@/components/auth/RegisterForm";
-import { mapMutations } from "vuex";
 import { useAuthStore } from "@/stores/auth";
 import { useLogbookStore } from "@/stores/logbook";
+import { useTrainingStore } from "@/stores/training";
 
 export default {
   name: "AuthView",
@@ -36,19 +36,16 @@ export default {
   computed: {
     ...mapState(useAuthStore, ["activeComponent"]),
     ...mapWritableState(useLogbookStore, { logbookDataRetrieved: "dataRetrieved" }),
+    ...mapWritableState(useTrainingStore, { trainingDataRetrieved: "dataRetrieved" }),
   },
 
   mounted: function() {
     // Force data retrievel upon next login.
     this.logbookDataRetrieved = false;
-    this.TRAINING_DATA_MISSING();
+    this.trainingDataRetrieved = false;
   },
 
   methods: {
-    ...mapMutations({
-      TRAINING_DATA_MISSING: "training/SET_DATA_MISSING",
-    }),
-
     // Component switch transition.
     beforeLeave: function(element) {
       this.prevHeight = getComputedStyle(element).height;

@@ -25,13 +25,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
+import { useTrainingStore } from "@/stores/training";
 
 export default {
   name: "TopGymsTable",
 
   computed: {
-    ...mapGetters("training", ["TOP_GYMS"]),
+    ...mapState(useTrainingStore, ["TOP_GYMS"]),
   },
 };
 </script>
