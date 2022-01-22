@@ -23,18 +23,6 @@ Vue.use(PiniaVuePlugin);
 // Expose axios instance in components (this.$http).
 Vue.prototype.$http = api;
 
-// Register commonly used components.
-Vue.component("LoadingOverlay", LoadingOverlay);
-
-new Vue({
-  name: "ClogApp",
-  router,
-  vuetify,
-  pinia,
-  render: (h) => h(App),
-})
-  .$mount("#app");
-
 // Set up global header for Axios if user is authenticated when application starts.
 const token = JSON.parse(localStorage.getItem("token"));
 
@@ -70,6 +58,18 @@ api.interceptors.response.use(
     }
   },
 );
+
+// Register commonly used components.
+Vue.component("LoadingOverlay", LoadingOverlay);
+
+new Vue({
+  name: "ClogApp",
+  router,
+  vuetify,
+  pinia,
+  render: (h) => h(App),
+})
+  .$mount("#app");
 
 // Vue-router: route guard.
 // Redirect unathenticated requests to Login page.
