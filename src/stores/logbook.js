@@ -4,7 +4,8 @@ import { logbookService } from "@/_services";
 
 // TODO: rename actions and getters.
 
-export const useLogbookStore = defineStore("logbook", {
+export const useLogbookStore = defineStore({
+  id: "logbook",
   state: () => {
     return {
       grades: {},

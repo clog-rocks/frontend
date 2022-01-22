@@ -27,7 +27,8 @@ const store = {
   },
 };
 
-export const useAuthStore = defineStore("auth", {
+export const useAuthStore = defineStore({
+  id: "auth",
   state: () => {
     return {
       // Component which should be displayed on Auth view.
