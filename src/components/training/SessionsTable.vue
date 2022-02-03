@@ -52,7 +52,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from "pinia";
+import { useTrainingStore } from "@/stores/training";
 
 export default {
   name: "SessionsTable",
@@ -87,7 +88,7 @@ export default {
   },
 
   computed: {
-    ...mapState("training", ["data"]),
+    ...mapState(useTrainingStore, ["data"]),
 
     sessions: function() {
       // This functions overrides `gym` property so it also contains city.

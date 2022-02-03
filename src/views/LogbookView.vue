@@ -15,8 +15,10 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import LogbookCounters from "@/components/logbook/LogbookCounters";
+import { useCoreStore } from "@/stores/core";
+import { useLogbookStore } from "@/stores/logbook";
 
 export default {
   name: "LogbookView",
@@ -25,22 +27,24 @@ export default {
     LogbookCounters,
   },
 
-  computed: { ...mapState("logbook", ["dataRetrieved"]) },
+  computed: {
+    ...mapState(useLogbookStore, ["dataRetrieved"]),
+    ...mapWritableState(useCoreStore, ["loading"]),
+  },
 
   mounted: function() {
     if (!this.dataRetrieved) {
-      this.LOADING_START();
+      this.loading = true;
 
       this.GET_DATA()
         .then(() => {
-          this.LOADING_STOP();
+          this.loading = false;
         });
     }
   },
 
   methods: {
-    ...mapActions("logbook", ["GET_DATA"]),
-    ...mapMutations("core", ["LOADING_START", "LOADING_STOP"]),
+    ...mapActions(useLogbookStore, ["GET_DATA"]),
   },
 };
 </script>

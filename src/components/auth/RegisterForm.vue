@@ -66,7 +66,7 @@
       <v-card-actions>
         <v-btn
           text
-          @click="SHOW_COMPONENT('LoginForm')"
+          @click="activeComponent = 'LoginForm'"
         >
           Login
         </v-btn>
@@ -83,9 +83,10 @@
 </template>
 
 <script>
+import { mapActions, mapWritableState } from "pinia";
 import _ from "lodash";
 import { authService } from "@/_services";
-import { mapActions } from "vuex";
+import { useAuthStore } from "@/stores/auth";
 
 export default {
   name: "RegisterForm",
@@ -116,6 +117,8 @@ export default {
   },
 
   computed: {
+    ...mapWritableState(useAuthStore, ["activeComponent"]),
+
     passwordMatchRule: (vm) => vm.password === vm.password2 || "Passwords must match.",
   },
 
@@ -131,7 +134,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("auth", ["REGISTER", "SHOW_COMPONENT"]),
+    ...mapActions(useAuthStore, ["register"]),
 
     submit: function() {
       if (
@@ -146,10 +149,10 @@ export default {
         this.usernameError = null;
         this.passwordError = null;
 
-        // Call register Vuex action.
+        // Call register Pinia action.
         const { username, email, password } = this;
 
-        this.REGISTER({ username, email, password })
+        this.register(username, email, password)
           .then(() => {
             this.$router.push({ name: "Logbook" });
           })

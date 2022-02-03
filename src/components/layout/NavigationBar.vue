@@ -53,20 +53,30 @@
       <a
         class="p-2"
         href=""
-        @click.prevent="LOGOUT"
+        @click.prevent="performLogout"
       >Logout</a>
     </nav>
   </section>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from "pinia";
+import router from "@/router";
+import { useAuthStore } from "@/stores/auth";
 
 export default {
   name: "NavigationBar",
 
   methods: {
-    ...mapActions("auth", ["LOGOUT"]),
+    ...mapActions(useAuthStore, ["logout"]),
+
+    // FIX: Need to find a way to move router.push() back into Pinia's action.
+    // It was failing and this is just workaround fix.
+    performLogout() {
+      this.logout();
+
+      router.push({ name: "Auth" });
+    },
   },
 };
 </script>

@@ -41,7 +41,7 @@
       <v-card-actions>
         <v-btn
           text
-          @click="SHOW_COMPONENT('RegisterForm')"
+          @click="activeComponent = 'RegisterForm'"
         >
           Register
         </v-btn>
@@ -58,7 +58,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapWritableState } from "pinia";
+import { useAuthStore } from "@/stores/auth";
 
 export default {
   name: "LoginForm",
@@ -77,23 +78,27 @@ export default {
     };
   },
 
+  computed: {
+    ...mapWritableState(useAuthStore, ["activeComponent"]),
+  },
+
   methods: {
-    ...mapActions("auth", ["LOGIN", "SHOW_COMPONENT"]),
+    ...mapActions(useAuthStore, ["login"]),
 
     submit: function() {
       if (this.$refs.form.validate()) {
         this.loading = true;
 
-        // Call login Vuex action.
+        // Call login Pinia action.
         const { username, password } = this;
 
-        this.LOGIN({ username, password })
+        this.login(username, password)
           .then(() => {
             this.$router.push({ name: "Logbook" });
           })
           .catch((error) => {
             this.loading = false;
-            if (error.response.data.non_field_errors) {
+            if (error?.response?.data?.non_field_errors) {
               this.nonFieldError = error.response.data.non_field_errors[0];
             }
           });

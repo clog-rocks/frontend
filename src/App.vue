@@ -32,7 +32,9 @@
 
 <script>
 import NavigationBar from "@/components/layout/NavigationBar";
-import { mapState } from "vuex";
+import { mapState } from "pinia";
+import { useAuthStore } from "./stores/auth";
+import { useCoreStore } from "./stores/core";
 
 export default {
   name: "App",
@@ -46,8 +48,8 @@ export default {
   },
 
   computed: {
-    ...mapState("core", ["loading"]),
-    ...mapState("auth", ["isAuthenticated"]),
+    ...mapState(useCoreStore, ["loading"]),
+    ...mapState(useAuthStore, ["isAuthenticated"]),
   },
 
   watch: {

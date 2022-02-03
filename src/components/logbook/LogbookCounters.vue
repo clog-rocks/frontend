@@ -58,7 +58,8 @@
 
 <script>
 import CounterItem from "@/components/layout/CounterItem";
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
+import { useLogbookStore } from "@/stores/logbook";
 
 export default {
   name: "LogbookCounters",
@@ -66,7 +67,7 @@ export default {
   components: { CounterItem },
 
   computed: {
-    ...mapGetters("logbook", [
+    ...mapState(useLogbookStore, [
       "ASCENT_COUNT",
       "ASCENT_LAST_YEAR_COUNT",
       "CRAG_VISIT_COUNT",

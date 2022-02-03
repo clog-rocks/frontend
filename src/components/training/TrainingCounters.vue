@@ -29,7 +29,8 @@
 
 <script>
 import CounterItem from "@/components/layout/CounterItem";
-import { mapGetters } from "vuex";
+import { mapState } from "pinia";
+import { useTrainingStore } from "@/stores/training";
 
 export default {
   name: "TrainingCounters",
@@ -37,7 +38,7 @@ export default {
   components: { CounterItem },
 
   computed: {
-    ...mapGetters("training", [
+    ...mapState(useTrainingStore, [
       "CITIES_COUNT",
       "COUNTRIES_COUNT",
       "GYMS_COUNT",
