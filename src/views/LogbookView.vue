@@ -35,12 +35,12 @@ export default {
   },
 
   computed: {
-    ...mapState(useLogbookStore, ["dataRetrieved"]),
+    ...mapState(useLogbookStore, ["data", "dataRetrieved"]),
     ...mapWritableState(useCoreStore, ["loading"]),
 
     // Because data is an object we can't slice() it directly.
     lastFiveAscents: function() {
-      return Object.values(this.$store.state.logbook.data)
+      return Object.values(this.data)
         .slice(-5);
     },
   },
