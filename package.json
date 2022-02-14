@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@vue/composition-api": "^1.4.6",
-    "axios": "^0.25.0",
+    "axios": "^0.26.0",
     "core-js": "^3.21.0",
     "countup.js": "^2.0.8",
     "date-fns": "^2.28.0",
