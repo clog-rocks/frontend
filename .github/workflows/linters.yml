@@ -19,6 +19,12 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "17"
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - uses: xt0rted/stylelint-problem-matcher@v1
       - name: npm install
         run: npm install
