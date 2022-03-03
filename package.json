@@ -14,7 +14,7 @@
     "@vue/composition-api": "^1.4.9",
     "axios": "^0.26.0",
     "core-js": "^3.21.1",
-    "countup.js": "^2.0.8",
+    "countup.js": "^2.1.0",
     "date-fns": "^2.28.0",
     "lodash": "^4.17.21",
     "pinia": "^2.0.11",
