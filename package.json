@@ -13,7 +13,7 @@
   "dependencies": {
     "@vue/composition-api": "^1.6.1",
     "axios": "^0.27.2",
-    "core-js": "^3.22.5",
+    "core-js": "^3.22.6",
     "countup.js": "^2.2.0",
     "date-fns": "^2.28.0",
     "lodash": "^4.17.21",
