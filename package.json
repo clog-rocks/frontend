@@ -11,7 +11,7 @@
     "lint:css": "npx stylelint --fix 'src/**/*.{vue,css,scss,html}'"
   },
   "dependencies": {
-    "@vue/composition-api": "^1.6.1",
+    "@vue/composition-api": "^1.6.2",
     "axios": "^0.27.2",
     "core-js": "^3.22.6",
     "countup.js": "^2.2.0",
