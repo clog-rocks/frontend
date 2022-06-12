@@ -24,7 +24,7 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-node-v1-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node-v
       - uses: xt0rted/stylelint-problem-matcher@v1
       - name: npm install
         run: npm install
