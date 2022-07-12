@@ -17,7 +17,7 @@
     "countup.js": "^2.3.2",
     "date-fns": "^2.28.0",
     "lodash": "^4.17.21",
-    "pinia": "^2.0.14",
+    "pinia": "^2.0.15",
     "vue": "^2.7.4",
     "vue-countup-v2": "^4.0.0",
     "vue-router": "^3.5.4",
