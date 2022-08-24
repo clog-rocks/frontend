@@ -20,7 +20,7 @@
     "pinia": "^2.0.20",
     "vue": "^2.7.10",
     "vue-countup-v2": "^4.0.0",
-    "vue-router": "^3.6.1",
+    "vue-router": "^3.6.3",
     "vuetify": "^2.6.9"
   },
   "devDependencies": {
