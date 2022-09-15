@@ -33,7 +33,7 @@
     "eslint-plugin-vue": "^9.4.0",
     "eslint-plugin-vuetify": "^1.1.0",
     "postcss-html": "^1.5.0",
-    "postcss-scss": "^4.0.4",
+    "postcss-scss": "^4.0.5",
     "sass": "^1.54.9",
     "sass-loader": "^8.0.0",
     "stylelint": "^14.9.1",
