@@ -18,7 +18,7 @@
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",
     "pinia": "^2.0.23",
-    "vue": "^2.7.10",
+    "vue": "^2.7.11",
     "vue-countup-v2": "^4.0.0",
     "vue-router": "^3.6.5",
     "vuetify": "^2.6.11"
@@ -46,7 +46,7 @@
     "stylelint-scss": "^4.3.0",
     "stylelint-webpack-plugin": "^3.3.0",
     "vue-cli-plugin-vuetify": "^2.5.8",
-    "vue-template-compiler": "^2.7.10",
+    "vue-template-compiler": "^2.7.11",
     "vuetify-loader": "^1.9.2"
   }
 }
