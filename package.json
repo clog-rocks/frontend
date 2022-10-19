@@ -21,7 +21,7 @@
     "vue": "^2.7.13",
     "vue-countup-v2": "^4.0.0",
     "vue-router": "^3.6.5",
-    "vuetify": "^2.6.11"
+    "vuetify": "^2.6.12"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.8",
