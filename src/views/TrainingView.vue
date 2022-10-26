@@ -1,65 +1,50 @@
-<template>
-  <transition
-    appear
-    mode="out-in"
-    name="fade"
-  >
-    <LoadingOverlay
-      v-if="!dataRetrieved"
-      message="Fetching your training data, please wait…"
-    />
-    <div v-else>
-      <TrainingCounters />
-      <div class="thin-header">
-        Training sessions
-      </div>
-      <TrainingSessionForm />
-      <SessionsTable />
-      <div class="thin-header">
-        Top gyms
-      </div>
-      <TopGymsTable />
-    </div>
-  </transition>
-</template>
+<script setup lang="ts">
+import { onMounted } from "vue";
 
-<script>
-import { mapActions, mapState, mapWritableState } from "pinia";
-import SessionsTable from "@/components/training/SessionsTable";
-import TopGymsTable from "@/components/training/top-gyms/TopGymsTable";
-import TrainingCounters from "@/components/training/TrainingCounters";
-import TrainingSessionForm from "@/components/training/forms/TrainingSessionForm.vue";
-import { useCoreStore } from "@/stores/core";
-import { useTrainingStore } from "@/stores/training";
+// import TrainingSessionForm from "@/components/training/forms/TrainingSessionForm.vue";
+// import TopGymsTable from "@/components/training/top-gyms/TopGymsTable.vue";
+import TrainingCounters from "@/components/training/TrainingCounters.vue";
+import TrainingSessions from "@/components/training/TrainingSessions.vue";
+import { useCoreStore, useTrainingStore } from "@/stores";
 
-export default {
-  name: "TrainingView",
+const trainingStore = useTrainingStore();
+const coreStore = useCoreStore();
 
-  components: {
-    TrainingCounters,
-    SessionsTable,
-    TopGymsTable,
-    TrainingSessionForm,
-  },
-
-  computed: {
-    ...mapState(useTrainingStore, ["dataRetrieved"]),
-    ...mapWritableState(useCoreStore, ["loading"]),
-  },
-
-  mounted: function() {
-    if (!this.dataRetrieved) {
-      this.loading = true;
-
-      this.GET_DATA()
-        .then(() => {
-          this.loading = false;
-        });
-    }
-  },
-
-  methods: {
-    ...mapActions(useTrainingStore, ["GET_DATA"]),
-  },
-};
+onMounted(async () => {
+  if (!trainingStore.status.fetched) {
+    await trainingStore.fetch();
+  }
+  if (!coreStore.status.fetched) {
+    await coreStore.fetch();
+  }
+});
 </script>
+
+<template>
+  <section>
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <p v-if="trainingStore.status.fetching">
+        Fetching your training sessions, please wait…
+      </p>
+      <div
+        v-else-if="trainingStore.status.fetched && trainingStore.hasSessions"
+      >
+        <TrainingCounters />
+        <!-- <TrainingSessionForm /> -->
+        <button @click="trainingStore.addSessionDummy">add session</button>
+        <TrainingSessions />
+        <div class="thin-header">Top gyms</div>
+        <!-- <TopGymsTable /> -->
+      </div>
+      <h3
+        v-else-if="trainingStore.status.fetched && !trainingStore.hasSessions"
+      >
+        Add your first session!
+        <button @click="trainingStore.addSessionDummy">add session</button>
+      </h3>
+    </transition>
+  </section>
+</template>

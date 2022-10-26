@@ -1,109 +1,39 @@
-<template>
-  <v-card flat>
-    <v-form
-      ref="form"
-      v-model="valid"
-      lazy-validation
-      @submit.prevent="submit"
-    >
-      <h2 class="font-weight-thin text-center">
-        Login
-      </h2>
-      <v-card-text>
-        <v-alert
-          class="px-5"
-          dense
-          elevation="3"
-          outlined
-          tile
-          transition="fade"
-          type="error"
-          :value="nonFieldError"
-        >
-          {{ nonFieldError }}
-        </v-alert>
-        <v-text-field
-          v-model="username"
-          autocomplete="username"
-          label="Username"
-          required
-          :rules="[(v) => !!v || 'Username is required.']"
-        />
-        <v-text-field
-          v-model="password"
-          autocomplete="current-password"
-          label="Password"
-          required
-          :rules="[(v) => !!v || 'Password is required.']"
-          type="password"
-        />
-      </v-card-text>
-      <v-card-actions>
-        <v-btn
-          text
-          @click="activeComponent = 'RegisterForm'"
-        >
-          Register
-        </v-btn>
-        <v-spacer />
-        <v-btn
-          :loading="loading"
-          type="submit"
-        >
-          Login
-        </v-btn>
-      </v-card-actions>
-    </v-form>
-  </v-card>
-</template>
+<script setup lang="ts">
+import { ref } from "vue";
 
-<script>
-import { mapActions, mapWritableState } from "pinia";
-import { useAuthStore } from "@/stores/auth";
+import { useUserStore } from "@/stores";
 
-export default {
-  name: "LoginForm",
-
-  data: () => {
-    return {
-      loading: false,
-      valid: true,
-
-      // Form fields.
-      username: null,
-      password: null,
-
-      // Errors (will be populated by API).
-      nonFieldError: null,
-    };
-  },
-
-  computed: {
-    ...mapWritableState(useAuthStore, ["activeComponent"]),
-  },
-
-  methods: {
-    ...mapActions(useAuthStore, ["login"]),
-
-    submit: function() {
-      if (this.$refs.form.validate()) {
-        this.loading = true;
-
-        // Call login Pinia action.
-        const { username, password } = this;
-
-        this.login(username, password)
-          .then(() => {
-            this.$router.push({ name: "Logbook" });
-          })
-          .catch((error) => {
-            this.loading = false;
-            if (error?.response?.data?.non_field_errors) {
-              this.nonFieldError = error.response.data.non_field_errors[0];
-            }
-          });
-      }
-    },
-  },
-};
+const userStore = useUserStore();
+const username = ref("");
+const password = ref("");
 </script>
+
+<template>
+  <section>
+    <h1>Login</h1>
+    <form @submit.prevent>
+      <label for="username">Username</label>
+      <input
+        id="username"
+        v-model="username"
+        autocomplete="username"
+        type="text"
+        autocorrect="off"
+        spellcheck="false"
+        required
+      />
+      <label for="password">Password</label>
+      <input
+        id="password"
+        v-model="password"
+        autocomplete="current-password"
+        spellcheck="false"
+        autocorrect="off"
+        type="password"
+        required
+      />
+      <button @click="userStore.login(username, password)">Login</button>
+    </form>
+    <RouterLink :to="{ name: 'register' }">Register instead</RouterLink>
+  </section>
+</template>
