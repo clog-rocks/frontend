@@ -1,0 +1,24 @@
+@import "./base.css";
+@import "./reset.css";
+@import "./nprogress.css";
+@import "./transitions.css";
+
+a,
+.green {
+  color: hsl(160deg 100% 37% / 100%);
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsl(160deg 100% 37% / 20%);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+}

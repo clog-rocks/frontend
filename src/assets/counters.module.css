@@ -1,0 +1,26 @@
+.counters {
+  display: grid;
+  justify-content: space-around;
+  justify-items: center;
+  max-width: 800px;
+  margin-inline: auto;
+  font-weight: 300;
+  color: var(--color-text-counter);
+}
+
+.counters__header { /* stylelint-disable-line selector-class-pattern */
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+section + section {
+  padding-top: 1.5rem;
+}
+
+section:first-of-type {
+  padding-top: 3rem;
+}
+
+section:last-of-type {
+  padding-bottom: 3rem;
+}

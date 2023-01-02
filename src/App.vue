@@ -1,69 +1,51 @@
-<template>
-  <v-app>
-    <v-progress-linear
-      absolute
-      :active="loading"
-      background-color="white"
-      color="#000"
-      height="1"
-      :indeterminate="loading"
-    />
+<script setup lang="ts">
+import NProgress from "nprogress";
+import { computed, watch } from "vue";
+import { RouterView } from "vue-router";
 
-    <v-main>
-      <v-container class="py-0">
-        <transition
-          appear
-          name="fade"
-        >
-          <NavigationBar v-if="displayNavbar" />
-        </transition>
+import NavigationBar from "@/components/layout/NavigationBar.vue";
+import {
+  useCoreStore,
+  useLogbookStore,
+  useTrainingStore,
+  useUserStore,
+} from "@/stores";
 
-        <transition
-          appear
-          mode="out-in"
-          name="fade"
-        >
-          <router-view />
-        </transition>
-      </v-container>
-    </v-main>
-  </v-app>
-</template>
+const coreStore = useCoreStore();
+const logbookStore = useLogbookStore();
+const trainingStore = useTrainingStore();
+const userStore = useUserStore();
 
-<script>
-import NavigationBar from "@/components/layout/NavigationBar";
-import { mapState } from "pinia";
-import { useAuthStore } from "./stores/auth";
-import { useCoreStore } from "./stores/core";
+const isLoading = computed(
+  () =>
+    coreStore.status.fetching ||
+    logbookStore.status.fetching ||
+    trainingStore.status.fetching ||
+    userStore.status.fetching
+);
 
-export default {
-  name: "App",
-
-  components: { NavigationBar },
-
-  data: () => {
-    return {
-      displayNavbar: null,
-    };
-  },
-
-  computed: {
-    ...mapState(useCoreStore, ["loading"]),
-    ...mapState(useAuthStore, ["isAuthenticated"]),
-  },
-
-  watch: {
-    // Delay Navbar insertion to DOM.
-    // Avoid jittering structure before Auth Component is hidden.
-    isAuthenticated(newValue) {
-      const timeout = newValue ? 500 : 0;
-
-      setTimeout(() => (this.displayNavbar = this.isAuthenticated), timeout);
-    },
-  },
-
-  mounted: function() {
-    this.displayNavbar = this.isAuthenticated;
-  },
-};
+watch(isLoading, (newStatus) => {
+  if (newStatus) {
+    NProgress.start();
+  } else {
+    NProgress.done();
+  }
+});
 </script>
+
+<template>
+  <main>
+    <NavigationBar />
+    <router-view v-slot="{ Component }">
+      <transition
+        appear
+        mode="out-in"
+        name="component-fade"
+      >
+        <keep-alive include="LoginForm,RegisterForm">
+          <component :is="Component" />
+        </keep-alive>
+      </transition>
+    </router-view>
+  </main>
+</template>

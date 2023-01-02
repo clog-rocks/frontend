@@ -1,50 +1,37 @@
-<template>
-  <transition
-    appear
-    mode="out-in"
-    name="fade"
-  >
-    <LoadingOverlay
-      v-if="!dataRetrieved"
-      message="Fetching your climbing data, please wait…"
-    />
-    <div v-else>
-      <LogbookCounters />
-    </div>
-  </transition>
-</template>
+<script setup lang="ts">
+import { onMounted } from "vue";
 
-<script>
-import { mapActions, mapState, mapWritableState } from "pinia";
-import LogbookCounters from "@/components/logbook/LogbookCounters";
-import { useCoreStore } from "@/stores/core";
-import { useLogbookStore } from "@/stores/logbook";
+import LogbookAscents from "@/components/logbook/LogbookAscents.vue";
+import LogbookCounters from "@/components/logbook/LogbookCounters.vue";
+import { useLogbookStore } from "@/stores";
 
-export default {
-  name: "LogbookView",
+const logbookStore = useLogbookStore();
 
-  components: {
-    LogbookCounters,
-  },
-
-  computed: {
-    ...mapState(useLogbookStore, ["dataRetrieved"]),
-    ...mapWritableState(useCoreStore, ["loading"]),
-  },
-
-  mounted: function() {
-    if (!this.dataRetrieved) {
-      this.loading = true;
-
-      this.GET_DATA()
-        .then(() => {
-          this.loading = false;
-        });
-    }
-  },
-
-  methods: {
-    ...mapActions(useLogbookStore, ["GET_DATA"]),
-  },
-};
+onMounted(async () => {
+  if (logbookStore.status.pending) {
+    await logbookStore.fetch();
+  }
+});
 </script>
+
+<template>
+  <section>
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <p v-if="logbookStore.status.fetching">
+        Fetching your logbook, please wait…
+      </p>
+      <p v-else-if="logbookStore.hasAscents">
+        <LogbookCounters />
+        <button @click="logbookStore.addAscentDummy">add ascent</button>
+        <LogbookAscents />
+      </p>
+      <h3 v-else-if="logbookStore.status.fetched && !logbookStore.hasAscents">
+        No Ascents
+        <button @click="logbookStore.addAscentDummy">add ascent</button>
+      </h3>
+    </transition>
+  </section>
+</template>

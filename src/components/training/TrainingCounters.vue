@@ -1,71 +1,40 @@
+<script setup lang="ts">
+import CounterItem from "@/components/layout/CounterItem.vue";
+import { useTrainingStore } from "@/stores";
+
+const trainingStore = useTrainingStore();
+</script>
+
 <template>
   <section class="counters training-stats">
     <CounterItem
       class="training-stats__item"
-      :delay="300"
       legend="sessions"
-      :value="SESSIONS_COUNT"
+      :value="trainingStore.session_count"
     />
     <CounterItem
       class="training-stats__item"
-      :delay="400"
       legend="gyms"
-      :value="GYMS_COUNT"
+      :value="trainingStore.gym_count"
     />
     <CounterItem
       class="training-stats__item"
-      :delay="500"
       legend="cities"
-      :value="CITIES_COUNT"
+      :value="trainingStore.city_count"
     />
     <CounterItem
       class="training-stats__item"
-      :delay="600"
       legend="countries"
-      :value="COUNTRIES_COUNT"
+      :value="trainingStore.country_count"
     />
   </section>
 </template>
 
-<script>
-import CounterItem from "@/components/layout/CounterItem";
-import { mapState } from "pinia";
-import { useTrainingStore } from "@/stores/training";
-
-export default {
-  name: "TrainingCounters",
-
-  components: { CounterItem },
-
-  computed: {
-    ...mapState(useTrainingStore, [
-      "CITIES_COUNT",
-      "COUNTRIES_COUNT",
-      "GYMS_COUNT",
-      "SESSIONS_COUNT",
-    ]),
-  },
-};
-</script>
-
 <style lang="scss" scoped>
-@import "@/scss/grids/counters";
+@import "@/assets/counters.module";
 
-.training-stats {
-  &__item {
-    &:nth-of-type(1) { grid-area: sessions; }
-    &:nth-of-type(2) { grid-area: gyms; }
-    &:nth-of-type(3) { grid-area: cities; }
-    &:nth-of-type(4) { grid-area: countries; }
-  }
-
-  grid-template-areas:
-    "sessions gyms"
-    "cities countries";
-
-  @media #{map-get($display-breakpoints, "sm-and-up")} {
-    grid-template-areas: "sessions gyms cities countries";
-    grid-template-columns: repeat(4, minmax(145px, 215px));
-  }
+.counters {
+  display: flex;
+  align-items: center;
 }
 </style>

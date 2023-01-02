@@ -1,168 +1,125 @@
-<template>
-  <section>
-    <v-app-bar
-      color="#fff"
-      flat
-    >
-      <v-toolbar-title class="logo">
-        clog
-      </v-toolbar-title>
+<script setup lang="ts">
+import { useUserStore } from "@/stores";
 
-      <v-spacer />
-
-      <v-btn
-        icon
-        :ripple="false"
-        tile
-      >
-        <v-icon color="red">
-          mdi-filter
-        </v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        :ripple="false"
-        tile
-      >
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        :ripple="false"
-        tile
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <nav>
-      <router-link :to="{ name: 'Logbook' }">
-        Logbook
-      </router-link>
-      <router-link :to="{ name: 'Training' }">
-        Training
-      </router-link>
-      <a
-        class="p-2"
-        href="/logbook/countries/"
-      >Explore</a>
-      <a
-        class="p-2"
-        href="/user/profile/"
-      >Your account </a>
-      <a
-        class="p-2"
-        href=""
-        @click.prevent="performLogout"
-      >Logout</a>
-    </nav>
-  </section>
-</template>
-
-<script>
-import { mapActions } from "pinia";
-import router from "@/router";
-import { useAuthStore } from "@/stores/auth";
-
-export default {
-  name: "NavigationBar",
-
-  methods: {
-    ...mapActions(useAuthStore, ["logout"]),
-
-    // FIX: Need to find a way to move router.push() back into Pinia's action.
-    // It was failing and this is just workaround fix.
-    performLogout() {
-      this.logout();
-
-      router.push({ name: "Auth" });
-    },
-  },
-};
+const userStore = useUserStore();
 </script>
 
-<style lang="scss" scoped>
-$color-active: #000;
-$background-color: #f37272;
+<template>
+  <header>
+    <p class="logo">clog</p>
+    <nav>
+      <TransitionGroup
+        tag="nav"
+        name="list"
+      >
+        <!-- Authenticated -->
+        <RouterLink
+          v-if="userStore.isAuthenticated"
+          key="logbook"
+          :to="{ name: 'logbook' }"
+        >
+          Logbook
+        </RouterLink>
+        <RouterLink
+          v-if="userStore.isAuthenticated"
+          key="training"
+          :to="{ name: 'training' }"
+        >
+          Training
+        </RouterLink>
+        <RouterLink
+          v-if="userStore.isAuthenticated && userStore.user?.username !== null"
+          key="user"
+          :to="{ name: 'user' }"
+        >
+          {{ userStore.user!.username }}
+        </RouterLink>
+        <RouterLink
+          v-if="userStore.isAuthenticated"
+          key="logout"
+          :to="{ name: 'logout' }"
+        >
+          Logout
+        </RouterLink>
 
-section {
-  padding-bottom: 1rem;
+        <!-- Not authenticated -->
+        <RouterLink
+          v-if="!userStore.isAuthenticated"
+          key="login"
+          :to="{ name: 'login' }"
+        >
+          Login
+        </RouterLink>
+        <RouterLink
+          v-if="!userStore.isAuthenticated"
+          key="register"
+          :to="{ name: 'register' }"
+        >
+          Register
+        </RouterLink>
+      </TransitionGroup>
+    </nav>
+  </header>
+</template>
 
-  .logo {
-    font-size: 2rem !important;
-    font-weight: 100;
-  }
+<style scoped>
+header {
+  max-height: 100vh;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
 }
 
 nav {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  border-top: 1px solid #e5e5e5;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  width: 100%;
+  margin-top: 2rem;
+  font-size: 12px;
+  text-align: center;
+}
 
-  /* Hide scrollbars *
-   * Chrome, Safari and Opera */
-  &::-webkit-scrollbar {
-    display: none;
-    width: 0;
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
   }
 
-  a {
-    position: relative;
-    padding: 0.75rem;
-    padding-bottom: 8px;
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: #584e4a !important;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    outline: none;
+  .logo {
+    margin: 0 2rem 0 0;
+  }
 
-    &:hover {
-      color: $color-active !important;
-    }
+  header .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    place-items: flex-start;
+  }
 
-    &::after {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      height: 1px;
-      content: "";
-      background: $background-color;
-      transition: transform ease-in-out 250ms;
-      transform: scale(0, 1);
-    }
-
-    &:hover::after,
-    &:focus::after {
-      transform: scale(1, 1);
-    }
-
-    /* vue-router */
-    &.router-link-active,
-    &.router-link-exact-active {
-      color: $color-active !important;
-      cursor: default !important;
-
-      &::after {
-        background: #adadad;
-        transform: scale(1, 1);
-      }
-
-      &:focus::after {
-        background: $background-color !important;
-      }
-    }
+  nav {
+    padding: 1rem 0;
+    margin-top: 1rem;
+    margin-left: -1rem;
+    font-size: 1rem;
+    text-align: left;
   }
 }
 </style>
