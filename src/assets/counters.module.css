@@ -8,7 +8,7 @@
   color: var(--color-text-counter);
 }
 
-.counters__header {
+.counters__header { /* stylelint-disable-line selector-class-pattern */
   text-transform: uppercase;
   letter-spacing: 4px;
 }
