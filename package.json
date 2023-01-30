@@ -16,7 +16,7 @@
     "ci:lint:css": "npx stylelint 'src/**/*.{vue,css,scss,html}'"
   },
   "dependencies": {
-    "@vueuse/core": "^9.11.1",
+    "@vueuse/core": "^9.12.0",
     "axios": "^1.2.6",
     "date-fns": "^2.29.3",
     "js-cookie": "^3.0.1",
