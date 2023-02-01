@@ -1,6 +1,6 @@
 import { countBy, keyBy, map, size, uniq } from "lodash";
 import { defineStore } from "pinia";
-import { type ComputedRef, computed, ref } from "vue";
+import { computed, type ComputedRef, ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import { trainingService } from "@/services";
