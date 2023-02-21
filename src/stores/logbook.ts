@@ -10,7 +10,7 @@ import {
   size,
   uniq,
   uniqBy,
-} from "lodash";
+} from "lodash-es";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
