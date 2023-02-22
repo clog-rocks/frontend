@@ -1,4 +1,4 @@
-import { keyBy } from "lodash";
+import { keyBy } from "lodash-es";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 

@@ -1,4 +1,4 @@
-import { countBy, keyBy, map, size, uniq } from "lodash";
+import { countBy, keyBy, map, size, uniq } from "lodash-es";
 import { defineStore } from "pinia";
 import { computed, type ComputedRef, ref } from "vue";
 

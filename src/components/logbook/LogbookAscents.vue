@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { map, orderBy } from "lodash";
+import { map, orderBy } from "lodash-es";
 import { computed, ref } from "vue";
 
 import { useLogbookStore } from "@/stores";
