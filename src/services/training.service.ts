@@ -1,3 +1,4 @@
+import type { Tag } from "@/types/generic";
 import type {
   Gym,
   TrainingSession,
@@ -37,5 +38,15 @@ export default {
   deleteSession: async (id: number) => {
     const response = await api.delete(`/api/training/sessions/${id}`);
     return response;
+  },
+
+  fetchTags: async (search: string): Promise<Tag[]> => {
+    const url = "/api/core/tags?";
+    const params = new URLSearchParams();
+
+    params.append("name", search);
+
+    const response = await api.get(url + params.toString());
+    return response.data;
   },
 };

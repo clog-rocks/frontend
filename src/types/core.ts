@@ -14,8 +14,3 @@ export interface City {
 }
 
 export type CityRequest = Omit<City, "id">;
-
-// Tag
-export interface Tag {
-  name: string;
-}
