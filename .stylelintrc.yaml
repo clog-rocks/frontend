@@ -12,8 +12,8 @@ extends:
   - stylelint-config-recommended-vue/scss
   - stylelint-config-recess-order
   - stylelint-config-css-modules
-  - stylelint-config-prettier
-  - stylelint-config-prettier-scss
+rules:
+  declaration-property-value-no-unknown: true
 ignoreFiles:
   - "**/*.js"
   - "**/*.ts"
