@@ -16,8 +16,8 @@
   &::after {
     margin: 0 0 0 20px;
   }
-}
 
-.thin-header ~ .thin-header {
-  padding-top: 3rem;
+  & ~ & {
+    padding-top: 3rem;
+  }
 }
