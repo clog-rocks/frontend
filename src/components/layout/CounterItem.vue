@@ -1,8 +1,7 @@
 <script setup lang="ts">
-const props = defineProps<{
-  value: number | string;
-  legend: string;
-}>();
+import { type CounterItemProps } from "@/types/generic";
+
+const props = defineProps<CounterItemProps>();
 </script>
 
 <template>
@@ -12,10 +11,10 @@ const props = defineProps<{
       mode="out-in"
     >
       <div :key="props.value">
-        <span class="counter__value">
+        <span class="counter value">
           {{ props.value }}
         </span>
-        <span class="counter__legend">
+        <span class="counter legend">
           {{ props.legend }}
         </span>
       </div>
@@ -23,17 +22,17 @@ const props = defineProps<{
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .counter {
   font-weight: 200;
   text-align: center;
 
-  &__value {
+  & .value {
     display: block;
     font-size: 2rem;
   }
 
-  &__legend {
+  & .legend {
     position: relative;
     bottom: 0.6em;
     font-size: 0.75rem;

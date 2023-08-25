@@ -2,26 +2,27 @@
 import { map, orderBy } from "lodash-es";
 import { computed, ref } from "vue";
 
-import { useLogbookStore } from "@/stores";
+import { useLogbookAscentStore } from "@/stores";
 import type { Ascent } from "@/types/logbook";
 
-const logbookStore = useLogbookStore();
 const show = ref(true);
+
+const ascentStore = useLogbookAscentStore();
 
 const sorted = computed(() =>
   orderBy(
-    map(logbookStore.ascents, (ascent: Ascent) => ascent),
+    map(ascentStore.ascents, (ascent: Ascent) => ascent),
     ["date", "date_added"],
-    ["desc", "desc"]
-  ).slice(0, 5)
+    ["desc", "desc"],
+  ).slice(0, 5),
 );
 
 const deleteAscent = async (id: number) => {
   try {
-    await logbookStore.deleteAscent(id);
+    await ascentStore.remove(id);
     return Promise.resolve();
   } catch (error) {
-    console.log("somethoing went wrogn");
+    console.log("Something went wrong deleting logbook/ascent.", error);
   }
 };
 </script>
@@ -43,9 +44,15 @@ const deleteAscent = async (id: number) => {
         <li
           v-for="ascent in sorted"
           :key="ascent.id"
-          @click="deleteAscent(ascent.id)"
+          @click.exact="
+            $router.push({
+              name: 'logbook-ascent-edit',
+              params: { ascentId: ascent.id },
+            })
+          "
+          @click.alt="deleteAscent(ascent.id)"
         >
-          <p>{{ ascent }}</p>
+          <pre>{{ ascent }}</pre>
         </li>
       </transition-group>
     </div>

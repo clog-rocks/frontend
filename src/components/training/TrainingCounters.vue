@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import CounterItem from "@/components/layout/CounterItem.vue";
-import { useTrainingStore } from "@/stores";
+import { useTrainingSessionStore } from "@/stores";
 
-const trainingStore = useTrainingStore();
+const sessionStore = useTrainingSessionStore();
 </script>
 
 <template>
@@ -10,22 +10,22 @@ const trainingStore = useTrainingStore();
     <CounterItem
       class="training-stats__item"
       legend="sessions"
-      :value="trainingStore.session_count"
+      :value="sessionStore.session_count"
     />
     <CounterItem
       class="training-stats__item"
       legend="gyms"
-      :value="trainingStore.gym_count"
+      :value="sessionStore.uniq_gyms_count"
     />
     <CounterItem
       class="training-stats__item"
       legend="cities"
-      :value="trainingStore.city_count"
+      :value="sessionStore.uniq_cities_count"
     />
     <CounterItem
       class="training-stats__item"
       legend="countries"
-      :value="trainingStore.country_count"
+      :value="sessionStore.uniq_countries_count"
     />
   </section>
 </template>
