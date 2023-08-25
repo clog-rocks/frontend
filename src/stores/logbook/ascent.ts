@@ -103,35 +103,29 @@ export const useLogbookAscentStore = defineStore("logbook/ascent", () => {
   async function create(ascent: AscentRequest) {
     try {
       const response = await logbookService.ascent.create(ascent);
-
       ascents.value[response.id] = response;
-
       return Promise.resolve(response);
     } catch (error) {
       console.log(error);
+      return Promise.reject(error);
     }
   }
 
   async function update(id: number, ascent: AscentRequest) {
     try {
       const response = await logbookService.ascent.update(id, ascent);
-
       ascents.value[response.id] = response;
-
       return Promise.resolve(response);
     } catch (error) {
       console.log(error);
+      return Promise.reject(error);
     }
   }
 
   async function remove(id: number) {
     try {
       const response = await logbookService.ascent.delete(id);
-
-      if (response.status === 204) {
-        delete ascents.value[id];
-      }
-
+      if (response.status === 204) delete ascents.value[id];
       return Promise.resolve(response);
     } catch (error) {
       return Promise.reject(error);

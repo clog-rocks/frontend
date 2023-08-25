@@ -12,62 +12,55 @@ const password2 = ref("");
 </script>
 
 <template>
-  <section>
+  <form @submit.prevent>
     <h1>Register</h1>
-    <form @submit.prevent>
-      <label
-        >Username
-        <input
-          id="username"
-          v-model="username"
-          autocomplete="username"
-          type="text"
-          autocorrect="off"
-          spellcheck="false"
-          required
-        />
-      </label>
-      <label
-        >E-Mail
-        <input
-          id="email"
-          v-model="email"
-          autocomplete="email"
-          spellcheck="false"
-          type="email"
-          autocorrect="off"
-          required
-        />
-      </label>
-      <label
-        >Password
-        <input
-          id="password"
-          v-model="password"
-          autocomplete="new-password"
-          spellcheck="false"
-          autocorrect="off"
-          type="password"
-          required
-        />
-      </label>
-      <label
-        >Confirm Password
-        <input
-          id="password2"
-          v-model="password2"
-          autocomplete="new-password"
-          spellcheck="false"
-          type="password"
-          autocorrect="off"
-          required
-        />
-      </label>
-      <button @click="userStore.register({ username, email, password })">
-        Create account
-      </button>
-    </form>
-
+    <label>
+      Username
+      <input
+        v-model="username"
+        autocomplete="username"
+        type="text"
+        autocorrect="off"
+        spellcheck="false"
+        required
+      />
+    </label>
+    <label>
+      E-Mail
+      <input
+        v-model="email"
+        autocomplete="email"
+        spellcheck="false"
+        type="email"
+        autocorrect="off"
+        required
+      />
+    </label>
+    <label>
+      Password
+      <input
+        v-model="password"
+        autocomplete="new-password"
+        spellcheck="false"
+        autocorrect="off"
+        type="password"
+        required
+      />
+    </label>
+    <label>
+      Confirm Password
+      <input
+        v-model="password2"
+        autocomplete="new-password"
+        spellcheck="false"
+        type="password"
+        autocorrect="off"
+        required
+      />
+    </label>
+    <button @click="userStore.register({ username, email, password })">
+      Create account
+    </button>
     <RouterLink :to="{ name: 'login' }">Login instead</RouterLink>
-  </section>
+  </form>
 </template>

@@ -32,8 +32,7 @@ export const useTrainingGymStore = defineStore("training/gym", () => {
     try {
       const response = await trainingService.gym.create(gym);
       gyms.value[response.id] = response;
-
-      return response;
+      return Promise.resolve(response);
     } catch (error) {
       console.log(error);
       return Promise.reject(error);

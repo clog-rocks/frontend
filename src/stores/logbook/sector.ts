@@ -32,12 +32,11 @@ export const useLogbookSectorStore = defineStore("logbook/sector", () => {
   async function create(sector: SectorRequest) {
     try {
       const response = await logbookService.sector.create(sector);
-
       sectors.value[response.id] = response;
-
       return Promise.resolve(response);
     } catch (error) {
       console.log(error);
+      return Promise.reject(error);
     }
   }
 

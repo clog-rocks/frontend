@@ -34,12 +34,11 @@ export const useLogbookRouteStore = defineStore("logbook/route", () => {
   async function create(route: RouteRequest) {
     try {
       const response = await logbookService.route.create(route);
-
       routes.value[response.id] = response;
-
       return Promise.resolve(response);
     } catch (error) {
       console.log(error);
+      return Promise.reject(error);
     }
   }
 

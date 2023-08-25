@@ -37,12 +37,11 @@ export const useLogbookCragStore = defineStore("logbook/crag", () => {
   async function create(crag: CragRequest) {
     try {
       const response = await logbookService.crag.create(crag);
-
       crags.value[response.id] = response;
-
       return Promise.resolve(response);
     } catch (error) {
       console.log(error);
+      return Promise.reject(error);
     }
   }
 

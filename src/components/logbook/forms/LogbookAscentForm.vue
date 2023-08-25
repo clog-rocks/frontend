@@ -91,116 +91,111 @@ const submit = async function () {
 </script>
 
 <template>
-  <div>
+  <form @submit.prevent>
     <p class="thin-header">{{ editing ? "Edit " : "Add new " }} ascent</p>
-    <form @submit.prevent>
-      <label>Route</label>
-      <VueMultiselect
-        id="route"
-        v-model="route"
-        :disabled="editing"
-        :options="stores.route.multiselect"
-        placeholder=""
-        label="id"
-        :allow-empty="false"
-        :hide-selected="true"
-        track-by="id"
-        :options-limit="20"
-      >
-        <template #singleLabel="{ option }">
-          {{ option.crag }}
-          /
-          {{ option.sector }}
-          /
-          <strong>{{ option.name }}</strong>
-          {{ option.grade }}
-        </template>
-        <template #option="{ option }">
-          {{ option.crag }}
-          /
-          {{ option.sector }}
-          /
-          <strong>{{ option.name }}</strong>
-          {{ option.grade }}
-        </template>
-      </VueMultiselect>
-      <pre>{{ route }}</pre>
-      <RouterLink
-        v-if="!editing"
-        :to="{ name: 'logbook-route-new' }"
-        >Add new route</RouterLink
-      >
+    <label for="route">Route</label>
+    <VueMultiselect
+      id="route"
+      v-model="route"
+      :disabled="editing"
+      :options="stores.route.multiselect"
+      placeholder=""
+      label="id"
+      :allow-empty="false"
+      :hide-selected="true"
+      track-by="id"
+      :options-limit="20"
+    >
+      <template #singleLabel="{ option }">
+        {{ option.crag }}
+        /
+        {{ option.sector }}
+        /
+        <strong>{{ option.name }}</strong>
+        {{ option.grade }}
+      </template>
+      <template #option="{ option }">
+        {{ option.crag }}
+        /
+        {{ option.sector }}
+        /
+        <strong>{{ option.name }}</strong>
+        {{ option.grade }}
+      </template>
+    </VueMultiselect>
+    <pre>{{ route }}</pre>
+    <RouterLink
+      v-if="!editing"
+      :to="{ name: 'logbook-route-new' }"
+      >Add new route</RouterLink
+    >
+    <label>
+      Date
+      <input
+        v-model="date"
+        type="date"
+      />
+    </label>
+    <fieldset>
+      <legend>Choose ascent style</legend>
       <label>
-        Date
+        OS
         <input
-          id="date"
-          v-model="date"
-          type="date"
+          v-model="style"
+          type="radio"
+          name="style"
+          value="1"
         />
       </label>
-      <fieldset>
-        <legend>Choose ascent style</legend>
+      <label>
+        Flash
+        <input
+          v-model="style"
+          type="radio"
+          name="style"
+          value="2"
+        />
+      </label>
+      <label>
+        Red Point
+        <input
+          v-model="style"
+          type="radio"
+          name="style"
+          value="3"
+        />
+      </label>
+    </fieldset>
+    <fieldset>
+      <legend>Choose style attributes</legend>
+      <div>
         <label>
-          OS
+          Second GO
           <input
-            id="OS"
-            v-model="style"
-            type="radio"
-            name="style"
-            value="1"
+            v-model="second_go"
+            type="checkbox"
+            name="scales"
           />
         </label>
+      </div>
+      <div>
         <label>
-          Flash
+          First Ascent
           <input
-            id="FL"
-            v-model="style"
-            type="radio"
-            name="style"
-            value="2"
+            v-model="first_ascent"
+            type="checkbox"
+            name="horns"
           />
         </label>
-        <label>
-          Red Point
-          <input
-            id="RP"
-            v-model="style"
-            type="radio"
-            name="style"
-            value="3"
-          />
-        </label>
-      </fieldset>
-      <fieldset>
-        <legend>Choose style attributes</legend>
-        <div>
-          <label>
-            Second GO
-            <input
-              id="second_go"
-              v-model="second_go"
-              type="checkbox"
-              name="scales"
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            First Ascent
-            <input
-              id="first_ascent"
-              v-model="first_ascent"
-              type="checkbox"
-              name="horns"
-            />
-          </label>
-        </div>
-      </fieldset>
-      <label>Comment</label>
-      <textarea v-model="comment"></textarea>
-      <button @click="submit()">
-        {{ editing ? "Save changes" : "Add new ascent" }}
-      </button>
-    </form>
-  </div>
+      </div>
+    </fieldset>
+    <label for="comment">Comment</label>
+    <textarea
+      id="comment"
+      v-model="comment"
+    />
+    <button @click="submit()">
+      {{ editing ? "Save changes" : "Add new ascent" }}
+    </button>
+  </form>
 </template>

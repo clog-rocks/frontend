@@ -51,7 +51,7 @@ watchEffect(() => {
   const sessionId = props.sessionId;
   if (!sessionId) return;
 
-  const session = stores.session.sessions[sessionId];
+  session = stores.session.sessions[sessionId];
   editing = true;
   gym.value = getGym(session.gym);
   date.value = session.date;
@@ -92,69 +92,69 @@ const addTag = function (newTag: string) {
 </script>
 
 <template>
-  <div>
+  <form @submit.prevent>
     <p class="thin-header">{{ editing ? "Edit " : "Add new" }} session</p>
-    <form @submit.prevent>
-      <label>Gym</label>
-      <VueMultiselect
-        id="gym"
-        v-model="gym"
-        :options="stores.gym.multiselect"
-        placeholder=""
-        label="gym"
-        :allow-empty="false"
-        :hide-selected="true"
-        track-by="id"
-        :options-limit="20"
-      >
-        <template #singleLabel="{ option }">
-          {{ option.country }}
-          /
-          {{ option.city }}
-          /
-          <strong>{{ option.gym }}</strong>
-        </template>
-        <template #option="{ option }">
-          {{ option.country }}
-          /
-          {{ option.city }}
-          /
-          <strong>{{ option.gym }}</strong>
-        </template>
-      </VueMultiselect>
-      <RouterLink :to="{ name: 'training-gym-new' }">Add new gym</RouterLink>
-      <pre>{{ gym }}</pre>
-      <label>Date</label>
+    <label for="gym">Gym</label>
+    <VueMultiselect
+      id="gym"
+      v-model="gym"
+      :options="stores.gym.multiselect"
+      placeholder=""
+      label="gym"
+      :allow-empty="false"
+      :hide-selected="true"
+      track-by="id"
+      :options-limit="20"
+    >
+      <template #singleLabel="{ option }">
+        {{ option.country }}
+        /
+        {{ option.city }}
+        /
+        <strong>{{ option.gym }}</strong>
+      </template>
+      <template #option="{ option }">
+        {{ option.country }}
+        /
+        {{ option.city }}
+        /
+        <strong>{{ option.gym }}</strong>
+      </template>
+    </VueMultiselect>
+    <RouterLink :to="{ name: 'training-gym-new' }">Add new gym</RouterLink>
+    <pre>{{ gym }}</pre>
+    <label>
+      Date
       <input
-        id="date"
         v-model="date"
         required
         type="date"
       />
-      <label>Comment</label>
-      <input
-        v-model="comment"
-        type="text"
-      />
-      <label>Tags</label>
-      <multiselect
-        v-model="tags"
-        tag-placeholder="Add this as new tag"
-        placeholder="Search or add a tag"
-        label="name"
-        track-by="name"
-        :options="Object.values(stores.tag.tags)"
-        tag-position="bottom"
-        :multiple="true"
-        :taggable="true"
-        :clear-on-select="false"
-        :close-on-select="true"
-        :max-height="200"
-        :hide-selected="true"
-        @tag="addTag"
-      />
-      <pre>{{ tags }}</pre>
-      <button @click="submit()">Add</button>
-    </form>
-  </div>
+    </label>
+    <label for="comment">Comment</label>
+    <input
+      id="comment"
+      v-model="comment"
+      type="text"
+    />
+    <label for="tags">Tags</label>
+    <multiselect
+      v-model="tags"
+      tag-placeholder="Add this as new tag"
+      placeholder="Search or add a tag"
+      label="name"
+      track-by="name"
+      :options="Object.values(stores.tag.tags)"
+      tag-position="bottom"
+      :multiple="true"
+      :taggable="true"
+      :clear-on-select="false"
+      :close-on-select="true"
+      :max-height="200"
+      :hide-selected="true"
+      @tag="addTag"
+    />
+    <pre>{{ tags }}</pre>
+    <button @click="submit()">Add</button>
+  </form>
 </template>

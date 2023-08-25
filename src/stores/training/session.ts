@@ -59,9 +59,7 @@ export const useTrainingSessionStore = defineStore("training/session", () => {
   async function create(session: TrainingSessionRequest) {
     try {
       const response = await trainingService.session.create(session);
-
       sessions.value[response.id] = response;
-
       return Promise.resolve(response);
     } catch (error) {
       console.log(error);
@@ -94,11 +92,7 @@ export const useTrainingSessionStore = defineStore("training/session", () => {
   async function remove(id: number) {
     try {
       const response = await trainingService.session.delete(id);
-
-      if (response.status === 204) {
-        delete sessions.value[id];
-      }
-
+      if (response.status === 204) delete sessions.value[id];
       return Promise.resolve(response);
     } catch (error) {
       return Promise.reject(error);
@@ -108,14 +102,10 @@ export const useTrainingSessionStore = defineStore("training/session", () => {
   async function update(id: number, session: TrainingSessionRequest) {
     try {
       const response = await trainingService.session.update(id, session);
-
-      if (response.status === 200) {
-        sessions.value[id] = response.data;
-      }
-
-      return response;
+      if (response.status === 200) sessions.value[id] = response.data;
+      return Promise.resolve(response);
     } catch (error) {
-      return undefined;
+      return Promise.reject(error);
     }
   }
 

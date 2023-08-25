@@ -42,9 +42,9 @@ const submit = async function () {
 </script>
 
 <template>
-  <div>
+  <form @submit.prevent>
     <p class="thin-header">New climbing gym</p>
-    <label>City</label>
+    <label for="route">City</label>
     <VueMultiselect
       id="route"
       v-model="city"
@@ -65,15 +65,16 @@ const submit = async function () {
     </VueMultiselect>
     <RouterLink :to="{ name: 'core-city-new' }">Add new city</RouterLink>
     <pre>{{ city }}</pre>
-    <label>Gym</label>
-    <input
-      id="gym"
-      v-model="gym"
-      type="text"
-      autocorrect="off"
-      spellcheck="false"
-      required
-    />
+    <label>
+      Gym
+      <input
+        v-model="gym"
+        type="text"
+        autocorrect="off"
+        spellcheck="false"
+        required
+      />
+    </label>
     <button @click="submit()">Add</button>
-  </div>
+  </form>
 </template>

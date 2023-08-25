@@ -3,41 +3,41 @@ import { ref } from "vue";
 import VueMultiselect from "vue-multiselect";
 
 import router from "@/router";
-import { useCoreCityStore } from "@/stores/core/city";
-import { useCoreCountryStore } from "@/stores/core/country";
-import { type Country } from "@/types/core";
-
-const city = ref<string>();
-const country = ref<Country>();
+import { useCoreCountryStore, useLogbookCragStore } from "@/stores";
+import { type CragMultiselect, type CragRequest } from "@/types/logbook";
 
 const stores = {
-  city: useCoreCityStore(),
+  crag: useLogbookCragStore(),
   country: useCoreCountryStore(),
 };
 
+const country = ref<CragMultiselect>();
+const name = ref<string>();
+
 const submit = async function () {
   // TODO: validate
-  if (!city.value || !country.value) return;
+  if (!name.value || !country.value) return;
+
+  const payload: CragRequest = {
+    name: name.value,
+    country: country.value.id,
+  };
 
   try {
-    const newCity = await stores.city.create({
-      name: city.value,
-      country: country.value.id,
-    });
-
+    const newCrag = await stores.crag.create(payload);
     router.push({
-      name: "training-gym-new",
-      params: { cityId: newCity.id },
+      name: "logbook-sector-new",
+      params: { cragId: newCrag.id },
     });
   } catch (error) {
-    console.log("Something went wrong submitting core/city: ", error);
+    console.log("Something went wrong submitting logbook/route.", error);
   }
 };
 </script>
 
 <template>
   <form @submit.prevent>
-    <p class="thin-header">New city</p>
+    <p class="thin-header">Add new crag</p>
     <label for="country">Country</label>
     <VueMultiselect
       id="country"
@@ -48,19 +48,19 @@ const submit = async function () {
       :allow-empty="false"
       :hide-selected="true"
       track-by="id"
+      :options-limit="20"
     />
     <pre>{{ country }}</pre>
     <label>
-      City
+      Crag
       <input
-        id="city"
-        v-model="city"
+        v-model="name"
         type="text"
         autocorrect="off"
         spellcheck="false"
         required
       />
     </label>
-    <button @click="submit()">Add</button>
+    <button @click="submit()">Add new crag</button>
   </form>
 </template>
