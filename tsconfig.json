@@ -1,9 +1,8 @@
 {
-  "strict": true,
   "files": [],
   "references": [
     {
-      "path": "./tsconfig.config.json"
+      "path": "./tsconfig.node.json"
     },
     {
       "path": "./tsconfig.app.json"
