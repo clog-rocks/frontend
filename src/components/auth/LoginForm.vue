@@ -9,12 +9,11 @@ const password = ref("");
 </script>
 
 <template>
-  <section>
+  <form @submit.prevent>
     <h1>Login</h1>
-    <form @submit.prevent>
-      <label for="username">Username</label>
+    <label>
+      Username
       <input
-        id="username"
         v-model="username"
         autocomplete="username"
         type="text"
@@ -22,9 +21,10 @@ const password = ref("");
         spellcheck="false"
         required
       />
-      <label for="password">Password</label>
+    </label>
+    <label>
+      Password
       <input
-        id="password"
         v-model="password"
         autocomplete="current-password"
         spellcheck="false"
@@ -32,8 +32,8 @@ const password = ref("");
         type="password"
         required
       />
-      <button @click="userStore.login(username, password)">Login</button>
-    </form>
+    </label>
+    <button @click="userStore.login(username, password)">Login</button>
     <RouterLink :to="{ name: 'register' }">Register instead</RouterLink>
-  </section>
+  </form>
 </template>

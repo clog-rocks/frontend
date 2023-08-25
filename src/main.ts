@@ -1,10 +1,12 @@
 import "./assets/main.css";
+import "vue-multiselect/dist/vue-multiselect.css";
 
 import Cookies from "js-cookie";
 import { createPinia } from "pinia";
 import { createApp } from "vue";
 
 import App from "@/App.vue";
+import NavigationBar from "@/components/layout/NavigationBar.vue";
 import router from "@/router";
 import api from "@/services/api";
 import { useUserStore } from "@/stores";
@@ -17,31 +19,25 @@ pinia.use(resetStore);
 const app = createApp(App);
 app.use(pinia);
 app.use(router);
+app.component("NavigationBar", NavigationBar);
 
 const userStore = useUserStore();
 
-// vue-router: route guard
+// Don't allow authenticated users to access Auth View.
 router.beforeEach(async (to) => {
-  // Don't allow authenticated users to access Auth View.
   if (!to.meta.requiresAuth && userStore.isAuthenticated) {
     return { name: "logbook" };
   }
+});
 
-  // Make sure the user is authenticated &
-  // Avoid an infinite redirects.
+// Make sure the user is authenticated &
+router.beforeEach(async (to) => {
   if (to.meta.requiresAuth && !userStore.isAuthenticated) {
     return {
       name: "login",
       replace: true,
       query: { redirect: to.fullPath },
     };
-  }
-
-  const isLogoutRoute = to.matched.some((record) => record.name === "logout");
-
-  if (isLogoutRoute) {
-    userStore.logout();
-    return;
   }
 });
 
@@ -57,7 +53,7 @@ api.interceptors.response.use(
           break;
       }
     }
-  }
+  },
 );
 
 api.interceptors.request.use((config) => {
@@ -73,7 +69,6 @@ api.interceptors.request.use((config) => {
     csrftoken !== undefined &&
     config.url !== "/api/auth/login/"
   ) {
-    console.log("not safe, setting header");
     config!.headers![config.xsrfHeaderName!] = csrftoken;
   }
 

@@ -12,12 +12,11 @@ const password2 = ref("");
 </script>
 
 <template>
-  <section>
+  <form @submit.prevent>
     <h1>Register</h1>
-    <label for="username">Username</label>
-    <form @submit.prevent>
+    <label>
+      Username
       <input
-        id="username"
         v-model="username"
         autocomplete="username"
         type="text"
@@ -25,9 +24,10 @@ const password2 = ref("");
         spellcheck="false"
         required
       />
-      <label for="email">E-Mail</label>
+    </label>
+    <label>
+      E-Mail
       <input
-        id="email"
         v-model="email"
         autocomplete="email"
         spellcheck="false"
@@ -35,9 +35,10 @@ const password2 = ref("");
         autocorrect="off"
         required
       />
-      <label for="password">Password</label>
+    </label>
+    <label>
+      Password
       <input
-        id="password"
         v-model="password"
         autocomplete="new-password"
         spellcheck="false"
@@ -45,9 +46,10 @@ const password2 = ref("");
         type="password"
         required
       />
-      <label for="password2">Confirm Password</label>
+    </label>
+    <label>
+      Confirm Password
       <input
-        id="password2"
         v-model="password2"
         autocomplete="new-password"
         spellcheck="false"
@@ -55,11 +57,10 @@ const password2 = ref("");
         autocorrect="off"
         required
       />
-      <button @click="userStore.register({ username, email, password })">
-        Create account
-      </button>
-    </form>
-
+    </label>
+    <button @click="userStore.register({ username, email, password })">
+      Create account
+    </button>
     <RouterLink :to="{ name: 'login' }">Login instead</RouterLink>
-  </section>
+  </form>
 </template>

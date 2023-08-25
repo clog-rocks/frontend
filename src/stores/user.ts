@@ -7,8 +7,8 @@ import router from "@/router";
 import { userService } from "@/services";
 import type { Profile, User, UserRegister, UserResponse } from "@/types/auth";
 
-import { useLogbookStore } from "./logbook";
-import { useTrainingStore } from "./training";
+import { useCoreCityStore, useTrainingSessionStore } from ".";
+import { useLogbookAscentStore } from "./logbook/ascent";
 
 export const useUserStore = defineStore("user", () => {
   const { _status, status } = useStoreStatus();
@@ -17,7 +17,7 @@ export const useUserStore = defineStore("user", () => {
   const user: Ref<User | null> = useLocalStorage("pinia/user", null, {
     serializer: StorageSerializers.object,
   });
-  const profile: Ref<Profile | null> = ref(null);
+  const profile = ref<Profile>();
 
   async function login(username: string, password: string) {
     try {
@@ -34,7 +34,7 @@ export const useUserStore = defineStore("user", () => {
       router.push(
         (router.currentRoute.value.query.redirect as string) || {
           name: "logbook",
-        }
+        },
       );
       return Promise.resolve(login_response);
     } catch (error) {
@@ -49,7 +49,7 @@ export const useUserStore = defineStore("user", () => {
     }
 
     user.value = null;
-    profile.value = null;
+    profile.value = undefined;
     isAuthenticated.value = false;
 
     const logbookStore = useLogbookStore();

@@ -2,27 +2,27 @@
 import { map, orderBy } from "lodash-es";
 import { computed, ref } from "vue";
 
-import { useTrainingStore } from "@/stores";
+import { useTrainingSessionStore } from "@/stores";
 import type { TrainingSession } from "@/types/training";
 
-const trainingStore = useTrainingStore();
+const sessionStore = useTrainingSessionStore();
 
 const show = ref(true);
 
 const sorted = computed(() =>
   orderBy(
-    map(trainingStore.sessions, (session: TrainingSession) => session),
+    map(sessionStore.sessions, (session: TrainingSession) => session),
     ["date", "date_added"],
-    ["desc", "desc"]
-  ).slice(0, 5)
+    ["desc", "desc"],
+  ).slice(0, 5),
 );
 
 const deleteSession = async (id: number) => {
   try {
-    await trainingStore.deleteSession(id);
+    await sessionStore.remove(id);
     return Promise.resolve();
   } catch (error) {
-    console.log("somethoing went wrogn");
+    console.log("Something went wrong deleting session.", error);
   }
 };
 </script>
@@ -44,9 +44,15 @@ const deleteSession = async (id: number) => {
         <li
           v-for="session in sorted"
           :key="session.id"
-          @click="deleteSession(session.id)"
+          @click.exact="
+            $router.push({
+              name: 'training-session-edit',
+              params: { sessionId: session.id },
+            })
+          "
+          @click.alt="deleteSession(session.id)"
         >
-          <p>{{ session }}</p>
+          <pre>{{ session }}</pre>
         </li>
       </transition-group>
     </div>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import CounterItem from "@/components/layout/CounterItem.vue";
-import { useLogbookStore } from "@/stores";
+import { useLogbookAscentStore } from "@/stores";
 
-const logbookStore = useLogbookStore();
+const ascentStore = useLogbookAscentStore();
 </script>
 
 <template>
@@ -12,30 +12,30 @@ const logbookStore = useLogbookStore();
       <CounterItem
         class="history-sums__item"
         legend="ascents"
-        :value="logbookStore.ascent_count"
+        :value="ascentStore.ascent_count"
       />
       <CounterItem
         class="history-sums__item"
         legend="crag visits"
-        :value="logbookStore.crag_visit_count"
+        :value="ascentStore.crag_visit_count"
       />
       <div class="counters__header history-sums__item">last year</div>
       <CounterItem
         class="history-sums__item"
         legend="ascents"
-        :value="logbookStore.ascent_last_year_count"
+        :value="ascentStore.ascent_last_year_count"
       />
       <CounterItem
         class="history-sums__item"
         legend="crag visits"
-        :value="logbookStore.crag_visit_last_year_count"
+        :value="ascentStore.crag_visit_last_year_count"
       />
     </section>
 
     <section class="counters top-grades">
       <div class="counters__header top-grades__item">top grades</div>
       <transition-group
-        v-for="i in logbookStore.top_grades"
+        v-for="i in ascentStore.top_grades"
         :key="i.style.id"
         name="list"
         tag="div"
