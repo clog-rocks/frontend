@@ -1,13 +1,33 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import LoginForm from "@/components/auth/LoginForm.vue";
 import { useUserStore } from "@/stores";
-import AppView from "@/views/AppView.vue";
-import AuthView from "@/views/AuthView.vue";
 
-const RegisterForm = () => import("@/components/auth/RegisterForm.vue");
+const AppView = () => import("@/views/AppView.vue");
+const AuthView = () => import("@/views/AuthView.vue");
 const LogbookSummaryView = () =>
   import("@/views/logbook/LogbookSummaryView.vue");
+const LogbookNewAscentButton = () =>
+  import("@/components/logbook/LogbookNewAscentButton.vue");
+const LogbookAscentForm = () =>
+  import("@/components/logbook/forms/LogbookAscentForm.vue");
+const LogbookRouteForm = () =>
+  import("@/components/logbook/forms/LogbookRouteForm.vue");
+const LogbookSectorForm = () =>
+  import("@/components/logbook/forms/LogbookSectorForm.vue");
+const LogbookCragForm = () =>
+  import("@/components/logbook/forms/LogbookCragForm.vue");
+const TrainingSummaryView = () =>
+  import("@/views/training/TrainingSummaryView.vue");
+const TrainingNewSessionButton = () =>
+  import("@/components/training/TrainingNewSessionButton.vue");
+const RegisterForm = () => import("@/components/auth/RegisterForm.vue");
+const LoginForm = () => import("@/components/auth/LoginForm.vue");
+const UserView = () => import("@/views/user/UserView.vue");
+const CoreCityForm = () => import("@/components/core/forms/CoreCityForm.vue");
+const TrainingGymForm = () =>
+  import("@/components/training/forms/TrainingGymForm.vue");
+const TrainingSessionForm = () =>
+  import("@/components/training/forms/TrainingSessionForm.vue");
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,14 +45,12 @@ const router = createRouter({
             {
               path: "",
               name: "logbook",
-              component: () =>
-                import("@/components/logbook/LogbookNewAscentButton.vue"),
+              component: LogbookNewAscentButton,
             },
             {
-              path: "edit/:ascentId(\\d+)",
+              path: "ascent/:ascentId(\\d+)/edit",
               name: "logbook-ascent-edit",
-              component: () =>
-                import("@/components/logbook/forms/LogbookAscentForm.vue"),
+              component: LogbookAscentForm,
               props: (route) => ({
                 ascentId: parseInt(route.params.ascentId as string),
               }),
@@ -40,8 +58,7 @@ const router = createRouter({
             {
               path: "new/:routeId(\\d+)?",
               name: "logbook-ascent-new",
-              component: () =>
-                import("@/components/logbook/forms/LogbookAscentForm.vue"),
+              component: LogbookAscentForm,
               props: (route) => ({
                 routeId: parseInt(route.params.routeId as string),
               }),
@@ -49,8 +66,7 @@ const router = createRouter({
             {
               path: "route/new/:sectorId(\\d+)?",
               name: "logbook-route-new",
-              component: () =>
-                import("@/components/logbook/forms/LogbookRouteForm.vue"),
+              component: LogbookRouteForm,
               props: (route) => ({
                 sectorId: parseInt(route.params.sectorId as string),
               }),
@@ -58,8 +74,7 @@ const router = createRouter({
             {
               path: "sector/new/:cragId(\\d+)?",
               name: "logbook-sector-new",
-              component: () =>
-                import("@/components/logbook/forms/LogbookSectorForm.vue"),
+              component: LogbookSectorForm,
               props: (route) => ({
                 cragId: parseInt(route.params.cragId as string),
               }),
@@ -67,8 +82,7 @@ const router = createRouter({
             {
               path: "crag/new",
               name: "logbook-crag-new",
-              component: () =>
-                import("@/components/logbook/forms/LogbookCragForm.vue"),
+              component: LogbookCragForm,
             },
           ],
         },
@@ -81,19 +95,17 @@ const router = createRouter({
       children: [
         {
           path: "",
-          component: () => import("@/views/training/TrainingSummaryView.vue"),
+          component: TrainingSummaryView,
           children: [
             {
               path: "",
               name: "training",
-              component: () =>
-                import("@/components/training/TrainingNewSessionButton.vue"),
+              component: TrainingNewSessionButton,
             },
             {
-              path: "edit/:sessionId(\\d+)?",
+              path: "session/:sessionId(\\d+)/edit",
               name: "training-session-edit",
-              component: () =>
-                import("@/components/training/forms/TrainingSessionForm.vue"),
+              component: TrainingSessionForm,
               props: (route) => ({
                 sessionId: parseInt(route.params.sessionId as string),
               }),
@@ -101,8 +113,7 @@ const router = createRouter({
             {
               path: "new/:gymId(\\d+)?",
               name: "training-session-new",
-              component: () =>
-                import("@/components/training/forms/TrainingSessionForm.vue"),
+              component: TrainingSessionForm,
               props: (route) => ({
                 gymId: parseInt(route.params.gymId as string),
               }),
@@ -110,8 +121,7 @@ const router = createRouter({
             {
               path: "gym/:cityId(\\d+)?",
               name: "training-gym-new",
-              component: () =>
-                import("@/components/training/forms/TrainingGymForm.vue"),
+              component: TrainingGymForm,
               props: (route) => ({
                 cityId: parseInt(route.params.cityId as string),
               }),
@@ -119,8 +129,7 @@ const router = createRouter({
             {
               path: "city",
               name: "core-city-new",
-              component: () =>
-                import("@/components/core/forms/CoreCityForm.vue"),
+              component: CoreCityForm,
             },
           ],
         },
@@ -134,7 +143,7 @@ const router = createRouter({
         {
           path: "",
           name: "user",
-          component: () => import("@/views/user/UserView.vue"),
+          component: UserView,
         },
       ],
     },
