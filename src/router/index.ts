@@ -1,3 +1,4 @@
+import NProgress from "nprogress";
 import { createRouter, createWebHistory } from "vue-router";
 
 import { useUserStore } from "@/stores";
@@ -171,6 +172,22 @@ const router = createRouter({
       ],
     },
   ],
+});
+
+router.beforeEach((to, from) => {
+  if (
+    to.matched[0] &&
+    to.matched[0].path == "/auth" &&
+    from.matched[0] &&
+    from.matched[0].path == "/auth"
+  )
+    return;
+  console.log(from);
+  if (to.path !== from.path) NProgress.start();
+});
+
+router.afterEach(() => {
+  NProgress.done();
 });
 
 export default router;
