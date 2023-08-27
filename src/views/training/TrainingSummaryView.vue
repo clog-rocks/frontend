@@ -32,16 +32,18 @@ onMounted(async () => {
       v-else-if="stores.session.status.fetched && stores.session.hasSessions"
     >
       <TrainingCounters />
-      <router-view v-slot="{ Component }">
-        <transition
-          name="fast-fade"
-          mode="out-in"
-        >
-          <component :is="Component" />
-        </transition>
-      </router-view>
+      <section>
+        <router-view v-slot="{ Component }">
+          <transition
+            name="fast-fade"
+            mode="out-in"
+          >
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </section>
       <TrainingSessions />
-      <div class="thin-header">Top gyms</div>
+      <h1>Top gyms</h1>
       <!-- <TopGymsTable /> -->
     </div>
     <RouterLink

@@ -37,7 +37,7 @@ const submit = async function () {
 
 <template>
   <form @submit.prevent>
-    <p class="thin-header">New city</p>
+    <h1>Add new city</h1>
     <label for="country">Country</label>
     <VueMultiselect
       id="country"

@@ -30,16 +30,16 @@ onMounted(async () => {
     </div>
     <div v-else-if="stores.ascent.hasAscents">
       <LogbookCounters />
-
-      <router-view v-slot="{ Component }">
-        <transition
-          name="fast-fade"
-          mode="out-in"
-        >
-          <component :is="Component" />
-        </transition>
-      </router-view>
-
+      <section>
+        <router-view v-slot="{ Component }">
+          <transition
+            name="fast-fade"
+            mode="out-in"
+          >
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </section>
       <LogbookAscents />
     </div>
     <RouterLink

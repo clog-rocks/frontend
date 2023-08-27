@@ -28,15 +28,12 @@ const deleteSession = async (id: number) => {
 </script>
 
 <template>
-  <div
-    class="thin-header"
-    @click="show = !show"
-  >
-    Training sessions
-  </div>
-  <transition name="fade">
-    <div v-if="show">
+  <section>
+    <h1>Latest</h1>
+    <span @click="show = !show">click to {{ show ? "hide" : "show" }}</span>
+    <transition name="fade">
       <transition-group
+        v-if="show"
         tag="ul"
         name="list"
         appear
@@ -55,8 +52,8 @@ const deleteSession = async (id: number) => {
           <pre>{{ session }}</pre>
         </li>
       </transition-group>
-    </div>
-  </transition>
+    </transition>
+  </section>
 </template>
 
 <style scoped>

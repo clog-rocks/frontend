@@ -45,7 +45,7 @@ const submit = async function () {
 
 <template>
   <form @submit.prevent>
-    <p class="thin-header">Add new sector</p>
+    <h1>Add new sector</h1>
     <label for="crag">Crag</label>
     <VueMultiselect
       id="crag"

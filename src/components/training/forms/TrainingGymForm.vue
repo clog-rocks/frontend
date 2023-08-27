@@ -30,7 +30,6 @@ const submit = async function () {
       name: gym.value,
       city: city.value.id,
     });
-
     router.push({
       name: "training-session-new",
       params: { gymId: newGym.id },
@@ -43,7 +42,7 @@ const submit = async function () {
 
 <template>
   <form @submit.prevent>
-    <p class="thin-header">New climbing gym</p>
+    <h1>Add new climbing gym</h1>
     <label for="route">City</label>
     <VueMultiselect
       id="route"

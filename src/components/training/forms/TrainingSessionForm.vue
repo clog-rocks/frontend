@@ -93,7 +93,7 @@ const addTag = function (newTag: string) {
 
 <template>
   <form @submit.prevent>
-    <p class="thin-header">{{ editing ? "Edit " : "Add new" }} session</p>
+    <h1>{{ editing ? "Edit " : "Add new" }} training session</h1>
     <label for="gym">Gym</label>
     <VueMultiselect
       id="gym"
