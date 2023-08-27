@@ -33,7 +33,7 @@ onMounted(async () => {
       <section>
         <router-view v-slot="{ Component }">
           <transition
-            name="fast-fade"
+            name="very-fast-fade"
             mode="out-in"
           >
             <component :is="Component" />

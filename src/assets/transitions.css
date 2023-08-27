@@ -2,7 +2,9 @@
 .fade-enter-from,
 .fade-leave-to,
 .fast-fade-enter-from,
-.fast-fade-leave-to {
+.fast-fade-leave-to,
+.very-fast-fade-enter-from,
+.very-fast-fade-leave-to {
   opacity: 0;
 }
 
@@ -14,6 +16,11 @@
 .fast-fade-enter-active,
 .fast-fade-leave-active {
   transition: opacity 0.25s ease;
+}
+
+.very-fast-fade-enter-active,
+.very-fast-fade-leave-active {
+  transition: opacity 0.1s ease;
 }
 
 /* component fade */
