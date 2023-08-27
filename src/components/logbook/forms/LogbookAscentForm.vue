@@ -92,7 +92,7 @@ const submit = async function () {
 
 <template>
   <form @submit.prevent>
-    <p class="thin-header">{{ editing ? "Edit " : "Add new " }} ascent</p>
+    <h1>{{ editing ? "Edit " : "Add new " }} ascent</h1>
     <label for="route">Route</label>
     <VueMultiselect
       id="route"
