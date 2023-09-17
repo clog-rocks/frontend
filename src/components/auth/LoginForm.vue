@@ -1,39 +1,50 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { helpers, required } from "@vuelidate/validators";
+import { reactive, unref } from "vue";
 
+import FormInput from "@/components/layout/FormInput.vue";
 import { useUserStore } from "@/stores";
 
 const userStore = useUserStore();
-const username = ref("");
-const password = ref("");
+
+const state = reactive({
+  username: "",
+  password: "",
+});
+
+const rules = {
+  username: { required: helpers.withMessage("Username is required", required) },
+  password: {
+    required: helpers.withMessage("Password is required", required),
+  },
+};
+
+const v$ = useVuelidate(rules, state);
+
+async function submit() {
+  const formValid = await unref(v$).$validate();
+  if (formValid) userStore.login(state.username, state.password);
+}
 </script>
 
 <template>
   <form @submit.prevent>
     <h1>Login</h1>
-    <label>
-      Username
-      <input
-        v-model="username"
-        autocomplete="username"
-        type="text"
-        autocorrect="off"
-        spellcheck="false"
-        required
-      />
-    </label>
-    <label>
-      Password
-      <input
-        v-model="password"
-        autocomplete="current-password"
-        spellcheck="false"
-        autocorrect="off"
-        type="password"
-        required
-      />
-    </label>
-    <button @click="userStore.login(username, password)">Login</button>
+    <FormInput
+      v-model="state.username"
+      autocomplete="username"
+      label="Username"
+      :validator="v$.username"
+    />
+    <FormInput
+      v-model="state.password"
+      autocomplete="password"
+      label="Password"
+      type="password"
+      :validator="v$.password"
+    />
+    <button @click="submit()">Login</button>
     <RouterLink :to="{ name: 'register' }">Register instead</RouterLink>
   </form>
 </template>
