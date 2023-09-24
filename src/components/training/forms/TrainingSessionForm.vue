@@ -44,7 +44,7 @@ const comment = ref<string>();
 const tags: Ref<Tag[]> = ref([]);
 
 const rules = {
-  gym: { required: helpers.withMessage("You must select a gym", required) },
+  gym: { required: helpers.withMessage("Gym is required", required) },
   date: { required: helpers.withMessage("Date is required", required) },
 };
 
