@@ -3,7 +3,7 @@ import FormFieldError from "@/components/layout/FormFieldError.vue";
 
 const modelValue = defineModel<string>();
 const props = defineProps({
-  autocomplete: { type: String, required: true },
+  autocomplete: { type: String, default: "off" },
   label: { type: String, required: true },
   type: { type: String, default: "text" },
   validator: { type: Object, required: true },
