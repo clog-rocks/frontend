@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { helpers, required } from "@vuelidate/validators";
+import { ref, unref } from "vue";
 import VueMultiselect from "vue-multiselect";
 
+import FormFieldError from "@/components/layout/FormFieldError.vue";
+import FormInput from "@/components/layout/FormInput.vue";
 import router from "@/router";
 import { useLogbookRouteStore } from "@/stores";
 import { useLogbookGradeStore } from "@/stores/logbook/grade";
@@ -30,24 +34,32 @@ const sector = ref<SectorMultiselect | undefined>(
 );
 const grade = ref<Grade>();
 
+const rules = {
+  sector: { required: helpers.withMessage("Sector is required", required) },
+  grade: { required: helpers.withMessage("Grade is required", required) },
+  name: { required: helpers.withMessage("Sector is requried", required) },
+};
+
+const v$ = useVuelidate(rules, { sector, grade, name });
+
 const submit = async function () {
-  // TODO: validate
-  if (!name.value || !sector.value || !grade.value) return;
+  const formValid = await unref(v$).$validate();
+  if (formValid && name.value && sector.value && grade.value) {
+    const payload: RouteRequest = {
+      name: name.value,
+      sector: sector.value.id,
+      grade: grade.value.id,
+    };
 
-  const payload: RouteRequest = {
-    name: name.value,
-    sector: sector.value.id,
-    grade: grade.value.id,
-  };
-
-  try {
-    const newRoute = await stores.route.create(payload);
-    router.push({
-      name: "logbook-ascent-new",
-      params: { routeId: newRoute.id },
-    });
-  } catch (error) {
-    console.log("Something went wrong submitting logbook/route.", error);
+    try {
+      const newRoute = await stores.route.create(payload);
+      router.push({
+        name: "logbook-ascent-new",
+        params: { routeId: newRoute.id },
+      });
+    } catch (error) {
+      console.log("Something went wrong submitting logbook/route.", error);
+    }
   }
 };
 </script>
@@ -55,9 +67,9 @@ const submit = async function () {
 <template>
   <form @submit.prevent>
     <h1>Add new route</h1>
-    <label for="sector">Sector</label>
+    <label for="id_sector">Sector</label>
     <VueMultiselect
-      id="sector"
+      id="id_sector"
       v-model="sector"
       :options="stores.sector.multiselect"
       placeholder=""
@@ -67,14 +79,11 @@ const submit = async function () {
       track-by="id"
       :options-limit="20"
     >
-      <template #singleLabel="{ option }">
-        {{ option.country }}
-        /
-        {{ option.crag }}
-        /
-        <strong>{{ option.name }}</strong>
-      </template>
-      <template #option="{ option }">
+      <template
+        v-for="slotName in ['option', 'singleLabel']"
+        #[slotName]="{ option }"
+        :key="slotName"
+      >
         {{ option.country }}
         /
         {{ option.crag }}
@@ -82,11 +91,12 @@ const submit = async function () {
         <strong>{{ option.name }}</strong>
       </template>
     </VueMultiselect>
+    <FormFieldError :field="v$.sector" />
     <pre>{{ sector }}</pre>
     <RouterLink :to="{ name: 'logbook-sector-new' }">Add new sector</RouterLink>
-    <label for="grade">Grade</label>
+    <label for="id_grade">Grade</label>
     <VueMultiselect
-      id="grade"
+      id="id_grade"
       v-model="grade"
       :options="Object.values(stores.grade.grades)"
       placeholder=""
@@ -95,16 +105,12 @@ const submit = async function () {
       :hide-selected="true"
       track-by="id"
     />
-    <label>
-      Route
-      <input
-        v-model="name"
-        type="text"
-        autocorrect="off"
-        spellcheck="false"
-        required
-      />
-    </label>
+    <FormFieldError :field="v$.grade" />
+    <FormInput
+      v-model="name"
+      label="Route"
+      :validator="v$.name"
+    />
     <button @click="submit()">Add new route</button>
   </form>
 </template>
