@@ -22,3 +22,32 @@ a,
     place-items: center;
   }
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  min-width: 500px;
+  padding: 0.75rem;
+  background-color: var(--color-background-soft);
+
+  & label {
+    padding-top: 1rem;
+    font-size: 0.85rem;
+  }
+
+  & input {
+    box-sizing: border-box;
+    width: 100%;
+    color: inherit;
+    background-color: inherit;
+    border-color: var(--text);
+    border-width: 0 0 1px;
+    transition: border-color 0.2s ease;
+  }
+
+  & input:focus {
+    border-color: var(--color-text-counter);
+    outline: none;
+  }
+}
+
