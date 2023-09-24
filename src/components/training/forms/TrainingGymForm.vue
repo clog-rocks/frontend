@@ -72,8 +72,8 @@ const submit = async function () {
       >
         {{ option.country }} / <strong>{{ option.name }}</strong>
       </template>
-      <FormFieldError :field="v$.city" />
     </VueMultiselect>
+    <FormFieldError :field="v$.city" />
     <RouterLink :to="{ name: 'core-city-new' }">Add new city</RouterLink>
     <pre>{{ city }}</pre>
     <FormInput
