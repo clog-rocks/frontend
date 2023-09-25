@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { type Ref, ref } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { helpers, required } from "@vuelidate/validators";
+import { type Ref, ref, unref } from "vue";
 import VueMultiselect from "vue-multiselect";
 
+import FormFieldError from "@/components/layout/FormFieldError.vue";
+import FormInput from "@/components/layout/FormInput.vue";
 import router from "@/router";
 import { useTrainingGymStore } from "@/stores";
 import { useCoreCityStore } from "@/stores/core/city";
@@ -21,31 +25,37 @@ const city: Ref<CityMultiselect | undefined> = ref(
 );
 const gym = ref<string>();
 
-const submit = async function () {
-  // TODO: validate
-  if (!city.value || !gym.value) return;
+const rules = {
+  city: { required: helpers.withMessage("City is required", required) },
+  gym: { required: helpers.withMessage("Gym is required", required) },
+};
 
-  try {
-    const newGym = await stores.gym.create({
-      name: gym.value,
-      city: city.value.id,
-    });
-    router.push({
-      name: "training-session-new",
-      params: { gymId: newGym.id },
-    });
-  } catch (error) {
-    console.log("Something went wrong submitting training/gym.", error);
-  }
+const v$ = useVuelidate(rules, { city, gym });
+
+const submit = async function () {
+  const formValid = await unref(v$).$validate();
+  if (formValid && city.value && gym.value)
+    try {
+      const newGym = await stores.gym.create({
+        name: gym.value,
+        city: city.value.id,
+      });
+      router.push({
+        name: "training-session-new",
+        params: { gymId: newGym.id },
+      });
+    } catch (error) {
+      console.log("Something went wrong submitting training/gym.", error);
+    }
 };
 </script>
 
 <template>
   <form @submit.prevent>
     <h1>Add new climbing gym</h1>
-    <label for="route">City</label>
+    <label for="id_city">City</label>
     <VueMultiselect
-      id="route"
+      id="id_city"
       v-model="city"
       :options="stores.city.multiselect"
       placeholder=""
@@ -55,25 +65,22 @@ const submit = async function () {
       track-by="id"
       :options-limit="20"
     >
-      <template #singleLabel="{ option }">
-        {{ option.country }} / <strong>{{ option.name }}</strong>
-      </template>
-      <template #option="{ option }">
+      <template
+        v-for="slotName in ['option', 'singleLabel']"
+        #[slotName]="{ option }"
+        :key="slotName"
+      >
         {{ option.country }} / <strong>{{ option.name }}</strong>
       </template>
     </VueMultiselect>
+    <FormFieldError :field="v$.city" />
     <RouterLink :to="{ name: 'core-city-new' }">Add new city</RouterLink>
     <pre>{{ city }}</pre>
-    <label>
-      Gym
-      <input
-        v-model="gym"
-        type="text"
-        autocorrect="off"
-        spellcheck="false"
-        required
-      />
-    </label>
+    <FormInput
+      v-model="gym"
+      label="Gym"
+      :validator="v$.gym"
+    />
     <button @click="submit()">Add</button>
   </form>
 </template>

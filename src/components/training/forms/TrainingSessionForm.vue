@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { onMounted, type Ref, ref, watchEffect } from "vue";
+import { useVuelidate } from "@vuelidate/core";
+import { helpers, required } from "@vuelidate/validators";
+import { onMounted, type Ref, ref, unref, watchEffect } from "vue";
 import VueMultiselect from "vue-multiselect";
 import Multiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
 
+import FormFieldError from "@/components/layout/FormFieldError.vue";
+import FormInput from "@/components/layout/FormInput.vue";
 import {
   useTrainingGymStore,
   useTrainingSessionStore,
@@ -39,8 +43,15 @@ const date = ref(new Date().toISOString().split("T")[0]);
 const comment = ref<string>();
 const tags: Ref<Tag[]> = ref([]);
 
+const rules = {
+  gym: { required: helpers.withMessage("Gym is required", required) },
+  date: { required: helpers.withMessage("Date is required", required) },
+};
+
 let editing = false;
 let session: TrainingSession;
+
+const v$ = useVuelidate(rules, { gym, date, comment, tags });
 
 onMounted(async () => {
   await stores.tag.fetch();
@@ -59,44 +70,43 @@ watchEffect(() => {
   if (session.comment) comment.value = session.comment;
 });
 
-const submit = async function () {
-  // TODO: validate
-  if (!gym.value) return;
+async function submit() {
+  const formValid = await unref(v$).$validate();
+  if (formValid && gym.value)
+    try {
+      // Need to check if editing or creating new one.
+      const payload: TrainingSessionRequest = {
+        gym: gym.value.id,
+        date: date.value,
+        comment: comment.value,
+        tags: tags.value.map((tag) => tag.name),
+      };
 
-  try {
-    // Need to check if editing or creating new one.
-    const payload: TrainingSessionRequest = {
-      gym: gym.value.id,
-      date: date.value,
-      comment: comment.value,
-      tags: tags.value.map((tag) => tag.name),
-    };
+      if (editing) {
+        await stores.session.update(session.id, payload);
+      } else {
+        await stores.session.create(payload);
+      }
 
-    if (editing) {
-      await stores.session.update(session.id, payload);
-    } else {
-      await stores.session.create(payload);
+      router.push({ name: "training" });
+    } catch (error) {
+      console.log("something went wrong adding session: ", error);
     }
+}
 
-    router.push({ name: "training" });
-  } catch (error) {
-    console.log("something went wrong adding session: ", error);
-  }
-};
-
-const addTag = function (newTag: string) {
+function addTag(newTag: string) {
   const tag: Tag = { name: newTag };
   tags.value.push(tag);
   stores.tag.tags.push(tag);
-};
+}
 </script>
 
 <template>
   <form @submit.prevent>
     <h1>{{ editing ? "Edit " : "Add new" }} training session</h1>
-    <label for="gym">Gym</label>
+    <label for="id_gym">Gym</label>
     <VueMultiselect
-      id="gym"
+      id="id_gym"
       v-model="gym"
       :options="stores.gym.multiselect"
       placeholder=""
@@ -106,14 +116,11 @@ const addTag = function (newTag: string) {
       track-by="id"
       :options-limit="20"
     >
-      <template #singleLabel="{ option }">
-        {{ option.country }}
-        /
-        {{ option.city }}
-        /
-        <strong>{{ option.gym }}</strong>
-      </template>
-      <template #option="{ option }">
+      <template
+        v-for="slotName in ['option', 'singleLabel']"
+        #[slotName]="{ option }"
+        :key="slotName"
+      >
         {{ option.country }}
         /
         {{ option.city }}
@@ -121,24 +128,24 @@ const addTag = function (newTag: string) {
         <strong>{{ option.gym }}</strong>
       </template>
     </VueMultiselect>
+    <FormFieldError :field="v$.gym" />
     <RouterLink :to="{ name: 'training-gym-new' }">Add new gym</RouterLink>
     <pre>{{ gym }}</pre>
-    <label>
-      Date
-      <input
-        v-model="date"
-        required
-        type="date"
-      />
-    </label>
+    <FormInput
+      v-model="date"
+      label="Date"
+      type="date"
+      :validator="v$.date"
+    />
     <label for="comment">Comment</label>
     <input
       id="comment"
       v-model="comment"
       type="text"
     />
-    <label for="tags">Tags</label>
+    <label for="id_tags">Tags</label>
     <multiselect
+      id="id_tags"
       v-model="tags"
       tag-placeholder="Add this as new tag"
       placeholder="Search or add a tag"
