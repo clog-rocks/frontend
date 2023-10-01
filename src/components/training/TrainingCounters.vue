@@ -6,35 +6,24 @@ const sessionStore = useTrainingSessionStore();
 </script>
 
 <template>
-  <section class="counters training-stats">
-    <CounterItem
-      class="training-stats__item"
-      legend="sessions"
-      :value="sessionStore.session_count"
-    />
-    <CounterItem
-      class="training-stats__item"
-      legend="gyms"
-      :value="sessionStore.uniq_gyms_count"
-    />
-    <CounterItem
-      class="training-stats__item"
-      legend="cities"
-      :value="sessionStore.uniq_cities_count"
-    />
-    <CounterItem
-      class="training-stats__item"
-      legend="countries"
-      :value="sessionStore.uniq_countries_count"
-    />
+  <section class="counters">
+    <div class="items">
+      <CounterItem
+        legend="sessions"
+        :value="sessionStore.session_count"
+      />
+      <CounterItem
+        legend="gyms"
+        :value="sessionStore.uniq_gyms_count"
+      />
+      <CounterItem
+        legend="cities"
+        :value="sessionStore.uniq_cities_count"
+      />
+      <CounterItem
+        legend="countries"
+        :value="sessionStore.uniq_countries_count"
+      />
+    </div>
   </section>
 </template>
-
-<style lang="scss" scoped>
-@import "@/assets/counters.module";
-
-.counters {
-  display: flex;
-  align-items: center;
-}
-</style>

@@ -1,0 +1,37 @@
+.counters {
+  font-weight: 300;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
+
+  .group ~ .group {
+    padding-top: 2rem;
+  }
+
+  & .header {
+    display: block;
+    text-align: center;
+  }
+
+  & .items {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  & .counter {
+    font-weight: 200;
+    text-align: center;
+
+    & .value {
+      display: block;
+      font-size: 2rem;
+      text-transform: none;
+    }
+
+    & .legend {
+      position: relative;
+      bottom: 0.6em;
+      font-size: 0.75rem;
+    }
+  }
+}
