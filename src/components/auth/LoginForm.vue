@@ -29,7 +29,10 @@ async function submit() {
 </script>
 
 <template>
-  <form @submit.prevent>
+  <form
+    class="auth-form"
+    @submit.prevent
+  >
     <h1>Login</h1>
     <FormInput
       v-model="state.username"
@@ -44,7 +47,9 @@ async function submit() {
       type="password"
       :validator="v$.password"
     />
-    <button @click="submit()">Login</button>
-    <RouterLink :to="{ name: 'register' }">Register instead</RouterLink>
+    <div class="button-link-group">
+      <button @click="submit()">Login</button>
+      <RouterLink :to="{ name: 'register' }">or register instead</RouterLink>
+    </div>
   </form>
 </template>

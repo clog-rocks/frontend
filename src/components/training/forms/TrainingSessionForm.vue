@@ -130,7 +130,6 @@ function addTag(newTag: string) {
     </VueMultiselect>
     <FormFieldError :field="v$.gym" />
     <RouterLink :to="{ name: 'training-gym-new' }">Add new gym</RouterLink>
-    <pre>{{ gym }}</pre>
     <FormInput
       v-model="date"
       label="Date"
@@ -161,7 +160,6 @@ function addTag(newTag: string) {
       :hide-selected="true"
       @tag="addTag"
     />
-    <pre>{{ tags }}</pre>
     <button @click="submit()">Add</button>
   </form>
 </template>

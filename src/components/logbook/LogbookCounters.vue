@@ -1,115 +1,58 @@
 <script setup lang="ts">
+import { computed } from "vue";
+
 import CounterItem from "@/components/layout/CounterItem.vue";
 import { useLogbookAscentStore } from "@/stores";
 
 const ascentStore = useLogbookAscentStore();
+const existing_grades = computed(() =>
+  ascentStore.top_grades.filter((i) => i.grade),
+);
 </script>
 
 <template>
-  <div>
-    <section class="counters history-sums">
-      <div class="counters__header history-sums__item">all time</div>
-      <CounterItem
-        class="history-sums__item"
-        legend="ascents"
-        :value="ascentStore.ascent_count"
-      />
-      <CounterItem
-        class="history-sums__item"
-        legend="crag visits"
-        :value="ascentStore.crag_visit_count"
-      />
-      <div class="counters__header history-sums__item">last year</div>
-      <CounterItem
-        class="history-sums__item"
-        legend="ascents"
-        :value="ascentStore.ascent_last_year_count"
-      />
-      <CounterItem
-        class="history-sums__item"
-        legend="crag visits"
-        :value="ascentStore.crag_visit_last_year_count"
-      />
-    </section>
-
-    <section class="counters top-grades">
-      <div class="counters__header top-grades__item">top grades</div>
-      <transition-group
-        v-for="i in ascentStore.top_grades"
-        :key="i.style.id"
-        name="list"
-        tag="div"
-        class="top-grades__item"
-      >
+  <section class="counters">
+    <div class="group">
+      <span class="header">all time</span>
+      <div class="items">
         <CounterItem
-          v-if="i.grade !== undefined"
-          :legend="i.style.name"
-          :value="i.grade.fr_route"
+          legend="ascents"
+          :value="ascentStore.ascent_count"
         />
-      </transition-group>
-    </section>
-  </div>
+        <CounterItem
+          legend="crag visits"
+          :value="ascentStore.crag_visit_count"
+        />
+      </div>
+    </div>
+    <div class="group">
+      <span class="header">last year</span>
+      <div class="items">
+        <CounterItem
+          legend="ascents"
+          :value="ascentStore.ascent_last_year_count"
+        />
+        <CounterItem
+          legend="crag visits"
+          :value="ascentStore.crag_visit_last_year_count"
+        />
+      </div>
+    </div>
+    <div
+      v-if="existing_grades.length"
+      class="group"
+    >
+      <span class="header">top grades</span>
+      <div class="items">
+        <transition-group name="list">
+          <CounterItem
+            v-for="i in existing_grades"
+            :key="i.style.id"
+            :legend="i.style.name"
+            :value="i.grade.fr_route"
+          />
+        </transition-group>
+      </div>
+    </div>
+  </section>
 </template>
-
-<style lang="scss" scoped>
-@import "@/assets/counters.module";
-
-.history-sums {
-  &__item {
-    &:nth-of-type(1) {
-      grid-area: header_all;
-    }
-
-    &:nth-of-type(2) {
-      grid-area: val_all_asc;
-    }
-
-    &:nth-of-type(3) {
-      grid-area: val_all_vis;
-    }
-
-    &:nth-of-type(4) {
-      grid-area: header_last;
-    }
-
-    &:nth-of-type(5) {
-      grid-area: val_last_asc;
-    }
-
-    &:nth-of-type(6) {
-      grid-area: val_last_vis;
-    }
-  }
-
-  grid-template-areas:
-    "header_all header_all"
-    "val_all_asc val_all_vis"
-    "header_last header_last"
-    "val_last_asc val_last_vis";
-}
-
-.top-grades {
-  &__item {
-    &:nth-of-type(1) {
-      grid-area: header;
-    }
-
-    &:nth-of-type(2) {
-      grid-area: val1;
-    }
-
-    &:nth-of-type(3) {
-      grid-area: val2;
-    }
-
-    &:nth-of-type(4) {
-      grid-area: val3;
-    }
-  }
-
-  grid-template-areas:
-    "header header header"
-    "val1 val2 val3";
-  grid-template-columns: repeat(3, minmax(100px, 215px));
-}
-</style>

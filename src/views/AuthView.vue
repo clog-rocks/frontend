@@ -1,5 +1,5 @@
 <template>
-  <div class="form">
+  <div class="center">
     <router-view v-slot="{ Component }">
       <transition
         name="very-fast-fade"
@@ -14,13 +14,27 @@
 </template>
 
 <style scoped>
-.form {
+.center {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
   align-items: center;
   justify-content: center;
-  max-width: 400px;
   height: 100vh;
+}
+</style>
+
+<style>
+.auth-form {
+  @media (width >=600px) {
+    width: 500px;
+  }
+
+  line-height: 2rem;
+  background-color: transparent;
+}
+
+.button-link-group {
+  display: inline-flex;
+  gap: 0.75rem;
+  align-items: baseline;
 }
 </style>

@@ -136,7 +136,6 @@ const submit = async function () {
       </template>
     </VueMultiselect>
     <FormFieldError :field="v$.route" />
-    <pre>{{ route }}</pre>
     <RouterLink
       v-if="!editing"
       :to="{ name: 'logbook-route-new' }"

@@ -92,7 +92,6 @@ const submit = async function () {
       </template>
     </VueMultiselect>
     <FormFieldError :field="v$.sector" />
-    <pre>{{ sector }}</pre>
     <RouterLink :to="{ name: 'logbook-sector-new' }">Add new sector</RouterLink>
     <label for="id_grade">Grade</label>
     <VueMultiselect

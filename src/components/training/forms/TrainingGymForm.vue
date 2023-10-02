@@ -75,7 +75,6 @@ const submit = async function () {
     </VueMultiselect>
     <FormFieldError :field="v$.city" />
     <RouterLink :to="{ name: 'core-city-new' }">Add new city</RouterLink>
-    <pre>{{ city }}</pre>
     <FormInput
       v-model="gym"
       label="Gym"
