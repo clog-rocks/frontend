@@ -51,7 +51,10 @@ async function submit() {
 </script>
 
 <template>
-  <form @submit.prevent>
+  <form
+    class="auth-form"
+    @submit.prevent
+  >
     <h1>Register</h1>
     <FormInput
       v-model="state.username"
@@ -80,7 +83,9 @@ async function submit() {
       label="Confirm password"
       :validator="v$.password.confirm"
     />
-    <button @click="submit()">Create account</button>
-    <RouterLink :to="{ name: 'login' }">Login instead</RouterLink>
+    <div class="button-link-group">
+      <button @click="submit()">Create account</button>
+      <RouterLink :to="{ name: 'login' }">or login instead</RouterLink>
+    </div>
   </form>
 </template>

@@ -74,52 +74,18 @@ header {
 
 nav {
   width: 100%;
-  margin-top: 2rem;
-  font-size: 12px;
-  text-align: center;
-}
+  padding: 1rem 0 2rem;
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
+  & a {
+    padding: 0 1rem;
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
+    &.router-link-active {
+      color: var(--text);
+    }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (width >= 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    place-items: flex-start;
-  }
-
-  nav {
-    padding: 1rem 0;
-    margin-top: 1rem;
-    margin-left: -1rem;
-    font-size: 1rem;
-    text-align: left;
+    &.router-link-active:hover {
+      background-color: transparent;
+    }
   }
 }
 </style>

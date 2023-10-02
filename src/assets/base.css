@@ -1,42 +1,96 @@
-:root {
-  --vt-c-white: #fff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222;
-  --vt-c-black-mute: #282828;
-  --vt-c-indigo: #2c3e50;
-  --vt-c-divider-light-1: rgb(60 60 60 / 29%);
-  --vt-c-divider-light-2: rgb(60 60 60 / 12%);
-  --vt-c-divider-dark-1: rgb(84 84 84 / 65%);
-  --vt-c-divider-dark-2: rgb(84 84 84 / 48%);
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgb(60 60 60 / 66%);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgb(235 235 235 / 64%);
-  --vt-c-accent-1: #fff1ab;
-  --section-gap: 160px;
+* {
+  /* brand foundation */
+  --brand-hue: 200;
+  --brand-saturation: 100%;
+  --brand-lightness: 50%;
 
-  /* semantic color variables for this project */
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-  --color-text-counter: var(--vt-c-indigo);
+  /* light */
+  --brand-light: hsl(
+    var(--brand-hue) var(--brand-saturation) var(--brand-lightness)
+  );
+  --text1-light: hsl(var(--brand-hue) var(--brand-saturation) 10%);
+  --text2-light: hsl(var(--brand-hue) 30% 30%);
+  --surface1-light: hsl(var(--brand-hue) 25% 90%);
+  --surface2-light: hsl(var(--brand-hue) 20% 99%);
+  --surface3-light: hsl(var(--brand-hue) 20% 92%);
+  --surface4-light: hsl(var(--brand-hue) 20% 85%);
+  --surface-shadow-light: var(--brand-hue) 10% 20%;
+  --shadow-strength-light: 0.02;
+
+  /* dark */
+  --brand-dark: hsl(
+    var(--brand-hue) calc(var(--brand-saturation) / 2)
+      calc(var(--brand-lightness) / 1.5)
+  );
+  --text1-dark: hsl(var(--brand-hue) 15% 85%);
+  --text2-dark: hsl(var(--brand-hue) 5% 65%);
+  --surface1-dark: hsl(var(--brand-hue) 10% 10%);
+  --surface2-dark: hsl(var(--brand-hue) 10% 15%);
+  --surface3-dark: hsl(var(--brand-hue) 5% 20%);
+  --surface4-dark: hsl(var(--brand-hue) 5% 25%);
+  --surface-shadow-dark: var(--brand-hue) 50% 3%;
+  --shadow-strength-dark: 0.8;
+
+  /* Spacing */
+  --section-gap: 160px;
+  --radius: 10px;
+}
+
+:root {
+  color-scheme: light;
+
+  /* set defaults */
+  --brand: var(--brand-light);
+  --text1: var(--text1-light);
+  --text2: var(--text2-light);
+  --surface1: var(--surface1-light);
+  --surface2: var(--surface2-light);
+  --surface3: var(--surface3-light);
+  --surface4: var(--surface4-light);
+  --surface-shadow: var(--surface-shadow-light);
+  --shadow-strength: var(--shadow-strength-light);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-    --color-text-counter: var(--vt-c-accent-1);
+    color-scheme: dark;
+
+    --brand: var(--brand-dark);
+    --text1: var(--text1-dark);
+    --text2: var(--text2-dark);
+    --surface1: var(--surface1-dark);
+    --surface2: var(--surface2-dark);
+    --surface3: var(--surface3-dark);
+    --surface4: var(--surface4-dark);
+    --surface-shadow: var(--surface-shadow-dark);
+    --shadow-strength: var(--shadow-strength-dark);
   }
+}
+
+[color-scheme="light"] {
+  color-scheme: light;
+
+  --brand: var(--brand-light);
+  --text1: var(--text1-light);
+  --text2: var(--text2-light);
+  --surface1: var(--surface1-light);
+  --surface2: var(--surface2-light);
+  --surface3: var(--surface3-light);
+  --surface4: var(--surface4-light);
+  --surface-shadow: var(--surface-shadow-light);
+  --shadow-strength: var(--shadow-strength-light);
+}
+
+[color-scheme="dark"] {
+  color-scheme: dark;
+
+  --brand: var(--brand-dark);
+  --text1: var(--text1-dark);
+  --text2: var(--text2-dark);
+  --surface1: var(--surface1-dark);
+  --surface2: var(--surface2-dark);
+  --surface3: var(--surface3-dark);
+  --surface4: var(--surface4-dark);
+  --surface-shadow: var(--surface-shadow-dark);
+  --shadow-strength: var(--shadow-strength-dark);
 }

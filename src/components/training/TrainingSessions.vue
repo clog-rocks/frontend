@@ -55,29 +55,3 @@ const deleteSession = async (id: number) => {
     </transition>
   </section>
 </template>
-
-<style scoped>
-ul {
-  position: relative;
-  list-style-type: none;
-}
-
-li {
-  display: flex;
-  gap: 1em;
-  max-width: 500px;
-  padding: 0.5rem;
-  margin: 15px auto;
-  background-color: var(--color-background-mute);
-  border-radius: 10px;
-  box-shadow: 1px 3px 5px rgb(0 0 0 / 10%);
-}
-
-ul li:first-of-type {
-  margin-top: 0;
-}
-
-ul li:last-of-type {
-  margin-bottom: 0;
-}
-</style>
