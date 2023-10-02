@@ -78,7 +78,6 @@ async function submit() {
       </template>
     </VueMultiselect>
     <FormFieldError :field="v$.crag" />
-    <pre>{{ crag }}</pre>
     <RouterLink :to="{ name: 'logbook-crag-new' }">Add new crag</RouterLink>
     <FormInput
       v-model="name"
