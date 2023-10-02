@@ -63,7 +63,7 @@ async function submit() {
       v-model="crag"
       :options="stores.crag.multiselect"
       placeholder=""
-      label="id"
+      label="name"
       :allow-empty="false"
       :hide-selected="true"
       track-by="id"
