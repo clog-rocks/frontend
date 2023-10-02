@@ -1,5 +1,5 @@
 <template>
   <RouterLink :to="{ name: 'training-session-new' }">
-    <button>Add new training session</button>
+    Add new training session
   </RouterLink>
 </template>

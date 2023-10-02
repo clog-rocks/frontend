@@ -1,5 +1,3 @@
 <template>
-  <RouterLink :to="{ name: 'logbook-ascent-new' }">
-    <button>Add new ascent</button>
-  </RouterLink>
+  <RouterLink :to="{ name: 'logbook-ascent-new' }">Add new ascent</RouterLink>
 </template>
