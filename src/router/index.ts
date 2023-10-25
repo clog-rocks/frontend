@@ -165,7 +165,12 @@ const router = createRouter({
         {
           path: "logout",
           name: "logout",
-          component: () => Promise.resolve({}),
+          component: {
+            beforeRouteEnter() {
+              const userStore = useUserStore();
+              userStore.logout();
+            },
+          },
           meta: { requiresAuth: true },
         },
       ],
