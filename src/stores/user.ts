@@ -52,11 +52,13 @@ export const useUserStore = defineStore("user", () => {
     profile.value = undefined;
     isAuthenticated.value = false;
 
-    const logbookStore = useLogbookStore();
-    const trainingStore = useTrainingStore();
+    const coreCityStore = useCoreCityStore();
+    const logbookAscentStore = useLogbookAscentStore();
+    const trainingSessionStore = useTrainingSessionStore();
 
-    logbookStore.$reset();
-    trainingStore.$reset();
+    coreCityStore.$reset();
+    logbookAscentStore.$reset();
+    trainingSessionStore.$reset();
 
     if (with_api_call) {
       // Regular logout, so no redirecting back.
