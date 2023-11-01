@@ -26,6 +26,7 @@
     "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
+    "pinia-orm": "^1.7.2",
     "vue": "^3.3.4",
     "vue-multiselect": "^3.0.0-beta.3",
     "vue-router": "^4.2.5"

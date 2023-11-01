@@ -3,6 +3,7 @@ import "vue-multiselect/dist/vue-multiselect.css";
 
 import Cookies from "js-cookie";
 import { createPinia } from "pinia";
+import { createORM } from "pinia-orm";
 import { createApp } from "vue";
 
 import App from "@/App.vue";
@@ -15,6 +16,7 @@ import resetStore from "./reset-store";
 
 const pinia = createPinia();
 pinia.use(resetStore);
+pinia.use(createORM());
 
 const app = createApp(App);
 app.use(pinia);
