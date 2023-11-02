@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import type { Ref } from "vue";
-import { ref, unref } from "vue";
+import { reactive, unref } from "vue";
 import VueMultiselect from "vue-multiselect";
 
 import FormFieldError from "@/components/layout/FormFieldError.vue";
@@ -11,6 +10,7 @@ import router from "@/router";
 import { useTrainingGymStore } from "@/stores";
 import { useCoreCityStore } from "@/stores/core/city";
 import type { CityMultiselect } from "@/types/core";
+import type { GymRequest } from "@/types/training";
 
 const props = defineProps<{ cityId?: number }>();
 
@@ -19,27 +19,29 @@ const stores = {
   city: useCoreCityStore(),
 };
 
-const city: Ref<CityMultiselect | undefined> = ref(
-  props.cityId
+type Form = Omit<GymRequest, "city"> & { city: CityMultiselect | undefined };
+
+const form: Form = reactive({
+  city: props.cityId
     ? stores.city.multiselect.find((gym) => gym.id == props.cityId)
     : undefined,
-);
-const gym = ref<string>();
+  name: "",
+});
 
 const rules = {
   city: { required: helpers.withMessage("City is required", required) },
-  gym: { required: helpers.withMessage("Gym is required", required) },
+  name: { required: helpers.withMessage("Gym is required", required) },
 };
 
-const v$ = useVuelidate(rules, { city, gym });
+const v$ = useVuelidate(rules, form);
 
 const submit = async function () {
   const formValid = await unref(v$).$validate();
-  if (formValid && city.value && gym.value)
+  if (formValid)
     try {
       const newGym = await stores.gym.create({
-        name: gym.value,
-        city: city.value.id,
+        name: form.name,
+        city: form.city!.id,
       });
       router.push({
         name: "training-session-new",
@@ -57,7 +59,7 @@ const submit = async function () {
     <label for="id_city">City</label>
     <VueMultiselect
       id="id_city"
-      v-model="city"
+      v-model="form.city"
       :options="stores.city.multiselect"
       placeholder=""
       label="route"
@@ -77,10 +79,10 @@ const submit = async function () {
     <FormFieldError :field="v$.city" />
     <RouterLink :to="{ name: 'core-city-new' }">Add new city</RouterLink>
     <FormInput
-      v-model="gym"
+      v-model="form.name"
       label="Gym"
-      :validator="v$.gym"
+      :validator="v$.name"
     />
-    <button @click="submit()">Add</button>
+    <button @click="submit()">Add new gym</button>
   </form>
 </template>

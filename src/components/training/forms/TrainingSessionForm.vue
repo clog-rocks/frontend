@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import type { Ref } from "vue";
-import { onMounted, ref, unref, watchEffect } from "vue";
+import { onMounted, reactive, ref, unref, watchEffect } from "vue";
 import VueMultiselect from "vue-multiselect";
 import Multiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
@@ -37,19 +36,24 @@ const stores = {
   tag: useTrainingTagStore(),
 };
 
-const gym = ref<GymMultiselect | undefined>(
-  props.gymId ? getGym(props.gymId) : undefined,
-);
-const date = ref(new Date().toISOString().split("T")[0]);
-const comment = ref<string>();
-const tags: Ref<Tag[]> = ref([]);
+type Form = Omit<TrainingSessionRequest, "gym" | "tags"> & {
+  gym: GymMultiselect | undefined;
+  tags: Tag[];
+};
+
+const form: Form = reactive({
+  gym: props.gymId ? getGym(props.gymId) : undefined,
+  date: new Date().toISOString().split("T")[0],
+  comment: undefined,
+  tags: [],
+});
 
 const rules = {
   gym: { required: helpers.withMessage("Gym is required", required) },
   date: { required: helpers.withMessage("Date is required", required) },
 };
 
-let editing = false;
+const editing = ref(false);
 let session: TrainingSession;
 
 const v$ = useVuelidate(rules, { gym, date, comment, tags });
@@ -60,30 +64,30 @@ onMounted(async () => {
 
 // Watch route.params.sessionId in case user selects/changes session to edit.
 watchEffect(() => {
-  const sessionId = props.sessionId;
-  if (!sessionId) return;
-
-  session = stores.session.sessions[sessionId];
-  editing = true;
-  gym.value = getGym(session.gym);
-  date.value = session.date;
-  tags.value = session.tags.map((tag) => ({ name: tag }));
-  if (session.comment) comment.value = session.comment;
+  if (!props.sessionId) return;
+  session = stores.session.sessions[props.sessionId];
+  if (session) {
+    editing.value = true;
+    form.gym = getGym(session.gym);
+    form.date = session.date;
+    form.tags = session.tags.map((tag) => ({ name: tag }));
+    if (session.comment) form.comment = session.comment;
+  }
 });
 
 async function submit() {
   const formValid = await unref(v$).$validate();
-  if (formValid && gym.value)
+  if (formValid)
     try {
       // Need to check if editing or creating new one.
       const payload: TrainingSessionRequest = {
-        gym: gym.value.id,
-        date: date.value,
-        comment: comment.value,
-        tags: tags.value.map((tag) => tag.name),
+        gym: form.gym!.id,
+        date: form.date,
+        comment: form.comment,
+        tags: form.tags.map((tag) => tag.name),
       };
 
-      if (editing) {
+      if (editing.value) {
         await stores.session.update(session.id, payload);
       } else {
         await stores.session.create(payload);
@@ -97,7 +101,7 @@ async function submit() {
 
 function addTag(newTag: string) {
   const tag: Tag = { name: newTag };
-  tags.value.push(tag);
+  form.tags.push(tag);
   stores.tag.tags.push(tag);
 }
 </script>
@@ -108,7 +112,7 @@ function addTag(newTag: string) {
     <label for="id_gym">Gym</label>
     <VueMultiselect
       id="id_gym"
-      v-model="gym"
+      v-model="form.gym"
       :options="stores.gym.multiselect"
       placeholder=""
       label="gym"
@@ -132,7 +136,7 @@ function addTag(newTag: string) {
     <FormFieldError :field="v$.gym" />
     <RouterLink :to="{ name: 'training-gym-new' }">Add new gym</RouterLink>
     <FormInput
-      v-model="date"
+      v-model="form.date"
       label="Date"
       type="date"
       :validator="v$.date"
@@ -140,13 +144,13 @@ function addTag(newTag: string) {
     <label for="comment">Comment</label>
     <input
       id="comment"
-      v-model="comment"
+      v-model="form.comment"
       type="text"
     />
     <label for="id_tags">Tags</label>
     <multiselect
       id="id_tags"
-      v-model="tags"
+      v-model="form.tags"
       tag-placeholder="Add this as new tag"
       placeholder="Search or add a tag"
       label="name"
@@ -161,6 +165,8 @@ function addTag(newTag: string) {
       :hide-selected="true"
       @tag="addTag"
     />
-    <button @click="submit()">Add</button>
+    <button @click="submit()">
+      {{ editing ? "Save changes" : "Add new session" }}
+    </button>
   </form>
 </template>

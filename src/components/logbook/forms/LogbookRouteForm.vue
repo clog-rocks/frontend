@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import { ref, unref } from "vue";
+import { reactive, unref } from "vue";
 import VueMultiselect from "vue-multiselect";
 
 import FormFieldError from "@/components/layout/FormFieldError.vue";
@@ -22,13 +22,18 @@ const stores = {
   route: useLogbookRouteStore(),
 };
 
-const name = ref<string>();
-const sector = ref<SectorMultiselect | undefined>(
-  props.sectorId
+type Form = Omit<RouteRequest, "sector" | "grade"> & {
+  sector: SectorMultiselect | undefined;
+  grade: Grade | undefined;
+};
+
+const form: Form = reactive({
+  name: "",
+  sector: props.sectorId
     ? stores.sector.multiselect.find((sector) => sector.id == props.sectorId)
     : undefined,
-);
-const grade = ref<Grade>();
+  grade: undefined,
+});
 
 const rules = {
   sector: { required: helpers.withMessage("Sector is required", required) },
@@ -36,15 +41,15 @@ const rules = {
   name: { required: helpers.withMessage("Sector is requried", required) },
 };
 
-const v$ = useVuelidate(rules, { sector, grade, name });
+const v$ = useVuelidate(rules, form);
 
 const submit = async function () {
   const formValid = await unref(v$).$validate();
-  if (formValid && name.value && sector.value && grade.value) {
+  if (formValid) {
     const payload: RouteRequest = {
-      name: name.value,
-      sector: sector.value.id,
-      grade: grade.value.id,
+      name: form.name,
+      sector: form.sector!.id,
+      grade: form.grade!.id,
     };
 
     try {
@@ -66,7 +71,7 @@ const submit = async function () {
     <label for="id_sector">Sector</label>
     <VueMultiselect
       id="id_sector"
-      v-model="sector"
+      v-model="form.sector"
       :options="stores.sector.multiselect"
       placeholder=""
       label="name"
@@ -92,7 +97,7 @@ const submit = async function () {
     <label for="id_grade">Grade</label>
     <VueMultiselect
       id="id_grade"
-      v-model="grade"
+      v-model="form.grade"
       :options="Object.values(stores.grade.grades)"
       placeholder=""
       label="fr_route"
@@ -102,7 +107,7 @@ const submit = async function () {
     />
     <FormFieldError :field="v$.grade" />
     <FormInput
-      v-model="name"
+      v-model="form.name"
       label="Route"
       :validator="v$.name"
     />
