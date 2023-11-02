@@ -4,7 +4,12 @@ import { computed, ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import { trainingService } from "@/services";
-import type { Gym, GymMultiselect, GymRequest } from "@/types/training";
+import type {
+  Gym,
+  GymMultiselect,
+  GymRequest,
+  GymTree,
+} from "@/types/training";
 
 import { useCoreCityStore } from "../core/city";
 import { useCoreCountryStore } from "../core/country";
@@ -16,8 +21,20 @@ export const useTrainingGymStore = defineStore("training/gym", () => {
 
   const gyms = ref<{ [key: number]: Gym }>({});
 
-  const multiselect = computed<GymMultiselect[]>(() => {
-    return Object.values(gyms.value).map((gym) => {
+  const tree = computed<{ [key: number]: GymTree }>(() =>
+    keyBy(
+      Object.values(gyms.value).map(
+        (gym): GymTree => ({
+          ...gym,
+          city: cityStore.tree[gym.city],
+        }),
+      ),
+      "id",
+    ),
+  );
+
+  const multiselect = computed<GymMultiselect[]>(() =>
+    Object.values(gyms.value).map((gym) => {
       const city = cityStore.cities[gym.city];
       return {
         id: gym.id,
@@ -25,8 +42,8 @@ export const useTrainingGymStore = defineStore("training/gym", () => {
         city: city.name,
         country: countryStore.countries[city.country].name,
       };
-    });
-  });
+    }),
+  );
 
   async function create(gym: GymRequest) {
     try {
@@ -57,6 +74,7 @@ export const useTrainingGymStore = defineStore("training/gym", () => {
     // getters
     multiselect,
     status,
+    tree,
 
     // actions
     create,

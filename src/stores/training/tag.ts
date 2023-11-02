@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import { trainingService } from "@/services";
-import { type Tag } from "@/types/generic";
+import type { Tag } from "@/types/generic";
 
 export const useTrainingTagStore = defineStore("training/tag", () => {
   const { _status, status } = useStoreStatus();

@@ -1,10 +1,15 @@
 import { countBy, keyBy, map, size, uniq } from "lodash-es";
 import { defineStore } from "pinia";
-import { computed, type ComputedRef, ref } from "vue";
+import type { ComputedRef } from "vue";
+import { computed, ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import { trainingService } from "@/services";
-import type { TrainingSession, TrainingSessionRequest } from "@/types/training";
+import type {
+  TrainingSession,
+  TrainingSessionRequest,
+  TrainingSessionTree,
+} from "@/types/training";
 
 import { useCoreCityStore } from "../core/city";
 import { useCoreCountryStore } from "../core/country";
@@ -17,6 +22,18 @@ export const useTrainingSessionStore = defineStore("training/session", () => {
   const countryStore = useCoreCountryStore();
 
   const sessions = ref<{ [key: number]: TrainingSession }>({});
+
+  const tree = computed<{ [key: number]: TrainingSessionTree }>(() =>
+    keyBy(
+      Object.values(sessions.value).map(
+        (session): TrainingSessionTree => ({
+          ...session,
+          gym: gymStore.tree[session.gym],
+        }),
+      ),
+      "id",
+    ),
+  );
 
   const hasSessions = computed(
     () => status.value.fetched && session_count.value > 0,
@@ -67,6 +84,26 @@ export const useTrainingSessionStore = defineStore("training/session", () => {
     }
   }
 
+  async function update(id: number, session: TrainingSessionRequest) {
+    try {
+      const response = await trainingService.session.update(id, session);
+      if (response.status === 200) sessions.value[id] = response.data;
+      return Promise.resolve(response);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  async function remove(id: number) {
+    try {
+      const response = await trainingService.session.delete(id);
+      if (response.status === 204) delete sessions.value[id];
+      return Promise.resolve(response);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
   async function fetch() {
     async function fetch() {
       return (sessions.value = keyBy(
@@ -89,26 +126,6 @@ export const useTrainingSessionStore = defineStore("training/session", () => {
     );
   }
 
-  async function remove(id: number) {
-    try {
-      const response = await trainingService.session.delete(id);
-      if (response.status === 204) delete sessions.value[id];
-      return Promise.resolve(response);
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
-
-  async function update(id: number, session: TrainingSessionRequest) {
-    try {
-      const response = await trainingService.session.update(id, session);
-      if (response.status === 200) sessions.value[id] = response.data;
-      return Promise.resolve(response);
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
-
   return {
     // state
     sessions,
@@ -116,6 +133,7 @@ export const useTrainingSessionStore = defineStore("training/session", () => {
     // getters
     _status,
     status,
+    tree,
     hasSessions,
     top_gyms,
 

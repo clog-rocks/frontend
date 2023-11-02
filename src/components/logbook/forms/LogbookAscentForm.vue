@@ -11,11 +11,11 @@ import {
   useLogbookGradeStore,
   useLogbookRouteStore,
 } from "@/stores";
-import {
-  type Ascent,
-  type AscentRequest,
-  type PersonalGradeFlag,
-  type RouteMultiselect,
+import type {
+  Ascent,
+  AscentRequest,
+  PersonalGradeFlag,
+  RouteMultiselect,
 } from "@/types/logbook";
 
 const props = defineProps<{

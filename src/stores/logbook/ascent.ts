@@ -16,7 +16,13 @@ import { computed, ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import { logbookService } from "@/services";
-import type { Ascent, AscentRequest, Style, TopGrade } from "@/types/logbook";
+import type {
+  Ascent,
+  AscentRequest,
+  AscentTree,
+  Style,
+  TopGrade,
+} from "@/types/logbook";
 
 import { useLogbookCragStore } from "./crag";
 import { useLogbookGradeStore } from "./grade";
@@ -33,6 +39,20 @@ export const useLogbookAscentStore = defineStore("logbook/ascent", () => {
   const routeStore = useLogbookRouteStore();
 
   const ascents = ref<{ [key: number]: Ascent }>({});
+
+  const tree = computed<{ [key: number]: AscentTree }>(() =>
+    keyBy(
+      Object.values(ascents.value).map(
+        (ascent): AscentTree => ({
+          ...ascent,
+          route: routeStore.tree[ascent.route],
+          style: styleStore.styles[ascent.style],
+          personal_grade: gradeStore.grades[ascent.personal_grade],
+        }),
+      ),
+      "id",
+    ),
+  );
 
   const hasAscents = computed(
     () => status.value.fetched && ascent_count.value > 0,
@@ -165,6 +185,7 @@ export const useLogbookAscentStore = defineStore("logbook/ascent", () => {
 
     // getters
     status,
+    tree,
     hasAscents,
     ascents_by_day,
     ascent_count,

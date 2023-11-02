@@ -4,7 +4,12 @@ import { computed, ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import { logbookService } from "@/services";
-import type { Crag, CragMultiselect, CragRequest } from "@/types/logbook";
+import type {
+  Crag,
+  CragMultiselect,
+  CragRequest,
+  CragTree,
+} from "@/types/logbook";
 
 import { useCoreCountryStore } from "../core/country";
 
@@ -14,15 +19,27 @@ export const useLogbookCragStore = defineStore("logbook/crag", () => {
 
   const crags = ref<{ [key: number]: Crag }>({});
 
-  const multiselect = computed<CragMultiselect[]>(() => {
-    return Object.values(crags.value).map((crag) => {
+  const tree = computed<{ [key: number]: CragTree }>(() =>
+    keyBy(
+      Object.values(crags.value).map(
+        (crag): CragTree => ({
+          ...crag,
+          country: countryStore.countries[crag.country],
+        }),
+      ),
+      "id",
+    ),
+  );
+
+  const multiselect = computed<CragMultiselect[]>(() =>
+    Object.values(crags.value).map((crag) => {
       return {
         id: crag.id,
         name: crag.name,
         country: countryStore.countries[crag.country].name,
       };
-    });
-  });
+    }),
+  );
 
   async function fetch() {
     try {
@@ -53,6 +70,7 @@ export const useLogbookCragStore = defineStore("logbook/crag", () => {
     // getters
     multiselect,
     status,
+    tree,
 
     // actions
     create,

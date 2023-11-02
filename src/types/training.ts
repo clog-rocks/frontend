@@ -1,4 +1,5 @@
-import { type Optional } from "./utility";
+import type { CityTree } from "./core";
+import type { Optional } from "./utility";
 
 // Gym
 export interface Gym {
@@ -8,6 +9,8 @@ export interface Gym {
 }
 
 export type GymRequest = Omit<Gym, "id">;
+
+export type GymTree = Readonly<Omit<Gym, "city"> & { city: CityTree }>;
 
 // Training session
 export interface TrainingSession {
@@ -23,6 +26,10 @@ export interface TrainingSession {
 export type TrainingSessionRequest = Omit<
   Optional<TrainingSession, "comment">,
   "id" | "date_added" | "date_last_edited"
+>;
+
+export type TrainingSessionTree = Readonly<
+  Omit<TrainingSession, "gym"> & { gym: GymTree }
 >;
 
 export interface GymMultiselect {

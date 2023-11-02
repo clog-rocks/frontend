@@ -1,4 +1,5 @@
-import { type Optional } from "./utility";
+import type { Country } from "./core";
+import type { Optional } from "./utility";
 
 // Crag
 export interface Crag {
@@ -8,6 +9,8 @@ export interface Crag {
 }
 
 export type CragRequest = Omit<Crag, "id">;
+
+export type CragTree = Readonly<Omit<Crag, "country"> & { country: Country }>;
 
 export interface CragMultiselect {
   readonly id: number;
@@ -23,6 +26,8 @@ export interface Sector {
 }
 
 export type SectorRequest = Omit<Sector, "id">;
+
+export type SectorTree = Readonly<Omit<Sector, "crag"> & { crag: CragTree }>;
 
 export interface SectorMultiselect {
   readonly id: number;
@@ -40,6 +45,13 @@ export interface Route {
 }
 
 export type RouteRequest = Omit<Route, "id">;
+
+export type RouteTree = Readonly<
+  Omit<Route, "sector" | "grade"> & {
+    sector: SectorTree;
+    grade: Grade;
+  }
+>;
 
 export interface RouteMultiselect {
   readonly id: number;
@@ -80,6 +92,14 @@ export type AscentRequest = Omit<
     | "style"
   >,
   "id" | "date_added" | "date_last_edited" | "repeat"
+>;
+
+export type AscentTree = Readonly<
+  Omit<Ascent, "personal_grade" | "style" | "route"> & {
+    personal_grade?: Grade;
+    style: Style;
+    route: RouteTree;
+  }
 >;
 
 // Style

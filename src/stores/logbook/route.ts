@@ -4,7 +4,12 @@ import { computed, ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import { logbookService } from "@/services";
-import type { Route, RouteMultiselect, RouteRequest } from "@/types/logbook";
+import type {
+  Route,
+  RouteMultiselect,
+  RouteRequest,
+  RouteTree,
+} from "@/types/logbook";
 
 import { useLogbookCragStore } from "./crag";
 import { useLogbookGradeStore } from "./grade";
@@ -18,8 +23,21 @@ export const useLogbookRouteStore = defineStore("logbook/route", () => {
 
   const routes = ref<{ [key: number]: Route }>({});
 
-  const multiselect = computed<RouteMultiselect[]>(() => {
-    return Object.values(routes.value).map((route) => {
+  const tree = computed<{ [key: number]: RouteTree }>(() =>
+    keyBy(
+      Object.values(routes.value).map(
+        (route): RouteTree => ({
+          ...route,
+          sector: sectorStore.tree[route.sector],
+          grade: gradeStore.grades[route.grade],
+        }),
+      ),
+      "id",
+    ),
+  );
+
+  const multiselect = computed<RouteMultiselect[]>(() =>
+    Object.values(routes.value).map((route) => {
       const sector = sectorStore.sectors[route.sector];
       return {
         id: route.id,
@@ -28,8 +46,8 @@ export const useLogbookRouteStore = defineStore("logbook/route", () => {
         crag: cragStore.crags[sector.crag].name,
         grade: gradeStore.grades[route.grade].fr_route,
       };
-    });
-  });
+    }),
+  );
 
   async function create(route: RouteRequest) {
     try {
@@ -60,6 +78,7 @@ export const useLogbookRouteStore = defineStore("logbook/route", () => {
     // getters
     multiselect,
     status,
+    tree,
 
     // actions
     create,
