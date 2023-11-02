@@ -1,36 +1,41 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import { ref, unref } from "vue";
+import { reactive, unref } from "vue";
 import VueMultiselect from "vue-multiselect";
 
 import FormFieldError from "@/components/layout/FormFieldError.vue";
 import FormInput from "@/components/layout/FormInput.vue";
 import router from "@/router";
 import { useCoreCountryStore, useLogbookCragStore } from "@/stores";
-import type { CragMultiselect, CragRequest } from "@/types/logbook";
+import type { Country } from "@/types/core";
+import type { CragRequest } from "@/types/logbook";
 
 const stores = {
   crag: useLogbookCragStore(),
   country: useCoreCountryStore(),
 };
 
-const country = ref<CragMultiselect>();
-const name = ref<string>("");
+type Form = Omit<CragRequest, "country"> & { country: Country | undefined };
+
+const form: Form = reactive({
+  country: undefined,
+  name: "",
+});
 
 const rules = {
   country: { required: helpers.withMessage("Country is required", required) },
   name: { required: helpers.withMessage("Crag is requried", required) },
 };
 
-const v$ = useVuelidate(rules, { country, name });
+const v$ = useVuelidate(rules, form);
 
 async function submit() {
   const formValid = await unref(v$).$validate();
-  if (formValid && country.value) {
+  if (formValid) {
     const payload: CragRequest = {
-      name: name.value,
-      country: country.value.id,
+      name: form.name,
+      country: form.country!.id,
     };
 
     try {
@@ -52,7 +57,7 @@ async function submit() {
     <label for="country">Country</label>
     <VueMultiselect
       id="country"
-      v-model="country"
+      v-model="form.country"
       :options="Object.values(stores.country.countries)"
       placeholder=""
       label="name"
@@ -63,7 +68,7 @@ async function submit() {
     />
     <FormFieldError :field="v$.country" />
     <FormInput
-      v-model="name"
+      v-model="form.name"
       label="Crag"
       :validator="v$.name"
     />

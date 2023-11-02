@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import { ref, unref } from "vue";
+import { reactive, unref } from "vue";
 import VueMultiselect from "vue-multiselect";
 
 import FormFieldError from "@/components/layout/FormFieldError.vue";
@@ -19,26 +19,28 @@ const stores = {
   sector: useLogbookSectorStore(),
 };
 
-const name = ref<string>("");
-const crag = ref<CragMultiselect | undefined>(
-  props.cragId
+type Form = Omit<SectorRequest, "crag"> & { crag: CragMultiselect | undefined };
+
+const form: Form = reactive({
+  name: "",
+  crag: props.cragId
     ? stores.crag.multiselect.find((crag) => crag.id == props.cragId)
     : undefined,
-);
+});
 
 const rules = {
   crag: { required: helpers.withMessage("Crag is required", required) },
   name: { required: helpers.withMessage("Sector is requried", required) },
 };
 
-const v$ = useVuelidate(rules, { crag, name });
+const v$ = useVuelidate(rules, form);
 
 async function submit() {
   const formValid = await unref(v$).$validate();
-  if (formValid && crag.value) {
+  if (formValid) {
     const payload: SectorRequest = {
-      name: name.value,
-      crag: crag.value.id,
+      name: form.name,
+      crag: form.crag!.id,
     };
 
     try {
@@ -60,7 +62,7 @@ async function submit() {
     <label for="id_crag">Crag</label>
     <VueMultiselect
       id="id_crag"
-      v-model="crag"
+      v-model="form.crag"
       :options="stores.crag.multiselect"
       placeholder=""
       label="name"
@@ -80,7 +82,7 @@ async function submit() {
     <FormFieldError :field="v$.crag" />
     <RouterLink :to="{ name: 'logbook-crag-new' }">Add new crag</RouterLink>
     <FormInput
-      v-model="name"
+      v-model="form.name"
       label="Sector"
       :validator="v$.name"
     />

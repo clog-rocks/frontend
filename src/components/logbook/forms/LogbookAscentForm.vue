@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import { ref, unref, watchEffect } from "vue";
+import { reactive, ref, unref, watchEffect } from "vue";
 import VueMultiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
 
@@ -11,12 +11,7 @@ import {
   useLogbookGradeStore,
   useLogbookRouteStore,
 } from "@/stores";
-import type {
-  Ascent,
-  AscentRequest,
-  PersonalGradeFlag,
-  RouteMultiselect,
-} from "@/types/logbook";
+import type { Ascent, AscentRequest, RouteMultiselect } from "@/types/logbook";
 
 const props = defineProps<{
   ascentId?: number;
@@ -34,37 +29,41 @@ const stores = {
   grade: useLogbookGradeStore(),
 };
 
-const comment = ref<string>();
-const date = ref(new Date().toISOString().split("T")[0]);
-const first_ascent = ref(false);
-const personal_grade = ref<number>();
-const personal_grade_flag = ref<PersonalGradeFlag>();
-const quality = ref<number | null>(null);
-const recommended = ref(false);
-const route = ref<RouteMultiselect | undefined>(
-  props.routeId ? getRoute(props.routeId) : undefined,
-);
-const second_go = ref(false);
-const style = ref(3);
+type Form = Omit<AscentRequest, "route"> & {
+  route: RouteMultiselect | undefined;
+};
 
-let editing = false;
+const form: Form = reactive({
+  comment: undefined,
+  date: new Date().toISOString().split("T")[0],
+  first_ascent: false,
+  personal_grade: undefined,
+  personal_grade_flag: undefined,
+  quality: null,
+  recommended: false,
+  route: props.routeId ? getRoute(props.routeId) : undefined,
+  second_go: false,
+  style: 3,
+});
+
+const editing = ref(false);
 let ascent: Ascent;
 
 watchEffect(() => {
   if (!props.ascentId) return;
   ascent = stores.ascent.ascents[props.ascentId];
   if (ascent) {
-    editing = true;
-    comment.value = ascent.comment;
-    date.value = ascent.date;
-    first_ascent.value = ascent.first_ascent;
-    personal_grade.value = ascent.personal_grade;
-    personal_grade_flag.value = ascent.personal_grade_flag;
-    quality.value = ascent.quality;
-    recommended.value = ascent.recommended;
-    route.value = getRoute(ascent.route);
-    second_go.value = ascent.second_go;
-    style.value = ascent.style;
+    editing.value = true;
+    form.comment = ascent.comment;
+    form.date = ascent.date;
+    form.first_ascent = ascent.first_ascent;
+    form.personal_grade = ascent.personal_grade;
+    form.personal_grade_flag = ascent.personal_grade_flag;
+    form.quality = ascent.quality;
+    form.recommended = ascent.recommended;
+    form.route = getRoute(ascent.route);
+    form.second_go = ascent.second_go;
+    form.style = ascent.style;
   }
 });
 
@@ -73,26 +72,26 @@ const rules = {
   date: { required: helpers.withMessage("Date is required", required) },
 };
 
-const v$ = useVuelidate(rules, { route, date });
+const v$ = useVuelidate(rules, form);
 
 const submit = async function () {
   const formValid = await unref(v$).$validate();
-  if (formValid && route.value) {
+  if (formValid) {
     try {
       const payload: AscentRequest = {
-        comment: comment.value,
-        date: date.value,
-        first_ascent: first_ascent.value,
-        personal_grade: personal_grade.value,
-        personal_grade_flag: personal_grade_flag.value,
-        quality: quality.value,
-        recommended: recommended.value,
-        route: route.value.id,
-        second_go: second_go.value,
-        style: style.value,
+        comment: form.comment,
+        date: form.date,
+        first_ascent: form.first_ascent,
+        personal_grade: form.personal_grade,
+        personal_grade_flag: form.personal_grade_flag,
+        quality: form.quality,
+        recommended: form.recommended,
+        route: form.route!.id,
+        second_go: form.second_go,
+        style: form.style,
       };
 
-      if (editing && props.ascentId) {
+      if (editing.value && props.ascentId) {
         await stores.ascent.update(props.ascentId, payload);
       } else {
         await stores.ascent.create(payload);
@@ -112,7 +111,7 @@ const submit = async function () {
     <label for="id_route">Route</label>
     <VueMultiselect
       id="id_route"
-      v-model="route"
+      v-model="form.route"
       :disabled="editing"
       :options="stores.route.multiselect"
       placeholder=""
@@ -144,14 +143,14 @@ const submit = async function () {
     <label>
       Date
       <input
-        v-model="date"
+        v-model="form.date"
         type="date"
       />
     </label>
     <label for="id_personal_grade">Personal grade</label>
     <VueMultiselect
       id="id_personal_grade"
-      v-model="personal_grade"
+      v-model="form.personal_grade"
       :options="Object.values(stores.grade.grades)"
       placeholder=""
       label="fr_route"
@@ -164,7 +163,7 @@ const submit = async function () {
       <label>
         OS
         <input
-          v-model="style"
+          v-model="form.style"
           type="radio"
           name="style"
           value="1"
@@ -173,7 +172,7 @@ const submit = async function () {
       <label>
         Flash
         <input
-          v-model="style"
+          v-model="form.style"
           type="radio"
           name="style"
           value="2"
@@ -182,7 +181,7 @@ const submit = async function () {
       <label>
         Red Point
         <input
-          v-model="style"
+          v-model="form.style"
           type="radio"
           name="style"
           value="3"
@@ -195,7 +194,7 @@ const submit = async function () {
         <label>
           Second GO
           <input
-            v-model="second_go"
+            v-model="form.second_go"
             type="checkbox"
             name="scales"
           />
@@ -205,7 +204,7 @@ const submit = async function () {
         <label>
           First Ascent
           <input
-            v-model="first_ascent"
+            v-model="form.first_ascent"
             type="checkbox"
             name="horns"
           />
@@ -215,7 +214,7 @@ const submit = async function () {
     <label for="comment">Comment</label>
     <textarea
       id="comment"
-      v-model="comment"
+      v-model="form.comment"
     />
     <button @click="submit()">
       {{ editing ? "Save changes" : "Add new ascent" }}
