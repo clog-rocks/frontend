@@ -10,11 +10,7 @@ import router from "@/router";
 import { useLogbookRouteStore } from "@/stores";
 import { useLogbookGradeStore } from "@/stores/logbook/grade";
 import { useLogbookSectorStore } from "@/stores/logbook/sector";
-import {
-  type Grade,
-  type RouteRequest,
-  type SectorMultiselect,
-} from "@/types/logbook";
+import type { Grade, RouteRequest, SectorMultiselect } from "@/types/logbook";
 
 const props = defineProps<{
   sectorId?: number;

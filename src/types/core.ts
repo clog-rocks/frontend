@@ -15,8 +15,8 @@ export interface City {
 
 export type CityRequest = Omit<City, "id">;
 
-export interface CityMultiselect {
-  readonly id: number;
-  readonly name: string;
-  readonly country: string;
-}
+export type CityTree = Readonly<Omit<City, "country"> & { country: Country }>;
+
+export type CityMultiselect = Readonly<
+  Omit<City, "country"> & { country: string }
+>;

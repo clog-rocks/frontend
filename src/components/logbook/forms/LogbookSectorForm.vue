@@ -8,7 +8,7 @@ import FormFieldError from "@/components/layout/FormFieldError.vue";
 import FormInput from "@/components/layout/FormInput.vue";
 import router from "@/router";
 import { useLogbookCragStore, useLogbookSectorStore } from "@/stores";
-import { type CragMultiselect, type SectorRequest } from "@/types/logbook";
+import type { CragMultiselect, SectorRequest } from "@/types/logbook";
 
 const props = defineProps<{
   cragId?: number;

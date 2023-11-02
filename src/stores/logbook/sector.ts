@@ -4,7 +4,12 @@ import { computed, ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import { logbookService } from "@/services";
-import type { Sector, SectorMultiselect, SectorRequest } from "@/types/logbook";
+import type {
+  Sector,
+  SectorMultiselect,
+  SectorRequest,
+  SectorTree,
+} from "@/types/logbook";
 
 import { useCoreCountryStore } from "../core/country";
 import { useLogbookCragStore } from "./crag";
@@ -16,8 +21,20 @@ export const useLogbookSectorStore = defineStore("logbook/sector", () => {
 
   const sectors = ref<{ [key: number]: Sector }>({});
 
-  const multiselect = computed<SectorMultiselect[]>(() => {
-    return Object.values(sectors.value).map((sector) => {
+  const tree = computed<{ [key: number]: SectorTree }>(() =>
+    keyBy(
+      Object.values(sectors.value).map(
+        (sector): SectorTree => ({
+          ...sector,
+          crag: cragStore.tree[sector.crag],
+        }),
+      ),
+      "id",
+    ),
+  );
+
+  const multiselect = computed<SectorMultiselect[]>(() =>
+    Object.values(sectors.value).map((sector) => {
       const crag = cragStore.crags[sector.crag];
       return {
         id: sector.id,
@@ -26,8 +43,8 @@ export const useLogbookSectorStore = defineStore("logbook/sector", () => {
         crag: crag.name,
         country: countryStore.countries[crag.country].name,
       };
-    });
-  });
+    }),
+  );
 
   async function create(sector: SectorRequest) {
     try {
@@ -58,6 +75,7 @@ export const useLogbookSectorStore = defineStore("logbook/sector", () => {
     // getters
     multiselect,
     status,
+    tree,
 
     // actions
     create,

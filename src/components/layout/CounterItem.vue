@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type CounterItemProps } from "@/types/generic";
+import type { CounterItemProps } from "@/types/generic";
 
 const props = defineProps<CounterItemProps>();
 </script>

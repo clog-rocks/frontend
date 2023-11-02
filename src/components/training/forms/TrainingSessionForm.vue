@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import { onMounted, type Ref, ref, unref, watchEffect } from "vue";
+import type { Ref } from "vue";
+import { onMounted, ref, unref, watchEffect } from "vue";
 import VueMultiselect from "vue-multiselect";
 import Multiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
@@ -13,7 +14,7 @@ import {
   useTrainingSessionStore,
   useTrainingTagStore,
 } from "@/stores";
-import { type Tag } from "@/types/generic";
+import type { Tag } from "@/types/generic";
 import type {
   GymMultiselect,
   TrainingSession,

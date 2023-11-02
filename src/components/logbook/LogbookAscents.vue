@@ -3,7 +3,7 @@ import { map, orderBy } from "lodash-es";
 import { computed, ref } from "vue";
 
 import { useLogbookAscentStore } from "@/stores";
-import type { Ascent } from "@/types/logbook";
+import type { AscentTree } from "@/types/logbook";
 
 const show = ref(true);
 
@@ -11,7 +11,7 @@ const ascentStore = useLogbookAscentStore();
 
 const sorted = computed(() =>
   orderBy(
-    map(ascentStore.ascents, (ascent: Ascent) => ascent),
+    map(ascentStore.tree, (ascent: AscentTree) => ascent),
     ["date", "date_added"],
     ["desc", "desc"],
   ).slice(0, 5),

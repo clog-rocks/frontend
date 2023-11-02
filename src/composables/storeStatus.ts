@@ -1,4 +1,5 @@
-import { computed, type Ref, ref } from "vue";
+import type { Ref } from "vue";
+import { computed, ref } from "vue";
 
 import type { StoreStatus } from "@/types/generic";
 

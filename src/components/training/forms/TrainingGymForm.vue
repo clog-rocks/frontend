@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import { type Ref, ref, unref } from "vue";
+import type { Ref } from "vue";
+import { ref, unref } from "vue";
 import VueMultiselect from "vue-multiselect";
 
 import FormFieldError from "@/components/layout/FormFieldError.vue";
@@ -9,7 +10,7 @@ import FormInput from "@/components/layout/FormInput.vue";
 import router from "@/router";
 import { useTrainingGymStore } from "@/stores";
 import { useCoreCityStore } from "@/stores/core/city";
-import { type CityMultiselect } from "@/types/core";
+import type { CityMultiselect } from "@/types/core";
 
 const props = defineProps<{ cityId?: number }>();
 

@@ -3,7 +3,7 @@ import { map, orderBy } from "lodash-es";
 import { computed, ref } from "vue";
 
 import { useTrainingSessionStore } from "@/stores";
-import type { TrainingSession } from "@/types/training";
+import type { TrainingSessionTree } from "@/types/training";
 
 const sessionStore = useTrainingSessionStore();
 
@@ -11,7 +11,7 @@ const show = ref(true);
 
 const sorted = computed(() =>
   orderBy(
-    map(sessionStore.sessions, (session: TrainingSession) => session),
+    map(sessionStore.tree, (session: TrainingSessionTree) => session),
     ["date", "date_added"],
     ["desc", "desc"],
   ).slice(0, 5),

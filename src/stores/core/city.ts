@@ -4,7 +4,12 @@ import { computed, ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import { coreService } from "@/services";
-import type { City, CityMultiselect, CityRequest } from "@/types/core";
+import type {
+  City,
+  CityMultiselect,
+  CityRequest,
+  CityTree,
+} from "@/types/core";
 
 import { useCoreCountryStore } from "./country";
 
@@ -14,13 +19,22 @@ export const useCoreCityStore = defineStore("core/city", () => {
 
   const cities = ref<{ [key: number]: City }>({});
 
-  const multiselect = computed<CityMultiselect[]>(() => {
-    return Object.values(cities.value).map((city) => ({
-      id: city.id,
-      name: city.name,
+  const tree = computed<{ [key: number]: CityTree }>(() =>
+    keyBy(
+      Object.values(cities.value).map((city) => ({
+        ...city,
+        country: countryStore.countries[city.country],
+      })),
+      "id",
+    ),
+  );
+
+  const multiselect = computed<CityMultiselect[]>(() =>
+    Object.values(cities.value).map((city) => ({
+      ...city,
       country: countryStore.countries[city.country].name,
-    }));
-  });
+    })),
+  );
 
   function fetch() {
     async function fetch() {
@@ -61,6 +75,7 @@ export const useCoreCityStore = defineStore("core/city", () => {
     // getters
     multiselect,
     status,
+    tree,
 
     // actions
     create,

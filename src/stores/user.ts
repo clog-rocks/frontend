@@ -1,6 +1,7 @@
 import { StorageSerializers, useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
-import { type Ref, ref } from "vue";
+import type { Ref } from "vue";
+import { ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import router from "@/router";
