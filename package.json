@@ -11,9 +11,9 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "lint:css": "npx stylelint --fix 'src/**/*.{vue,css,scss,html}'",
+    "lint:css": "npx stylelint --fix 'src/**/*.{vue,css,html}'",
     "ci:lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
-    "ci:lint:css": "npx stylelint 'src/**/*.{vue,css,scss,html}'",
+    "ci:lint:css": "npx stylelint 'src/**/*.{vue,css,html}'",
     "format": "prettier --write src/"
   },
   "dependencies": {
@@ -56,10 +56,8 @@
     "stylelint-config-css-modules": "^4.3.0",
     "stylelint-config-recess-order": "^4.3.0",
     "stylelint-config-recommended": "^13.0.0",
-    "stylelint-config-recommended-scss": "^13.0.0",
     "stylelint-config-recommended-vue": "^1.5.0",
     "stylelint-config-standard": "^34.0.0",
-    "stylelint-config-standard-scss": "^11.0.0",
     "typescript": "~5.2.2",
     "vite": "^4.5.0",
     "vitest": "^0.34.6",
