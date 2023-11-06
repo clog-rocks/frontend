@@ -1,8 +1,8 @@
-@import "./base.css";
-@import "./reset.css";
-@import "./counters.css";
-@import "./nprogress.css";
-@import "./transitions.css";
+@import url("./base.css");
+@import url("./reset.css");
+@import url("./counters.css");
+@import url("./nprogress.css");
+@import url("./transitions.css");
 
 html {
   color: var(--text1);
