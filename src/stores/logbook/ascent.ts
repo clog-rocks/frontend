@@ -1,4 +1,4 @@
-import { differenceInDays, parseISO } from "date-fns";
+import { differenceInDays } from "date-fns";
 import {
   filter,
   groupBy,
@@ -16,13 +16,13 @@ import { computed, ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import { logbookService } from "@/services";
+import type { Style, TopGrade } from "@/types/logbook";
 import type {
   Ascent,
-  AscentRequest,
   AscentTree,
-  Style,
-  TopGrade,
-} from "@/types/logbook";
+  CreateAscentRequest,
+  PatchAscentRequest,
+} from "@/types/logbook/ascent";
 
 import { useLogbookCragStore } from "./crag";
 import { useLogbookGradeStore } from "./grade";
@@ -42,14 +42,14 @@ export const useLogbookAscentStore = defineStore("logbook/ascent", () => {
 
   const tree = computed<{ [key: number]: AscentTree }>(() =>
     keyBy(
-      Object.values(ascents.value).map(
-        (ascent): AscentTree => ({
-          ...ascent,
-          route: routeStore.tree[ascent.route],
-          style: styleStore.styles[ascent.style],
-          personal_grade: gradeStore.grades[ascent.personal_grade],
-        }),
-      ),
+      Object.values(ascents.value).map((ascent) => ({
+        ...ascent,
+        route: routeStore.tree[ascent.route],
+        style: styleStore.styles[ascent.style],
+        personal_grade: ascent.personal_grade
+          ? gradeStore.grades[ascent.personal_grade]
+          : null,
+      })),
       "id",
     ),
   );
@@ -69,8 +69,7 @@ export const useLogbookAscentStore = defineStore("logbook/ascent", () => {
   const ascent_last_year = computed(() =>
     filter(
       ascents.value,
-      (ascent: Ascent) =>
-        differenceInDays(new Date(parseISO(ascent.date)), new Date()) >= -365,
+      (ascent: Ascent) => differenceInDays(ascent.date, new Date()) >= -365,
     ),
   );
 
@@ -120,7 +119,7 @@ export const useLogbookAscentStore = defineStore("logbook/ascent", () => {
     );
   });
 
-  async function create(ascent: AscentRequest) {
+  async function create(ascent: CreateAscentRequest) {
     try {
       const response = await logbookService.ascent.create(ascent);
       ascents.value[response.id] = response;
@@ -131,7 +130,7 @@ export const useLogbookAscentStore = defineStore("logbook/ascent", () => {
     }
   }
 
-  async function update(id: number, ascent: AscentRequest) {
+  async function update(id: number, ascent: PatchAscentRequest) {
     try {
       const response = await logbookService.ascent.update(id, ascent);
       ascents.value[response.id] = response;

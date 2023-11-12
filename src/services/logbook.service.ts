@@ -1,6 +1,4 @@
 import type {
-  Ascent,
-  AscentRequest,
   Crag,
   CragRequest,
   Grade,
@@ -10,12 +8,17 @@ import type {
   SectorRequest,
   Style,
 } from "@/types/logbook";
+import type {
+  Ascent,
+  CreateAscentRequest,
+  PatchAscentRequest,
+} from "@/types/logbook/ascent";
 
 import api from "./api";
 
 export default {
   ascent: {
-    create: async (payload: AscentRequest): Promise<Ascent> => {
+    create: async (payload: CreateAscentRequest): Promise<Ascent> => {
       const response = await api.post("/api/logbook/ascents", payload);
       return response.data;
     },
@@ -27,7 +30,10 @@ export default {
       const response = await api.get("/api/logbook/ascents");
       return response.data;
     },
-    update: async (id: number, payload: AscentRequest): Promise<Ascent> => {
+    update: async (
+      id: number,
+      payload: PatchAscentRequest,
+    ): Promise<Ascent> => {
       const response = await api.patch(`/api/logbook/ascents/${id}`, payload);
       return response.data;
     },

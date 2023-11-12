@@ -10,9 +10,8 @@ html {
 }
 
 body {
-  max-width: max-content;
   min-height: 100vh;
-  margin: auto;
+  margin: 0 1rem 1rem;
   font-family:
     Inter,
     -apple-system,
@@ -26,7 +25,7 @@ body {
     "Droid Sans",
     "Helvetica Neue",
     sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.5;
   transition:
     color 0.5s,
@@ -52,17 +51,19 @@ a {
 button {
   width: max-content;
   padding: 10px 18px;
-  margin: 8px 0 0;
   color: var(--text2);
   cursor: pointer;
   background-color: var(--surface4);
   border: none;
-  border-radius: calc(var(--radius) / 2);
-  transition: 0.2s ease-in-out;
+  transition: 0.1s ease-in-out;
 
   &:hover {
     color: var(--surface3);
     background-color: var(--brand);
+  }
+
+  &.button-small {
+    padding: 4px 8px;
   }
 }
 
@@ -94,13 +95,6 @@ form {
   }
 }
 
-pre {
-  padding: 0.25rem;
-  margin: 15px auto;
-  background-color: var(--surface4);
-  border-radius: var(--radius);
-}
-
 ul {
   position: relative;
   padding: 0;
@@ -114,6 +108,14 @@ ul {
   & li:last-of-type {
     margin-bottom: 0;
   }
+}
+
+h1 {
+  padding-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 section ~ section {

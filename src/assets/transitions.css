@@ -52,7 +52,7 @@
   transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
-/* For lists, sessions, ascents, etc */
+/* For lists: sessions, ascents, etc */
 .list-enter-from,
 .list-leave-to {
   opacity: 0;

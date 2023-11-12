@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import { onMounted, reactive, ref, unref, watchEffect } from "vue";
+import { onMounted, reactive, ref, unref, watch } from "vue";
 import VueMultiselect from "vue-multiselect";
 import Multiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
@@ -56,24 +56,27 @@ const rules = {
 const editing = ref(false);
 let session: TrainingSession;
 
-const v$ = useVuelidate(rules, { gym, date, comment, tags });
+const v$ = useVuelidate(rules, form);
 
 onMounted(async () => {
   await stores.tag.fetch();
 });
 
-// Watch route.params.sessionId in case user selects/changes session to edit.
-watchEffect(() => {
-  if (!props.sessionId) return;
-  session = stores.session.sessions[props.sessionId];
-  if (session) {
-    editing.value = true;
-    form.gym = getGym(session.gym);
-    form.date = session.date;
-    form.tags = session.tags.map((tag) => ({ name: tag }));
-    if (session.comment) form.comment = session.comment;
-  }
-});
+watch(
+  () => props.sessionId,
+  () => {
+    if (!props.sessionId) return;
+    session = stores.session.sessions[props.sessionId];
+    if (session) {
+      editing.value = true;
+      form.gym = getGym(session.gym);
+      form.date = session.date;
+      form.tags = session.tags.map((tag) => ({ name: tag }));
+      if (session.comment) form.comment = session.comment;
+    }
+  },
+  { immediate: true },
+);
 
 async function submit() {
   const formValid = await unref(v$).$validate();
