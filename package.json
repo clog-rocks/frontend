@@ -20,7 +20,7 @@
   "dependencies": {
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
-    "@vueuse/core": "^10.6.1",
+    "@vueuse/core": "^10.7.0",
     "axios": "^1.6.2",
     "date-fns": "^2.30.0",
     "js-cookie": "^3.0.5",
