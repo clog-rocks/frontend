@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.0 (2023-12-08)
+
+
+### Features
+
+* add faster fade transition ([#815](https://github.com/clog-rocks/frontend/issues/815)) ([9e8f54c](https://github.com/clog-rocks/frontend/commit/9e8f54ce5382ecb084e222db5c15b7dd153cb2cf))
+* add form validation ([#852](https://github.com/clog-rocks/frontend/issues/852)) ([c9170e8](https://github.com/clog-rocks/frontend/commit/c9170e889e3a9e40cb7e0009b50b5363121a4079))
+* add forms ([#590](https://github.com/clog-rocks/frontend/issues/590)) ([925310e](https://github.com/clog-rocks/frontend/commit/925310e21d676cd568b2584f1ae9965447e555e0))
+* lazy-load all routes ([#812](https://github.com/clog-rocks/frontend/issues/812)) ([41772fb](https://github.com/clog-rocks/frontend/commit/41772fb43b5df29185d287bf08afb9fcac3c0c36))
+* **stores:** add tree getters ([#902](https://github.com/clog-rocks/frontend/issues/902)) ([3e8c97c](https://github.com/clog-rocks/frontend/commit/3e8c97cf6f2c6cc02dfe90724106e009b05ae385))
+
+
+### Bug Fixes
+
+* **forms:** use correct `label` ([#864](https://github.com/clog-rocks/frontend/issues/864)) ([6b3b1bb](https://github.com/clog-rocks/frontend/commit/6b3b1bbe808d5b6d4675e8d9b22e538986741659))
+
 ## 0.0.1 (2022-12-09)
 
 
