@@ -7,7 +7,6 @@ extends:
   - stylelint-config-recommended
   - stylelint-config-recommended-vue
   - stylelint-config-recess-order
-  - stylelint-config-css-modules
 rules:
   declaration-property-value-no-unknown: true
 ignoreFiles:
