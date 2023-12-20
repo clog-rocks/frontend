@@ -22,7 +22,7 @@
     "@vuelidate/validators": "^2.0.4",
     "@vueuse/core": "^10.7.0",
     "axios": "^1.6.2",
-    "date-fns": "^3.0.0",
+    "date-fns": "^3.0.1",
     "js-cookie": "^3.0.5",
     "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",
