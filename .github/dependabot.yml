@@ -1,14 +1,16 @@
 version: 2
 updates:
-  # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
     reviewers:
       - "gegoune"
-
-  # Maintain dependencies for npm
+    groups:
+      semver:
+        update-types:
+          - "minor"
+          - "patch"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -16,3 +18,8 @@ updates:
     open-pull-requests-limit: 10
     reviewers:
       - "gegoune"
+    groups:
+      semver:
+        update-types:
+          - "minor"
+          - "patch"
