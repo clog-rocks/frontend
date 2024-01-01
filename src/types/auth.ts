@@ -5,15 +5,20 @@ export interface User {
   first_name: string;
   last_name: string;
   username: string;
+  profile: Profile;
+}
+
+export interface UserRequest {
+  email: string;
+  first_name: string;
+  last_name: string;
+  password?: string;
+  new_password?: string;
+  profile: Profile;
 }
 
 export interface Profile {
   grading_system: "fr" | "yds";
-}
-
-export interface UserResponse {
-  user: User;
-  profile: Profile;
 }
 
 export interface UserRegister {
