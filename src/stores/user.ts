@@ -1,12 +1,11 @@
 import { StorageSerializers, useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 import type { Ref } from "vue";
-import { ref } from "vue";
 
 import { useStoreStatus } from "@/composables/storeStatus";
 import router from "@/router";
 import { userService } from "@/services";
-import type { Profile, User, UserRegister, UserResponse } from "@/types/auth";
+import type { User, UserRegister } from "@/types/auth";
 
 import { useCoreCityStore, useTrainingSessionStore } from ".";
 import { useLogbookAscentStore } from "./logbook/ascent";
@@ -18,18 +17,13 @@ export const useUserStore = defineStore("user", () => {
   const user: Ref<User | null> = useLocalStorage("pinia/user", null, {
     serializer: StorageSerializers.object,
   });
-  const profile = ref<Profile>();
 
   async function login(username: string, password: string) {
     try {
       _status.value = "FETCHING";
-      const login_response = await userService.login(username, password);
-      const user_response: UserResponse = await userService.profile();
-
-      user.value = user_response.user;
-      profile.value = user_response.profile;
+      const response = await userService.login(username, password);
+      user.value = response;
       isAuthenticated.value = true;
-
       _status.value = "FETCHED";
 
       router.push(
@@ -37,7 +31,7 @@ export const useUserStore = defineStore("user", () => {
           name: "logbook",
         },
       );
-      return Promise.resolve(login_response);
+      return Promise.resolve(response);
     } catch (error) {
       _status.value = "FAILED";
       return Promise.reject(error);
@@ -50,7 +44,6 @@ export const useUserStore = defineStore("user", () => {
     }
 
     user.value = null;
-    profile.value = undefined;
     isAuthenticated.value = false;
 
     const coreCityStore = useCoreCityStore();
@@ -75,10 +68,8 @@ export const useUserStore = defineStore("user", () => {
 
   async function register(user_data: UserRegister) {
     try {
-      const response: UserResponse = await userService.register(user_data);
-
-      user.value = response.user;
-      profile.value = response.profile;
+      const response = await userService.register(user_data);
+      user.value = response;
       isAuthenticated.value = true;
 
       router.push({ name: "logbook" });
