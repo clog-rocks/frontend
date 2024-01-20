@@ -22,12 +22,12 @@
     "@vuelidate/validators": "^2.0.4",
     "@vueuse/core": "^10.7.2",
     "axios": "^1.6.5",
-    "date-fns": "^3.2.0",
+    "date-fns": "^3.3.0",
     "js-cookie": "^3.0.5",
     "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
-    "vue": "^3.4.14",
+    "vue": "^3.4.15",
     "vue-multiselect": "^3.0.0-beta.3",
     "vue-router": "^4.2.5"
   },
@@ -53,14 +53,14 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.4",
     "start-server-and-test": "^2.0.3",
-    "stylelint": "^16.1.0",
+    "stylelint": "^16.2.0",
     "stylelint-config-recess-order": "^4.4.0",
     "stylelint-config-recommended": "^14.0.0",
     "stylelint-config-recommended-vue": "^1.5.0",
     "stylelint-config-standard": "^36.0.0",
     "typescript": "~5.3.3",
     "vite": "^5.0.12",
-    "vitest": "^1.2.0",
+    "vitest": "^1.2.1",
     "vue-tsc": "^1.8.27"
   }
 }
