@@ -32,12 +32,11 @@ const showDay = !["Yesterday", "Today"].includes(display);
 .date-header {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
   align-items: center;
   padding-bottom: 0.5rem;
   letter-spacing: 1px;
 
-  & p:last-of-type {
+  p:nth-of-type(2) {
     font-size: 0.75rem;
   }
 }

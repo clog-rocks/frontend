@@ -37,28 +37,30 @@ const actions = {
       {{ props.ascent.repeat ? "repeat" : props.ascent.style.shorthand }}
     </div>
     <div class="route-section">
-      <span class="location">
+      <div class="location">
         {{ props.ascent.route.sector.crag.country.name }} /
         {{ props.ascent.route.sector.crag.name }} /
         {{ props.ascent.route.sector.name }}
-      </span>
+      </div>
       <div class="route">
-        <span class="name">{{ props.ascent.route.name }}</span>
-        <span class="grade">{{ props.ascent.route.grade.fr_route }}</span>
+        <div>{{ props.ascent.route.name }}</div>
         <span
-          v-if="props.ascent.quality"
-          class="quality"
+          v-if="props.ascent.personal_grade"
+          class="grade"
         >
+          {{ props.ascent.personal_grade.fr_route }}
+        </span>
+        <div :class="['grade', { striken: props.ascent.personal_grade }]">
+          {{ props.ascent.route.grade.fr_route }}
+        </div>
+        <span v-if="props.ascent.quality">
           {{ "&#9734;".repeat(props.ascent.quality) }}
         </span>
-        <span
-          v-if="props.ascent.recommended"
-          class="recommended"
-        >
-          &#9825;
-        </span>
+        <span v-if="props.ascent.recommended"> &#9825; </span>
+        <span v-if="props.ascent.first_ascent">First ascent</span>
       </div>
     </div>
+    <div>{{ props.ascent.comment }}</div>
     <div class="actions">
       <button
         class="button-small"
@@ -84,51 +86,73 @@ const actions = {
 
 <style scoped>
 .ascent {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  align-items: center;
-  padding: 6px 0;
+  display: grid;
+  gap: 1ch;
 
   .style {
-    display: flex;
-    justify-content: center;
-    min-width: 3rem;
-    font-size: 1.15rem;
+    font-size: 1.15em;
     font-weight: 300;
 
     &.repeat {
-      font-size: 0.6rem;
+      font-size: 0.85em;
     }
   }
 
   .route-section {
-    display: flex;
-    flex-direction: column;
     letter-spacing: 1px;
 
     .location {
-      font-size: 0.6rem;
+      font-size: 0.75em;
     }
 
     .route {
       display: flex;
-      gap: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0 0.75em;
+
+      .grade {
+        &.striken {
+          text-decoration: line-through 1px;
+        }
+      }
     }
   }
 
   .actions {
-    display: flex;
-    margin-left: auto;
-    font-size: 0.75rem;
-    opacity: 0;
+    font-size: 0.75em;
   }
 
-  &:hover,
-  &:active {
+  @container ascents (width >=700px) {
+    grid-template-columns: 5ch 30ch auto;
+    align-items: center;
+    padding-left: 0.25em;
+    border: 1px dotted var(--surface2);
+    border-left: 1px dotted var(--surface3);
+
+    .style {
+      display: flex;
+      justify-content: center;
+    }
+
     .actions {
-      opacity: 1;
+      position: absolute;
+      right: 0.5em;
+      display: none;
+    }
+
+    &:hover,
+    &:active {
+      border: 1px dotted var(--surface1);
+
+      .actions {
+        display: inline;
+        border: 1px dotted var(--surface1);
+      }
     }
   }
+}
+
+.ascent ~ .ascent {
+  margin-top: 1.5em;
 }
 </style>

@@ -36,6 +36,10 @@ const sorted = computed(() =>
 </template>
 
 <style scoped>
+section {
+  container: ascents / inline-size;
+}
+
 .link {
   display: flex;
   justify-content: center;

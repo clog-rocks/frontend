@@ -28,3 +28,9 @@ const sorted = computed(() =>
     </transition-group>
   </section>
 </template>
+
+<style scoped>
+section {
+  container: trainingsessions / inline-size;
+}
+</style>

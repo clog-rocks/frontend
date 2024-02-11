@@ -33,26 +33,25 @@ const actions = {
 
 <template>
   <div class="session">
-    <div class="date">
-      {{ props.session.date }}
-    </div>
+    <div>{{ props.session.date }}</div>
     <div class="gym-section">
-      <span class="location">
+      <div class="location">
         {{ props.session.gym.city.country.name }} /
         {{ props.session.gym.city.name }}
-      </span>
-      <span class="gym">
-        {{ props.session.gym.name }}
-      </span>
+      </div>
+      <div>{{ props.session.gym.name }}</div>
     </div>
     <div class="info">
-      <span
+      <div
         v-if="props.session.comment"
         class="comment"
       >
         {{ props.session.comment }}
-      </span>
-      <div class="tags">
+      </div>
+      <div
+        v-if="props.session.tags.length > 0"
+        class="tags"
+      >
         <span
           v-for="tag in props.session.tags"
           :key="tag"
@@ -87,21 +86,10 @@ const actions = {
 
 <style scoped>
 .session {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  .date {
-    font-family: "Courier New", Courier, monospace;
-    font-size: 1.1em;
-    text-wrap: nowrap;
-  }
+  display: grid;
+  gap: 1ch;
 
   .gym-section {
-    display: flex;
-    flex-direction: inherit;
-    align-items: center;
-    align-items: flex-start;
     letter-spacing: 1px;
 
     .location {
@@ -122,8 +110,7 @@ const actions = {
     .tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.1em;
-      align-content: center;
+      gap: 0.25em;
 
       .tag {
         padding: 2px 4px;
@@ -139,30 +126,20 @@ const actions = {
     font-size: 0.75rem;
   }
 
-  @media (width > 700px) {
-    position: relative;
-    flex-direction: row;
-    gap: 1.5em;
+  @container trainingsessions (width >=700px) {
+    grid-template-columns: 10ch 20ch auto;
     align-items: center;
-    padding-left: 0.25em;
-
-    .gym-section {
-      flex-direction: column;
-      align-items: flex-start;
-      min-width: 10em;
-    }
 
     .actions {
       position: absolute;
       right: 0.5em;
       display: none;
-      margin: 0 auto;
     }
 
     &:hover,
     &:active {
       .actions {
-        display: inline;
+        display: block;
       }
     }
   }
