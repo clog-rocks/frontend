@@ -60,7 +60,7 @@ const actions = {
         <span v-if="props.ascent.first_ascent">First ascent</span>
       </div>
     </div>
-    <div>{{ props.ascent.comment }}</div>
+    <div class="comment">{{ props.ascent.comment }}</div>
     <div class="actions">
       <button
         class="button-small"
@@ -88,6 +88,7 @@ const actions = {
 .ascent {
   display: grid;
   gap: 1ch;
+  padding: 0.25em;
 
   .style {
     font-size: 1.15em;
@@ -123,31 +124,25 @@ const actions = {
   }
 
   @container ascents (width >=700px) {
-    grid-template-columns: 5ch 30ch auto;
+    grid-template-columns: 5ch 40ch auto auto;
     align-items: center;
-    padding-left: 0.25em;
-    border: 1px dotted var(--surface2);
-    border-left: 1px dotted var(--surface3);
 
     .style {
       display: flex;
       justify-content: center;
     }
 
+    .comment {
+      text-wrap: pretty;
+    }
+
     .actions {
-      position: absolute;
-      right: 0.5em;
-      display: none;
+      margin-inline: auto 0;
     }
 
     &:hover,
     &:active {
-      border: 1px dotted var(--surface1);
-
-      .actions {
-        display: inline;
-        border: 1px dotted var(--surface1);
-      }
+      background-color: var(--surface3);
     }
   }
 }
