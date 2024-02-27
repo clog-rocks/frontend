@@ -88,6 +88,7 @@ const actions = {
 .session {
   display: grid;
   gap: 1ch;
+  padding: 0.25em;
 
   .gym-section {
     letter-spacing: 1px;
@@ -105,6 +106,7 @@ const actions = {
     .comment {
       font-size: 0.9em;
       font-style: italic;
+      text-wrap: pretty;
     }
 
     .tags {
@@ -127,20 +129,16 @@ const actions = {
   }
 
   @container trainingsessions (width >=700px) {
-    grid-template-columns: 10ch 20ch auto;
+    grid-template-columns: 10ch 20ch auto auto;
     align-items: center;
 
     .actions {
-      position: absolute;
-      right: 0.5em;
-      display: none;
+      margin-inline: auto 0;
     }
 
     &:hover,
     &:active {
-      .actions {
-        display: block;
-      }
+      background-color: var(--surface3);
     }
   }
 }
