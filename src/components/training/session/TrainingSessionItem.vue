@@ -128,7 +128,7 @@ const actions = {
     font-size: 0.75rem;
   }
 
-  @container trainingsessions (width >=700px) {
+  @container trainingsessions (width >= 700px) {
     grid-template-columns: 10ch 20ch auto auto;
     align-items: center;
 

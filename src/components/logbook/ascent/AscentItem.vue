@@ -123,7 +123,7 @@ const actions = {
     font-size: 0.75em;
   }
 
-  @container ascents (width >=700px) {
+  @container ascents (width >= 700px) {
     grid-template-columns: 5ch 40ch auto auto;
     align-items: center;
 
