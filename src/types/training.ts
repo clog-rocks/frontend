@@ -1,5 +1,4 @@
 import type { CityTree } from "./core";
-import type { Optional } from "./utility";
 
 // Gym
 export interface Gym {
@@ -15,18 +14,20 @@ export type GymTree = Readonly<Omit<Gym, "city"> & { city: CityTree }>;
 // Training session
 export interface TrainingSession {
   readonly id: number;
-  readonly date_added: Date;
-  readonly date_last_edited: Date | null;
+  readonly date_added: string;
+  readonly date_last_edited: string | null;
   gym: number;
   date: string;
   comment: string | null;
   tags: string[];
 }
 
-export type TrainingSessionRequest = Omit<
-  Optional<TrainingSession, "comment">,
-  "id" | "date_added" | "date_last_edited"
->;
+export type TrainingSessionRequest = {
+  gym: number;
+  date: string;
+  comment?: string;
+  tags?: string[];
+};
 
 export type TrainingSessionTree = Readonly<
   Omit<TrainingSession, "gym"> & { gym: GymTree }

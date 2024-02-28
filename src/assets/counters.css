@@ -30,7 +30,7 @@
 
     & .legend {
       position: relative;
-      bottom: 0.6em;
+      bottom: 0.6rem;
       font-size: 0.75rem;
     }
   }

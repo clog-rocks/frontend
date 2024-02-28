@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import { reactive, ref, unref, watchEffect } from "vue";
+import { reactive, ref, unref, watch } from "vue";
 import VueMultiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
 
@@ -11,7 +11,12 @@ import {
   useLogbookGradeStore,
   useLogbookRouteStore,
 } from "@/stores";
-import type { Ascent, AscentRequest, RouteMultiselect } from "@/types/logbook";
+import type { RouteMultiselect } from "@/types/logbook";
+import type {
+  Ascent,
+  CreateAscentRequest,
+  PatchAscentRequest,
+} from "@/types/logbook/ascent";
 
 const props = defineProps<{
   ascentId?: number;
@@ -29,56 +34,61 @@ const stores = {
   grade: useLogbookGradeStore(),
 };
 
-type Form = Omit<AscentRequest, "route"> & {
+type Form = Omit<PatchAscentRequest, "route"> & {
   route: RouteMultiselect | undefined;
+  date: string; // FIXME: Although not required by API form always has date.
 };
 
 const form: Form = reactive({
   comment: undefined,
   date: new Date().toISOString().split("T")[0],
-  first_ascent: false,
+  first_ascent: undefined,
   personal_grade: undefined,
   personal_grade_flag: undefined,
-  quality: null,
-  recommended: false,
+  quality: undefined,
+  recommended: undefined,
   route: props.routeId ? getRoute(props.routeId) : undefined,
-  second_go: false,
+  second_go: undefined,
   style: 3,
 });
 
 const editing = ref(false);
 let ascent: Ascent;
 
-watchEffect(() => {
-  if (!props.ascentId) return;
-  ascent = stores.ascent.ascents[props.ascentId];
-  if (ascent) {
-    editing.value = true;
-    form.comment = ascent.comment;
-    form.date = ascent.date;
-    form.first_ascent = ascent.first_ascent;
-    form.personal_grade = ascent.personal_grade;
-    form.personal_grade_flag = ascent.personal_grade_flag;
-    form.quality = ascent.quality;
-    form.recommended = ascent.recommended;
-    form.route = getRoute(ascent.route);
-    form.second_go = ascent.second_go;
-    form.style = ascent.style;
-  }
-});
+watch(
+  () => props.ascentId,
+  () => {
+    if (!props.ascentId) return;
+    ascent = stores.ascent.ascents[props.ascentId];
+    if (ascent) {
+      editing.value = true;
+      form.comment = ascent.comment || undefined;
+      form.date = ascent.date;
+      form.first_ascent = ascent.first_ascent;
+      form.personal_grade = ascent.personal_grade || undefined;
+      form.personal_grade_flag = ascent.personal_grade_flag || undefined;
+      form.quality = ascent.quality || undefined;
+      form.recommended = ascent.recommended;
+      form.route = getRoute(ascent.route);
+      form.second_go = ascent.second_go;
+      form.style = ascent.style;
+    }
+  },
+  { immediate: true },
+);
 
 const rules = {
   route: { required: helpers.withMessage("Route is required", required) },
   date: { required: helpers.withMessage("Date is required", required) },
 };
 
-const v$ = useVuelidate(rules, form);
+const v$ = useVuelidate(rules, { route: form.route, date: form.date });
 
 const submit = async function () {
   const formValid = await unref(v$).$validate();
   if (formValid) {
     try {
-      const payload: AscentRequest = {
+      const payload: CreateAscentRequest = {
         comment: form.comment,
         date: form.date,
         first_ascent: form.first_ascent,
@@ -126,12 +136,8 @@ const submit = async function () {
         #[slotName]="{ option }"
         :key="slotName"
       >
-        {{ option.crag }}
-        /
-        {{ option.sector }}
-        /
-        <strong>{{ option.name }}</strong>
-        {{ option.grade }}
+        {{ option.crag }} / {{ option.sector }} /
+        <strong>{{ option.name }}</strong> {{ option.grade }}
       </template>
     </VueMultiselect>
     <FormFieldError :field="v$.route" />
