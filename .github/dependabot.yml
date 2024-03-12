@@ -7,10 +7,9 @@ updates:
     reviewers:
       - "gegoune"
     groups:
-      semver:
-        update-types:
-          - "minor"
-          - "patch"
+      gha:
+        patterns:
+          - "*"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -19,7 +18,10 @@ updates:
     reviewers:
       - "gegoune"
     groups:
-      semver:
+      npm-non-breaking:
         update-types:
           - "minor"
           - "patch"
+      npm-breaking:
+        update-types:
+          - "major"
