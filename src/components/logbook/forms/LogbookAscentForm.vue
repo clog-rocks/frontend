@@ -6,7 +6,7 @@ import VueMultiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
 
 import FormFieldError from "@/components/layout/FormFieldError.vue";
-import RepeatedAscent from "@/components/logbook/forms/RepeatedAscent.vue";
+import AscentRepeatInfo from "@/components/logbook/forms/AscentRepeatInfo.vue";
 import { useRepeats } from "@/composables/logbook/useRepeats";
 import {
   useLogbookAscentStore,
@@ -125,7 +125,7 @@ watchEffect(() => {
 <template>
   <form @submit.prevent>
     <h1>{{ editing ? "Edit " : "Add new " }} ascent</h1>
-    <RepeatedAscent
+    <AscentRepeatInfo
       v-if="isRepeat"
       :repeats="repeats"
     />
