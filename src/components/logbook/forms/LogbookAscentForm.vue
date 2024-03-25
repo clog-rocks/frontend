@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import { reactive, ref, unref, watch } from "vue";
+import { reactive, ref, unref, watch, watchEffect } from "vue";
 import VueMultiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
 
 import FormFieldError from "@/components/layout/FormFieldError.vue";
+import AscentRepeatInfo from "@/components/logbook/forms/AscentRepeatInfo.vue";
+import { useRepeats } from "@/composables/logbook/useRepeats";
 import {
   useLogbookAscentStore,
   useLogbookGradeStore,
@@ -113,11 +115,21 @@ const submit = async function () {
     }
   }
 };
+
+const { repeats, isRepeat } = useRepeats(() => form.route?.id, props.ascentId);
+watchEffect(() => {
+  if (isRepeat) form.style = 3;
+});
 </script>
 
 <template>
   <form @submit.prevent>
     <h1>{{ editing ? "Edit " : "Add new " }} ascent</h1>
+    <AscentRepeatInfo
+      v-if="isRepeat"
+      :key="form.route?.id"
+      :repeats="repeats"
+    />
     <label for="id_route">Route</label>
     <VueMultiselect
       id="id_route"
@@ -164,7 +176,7 @@ const submit = async function () {
       :hide-selected="true"
       track-by="id"
     />
-    <fieldset>
+    <fieldset v-if="!isRepeat">
       <legend>Choose ascent style</legend>
       <label>
         OS
@@ -202,6 +214,7 @@ const submit = async function () {
           <input
             v-model="form.second_go"
             type="checkbox"
+            :disabled="isRepeat"
             name="scales"
           />
         </label>
@@ -211,6 +224,7 @@ const submit = async function () {
           First Ascent
           <input
             v-model="form.first_ascent"
+            :disabled="isRepeat"
             type="checkbox"
             name="horns"
           />
