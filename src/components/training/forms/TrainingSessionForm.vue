@@ -6,6 +6,7 @@ import VueMultiselect from "vue-multiselect";
 import Multiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
 
+import FormDateShortcuts from "@/components/layout/FormDateShortcuts.vue";
 import FormFieldError from "@/components/layout/FormFieldError.vue";
 import FormInput from "@/components/layout/FormInput.vue";
 import {
@@ -144,6 +145,7 @@ function addTag(newTag: string) {
       type="date"
       :validator="v$.date"
     />
+    <FormDateShortcuts v-model="form.date" />
     <label for="comment">Comment</label>
     <input
       id="comment"

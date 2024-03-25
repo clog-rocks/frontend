@@ -5,7 +5,9 @@ import { reactive, ref, unref, watch, watchEffect } from "vue";
 import VueMultiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
 
+import FormDateShortcuts from "@/components/layout/FormDateShortcuts.vue";
 import FormFieldError from "@/components/layout/FormFieldError.vue";
+import FormInput from "@/components/layout/FormInput.vue";
 import AscentRepeatInfo from "@/components/logbook/forms/AscentRepeatInfo.vue";
 import { useRepeats } from "@/composables/logbook/useRepeats";
 import {
@@ -158,13 +160,13 @@ watchEffect(() => {
       :to="{ name: 'logbook-route-new' }"
       >Add new route</RouterLink
     >
-    <label>
-      Date
-      <input
-        v-model="form.date"
-        type="date"
-      />
-    </label>
+    <FormInput
+      v-model="form.date"
+      label="Date"
+      type="date"
+      :validator="v$.date"
+    />
+    <FormDateShortcuts v-model="form.date" />
     <label for="id_personal_grade">Personal grade</label>
     <VueMultiselect
       id="id_personal_grade"
