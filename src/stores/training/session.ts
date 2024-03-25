@@ -45,24 +45,23 @@ export const useTrainingSessionStore = defineStore("training/session", () => {
     uniq(map(sessions.value, (session) => gymStore.gyms[session.gym])),
   );
 
-  const uniq_cities = computed(() => {
-    return uniq(
+  const uniq_cities = computed(() =>
+    uniq(
       map(sessions.value, (session) => {
-        const gym = gymStore.gyms[session.gym];
-        return cityStore.cities[gym.city];
+        cityStore.cities[gymStore.gyms[session.gym].city];
       }),
-    );
-  });
+    ),
+  );
 
-  const uniq_countries = computed(() => {
-    return uniq(
+  const uniq_countries = computed(() =>
+    uniq(
       map(sessions.value, (session) => {
         const gym = gymStore.gyms[session.gym];
         const city = cityStore.cities[gym.city];
         return countryStore.countries[city.country];
       }),
-    );
-  });
+    ),
+  );
 
   const uniq_gyms_count = computed(() => uniq_gyms.value.length);
   const uniq_cities_count = computed(() => uniq_cities.value.length);
