@@ -68,12 +68,12 @@ watch(
   () => {
     if (!props.sessionId) return;
     session = stores.session.sessions[props.sessionId];
-    if (session) {
-      editing.value = true;
-      form.gym = getGym(session.gym);
-      form.date = session.date;
-      form.tags = session.tags.map((tag) => ({ name: tag }));
-      if (session.comment) form.comment = session.comment;
+    if (!session) return;
+    editing.value = true;
+    form.gym = getGym(session.gym);
+    form.date = session.date;
+    form.tags = session.tags.map((tag) => ({ name: tag }));
+    form.comment = session.comment || undefined;
     }
   },
   { immediate: true },
