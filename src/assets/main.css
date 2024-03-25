@@ -65,28 +65,29 @@ button {
 form {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
   padding: 0.75rem;
   background-color: var(--surface3);
 
   & label {
-    padding-top: 1rem;
     font-size: 0.85rem;
   }
 
-  & input,
+  & input:not([type="checkbox"], [type="radio"]),
   & textarea {
-    box-sizing: border-box;
     width: 100%;
-    color: inherit;
-    border-color: var(--text1);
-    border-width: 0 0 1px;
-    transition: border-color 0.2s ease;
+    padding: 0 1ch;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.125rem;
 
     &:focus {
       border-color: var(--brand);
       outline: none;
     }
+  }
+
+  label + label {
+    padding-top: 1rem;
   }
 }
 
