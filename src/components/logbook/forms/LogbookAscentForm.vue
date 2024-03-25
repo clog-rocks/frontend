@@ -64,19 +64,20 @@ watch(
   () => {
     if (!props.ascentId) return;
     ascent = stores.ascent.ascents[props.ascentId];
-    if (ascent) {
-      editing.value = true;
-      form.comment = ascent.comment || undefined;
-      form.date = ascent.date;
-      form.first_ascent = ascent.first_ascent;
-      form.personal_grade = ascent.personal_grade || undefined;
-      form.personal_grade_flag = ascent.personal_grade_flag || undefined;
-      form.quality = ascent.quality || undefined;
-      form.recommended = ascent.recommended;
-      form.route = getRoute(ascent.route);
-      form.second_go = ascent.second_go;
-      form.style = ascent.style;
-    }
+    if (!ascent) return;
+    editing.value = true;
+    form.comment = ascent.comment || undefined;
+    form.date = ascent.date;
+    form.first_ascent = ascent.first_ascent;
+    form.personal_grade = ascent.personal_grade
+      ? stores.grade.grades[ascent.personal_grade]
+      : undefined;
+    form.personal_grade_flag = ascent.personal_grade_flag || undefined;
+    form.quality = ascent.quality || undefined;
+    form.recommended = ascent.recommended;
+    form.route = getRouteById(ascent.route);
+    form.second_go = ascent.second_go;
+    form.style = ascent.style;
   },
   { immediate: true },
 );
