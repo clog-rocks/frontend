@@ -74,7 +74,6 @@ watch(
     form.date = session.date;
     form.tags = session.tags.map((tag) => ({ name: tag }));
     form.comment = session.comment || undefined;
-    }
   },
   { immediate: true },
 );
