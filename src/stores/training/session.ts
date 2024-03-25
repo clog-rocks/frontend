@@ -47,9 +47,10 @@ export const useTrainingSessionStore = defineStore("training/session", () => {
 
   const uniq_cities = computed(() =>
     uniq(
-      map(sessions.value, (session) => {
-        cityStore.cities[gymStore.gyms[session.gym].city];
-      }),
+      map(
+        sessions.value,
+        (session) => cityStore.cities[gymStore.gyms[session.gym].city],
+      ),
     ),
   );
 
