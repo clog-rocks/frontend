@@ -11,6 +11,6 @@ const last =
 <template>
   <span>
     This is repeated ({{ repeats.length }}) ascent (original: {{ first.date
-    }}{{ last ? `, latest: ${last.date})` : "" }}.
+    }}{{ last ? `, latest: ${last.date}` : "" }}).
   </span>
 </template>

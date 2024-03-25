@@ -5,6 +5,8 @@ import { computed, readonly, ref, toValue, watchEffect } from "vue";
 import { useLogbookAscentStore } from "@/stores";
 import type { Ascent } from "@/types/logbook/ascent";
 
+const repeats: Ref<Ascent[]> = ref([]);
+const isRepeat = computed(() => repeats.value.length > 0);
 const ascentStore = useLogbookAscentStore();
 const getRepeats = (routeId: MaybeRefOrGetter, ascentId?: number) =>
   Object.values(ascentStore.ascents).filter(
@@ -12,13 +14,9 @@ const getRepeats = (routeId: MaybeRefOrGetter, ascentId?: number) =>
   );
 
 export function useRepeats(routeId: MaybeRefOrGetter, ascentId?: number) {
-  const repeats: Ref<Ascent[]> = ref([]);
-  const isRepeat = computed(() => repeats.value.length > 0);
-
   watchEffect(() => {
     if (!routeId) return;
     repeats.value = orderBy(getRepeats(routeId, ascentId), "date");
   });
-
   return { repeats: readonly(repeats), isRepeat: readonly(isRepeat) };
 }

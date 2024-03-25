@@ -127,6 +127,7 @@ watchEffect(() => {
     <h1>{{ editing ? "Edit " : "Add new " }} ascent</h1>
     <AscentRepeatInfo
       v-if="isRepeat"
+      :key="form.route?.id"
       :repeats="repeats"
     />
     <label for="id_route">Route</label>
