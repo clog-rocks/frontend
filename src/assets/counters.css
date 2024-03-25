@@ -1,37 +1,50 @@
 .counters {
-  font-weight: 300;
+  container-type: inline-size;
+  container-name: counters;
+  font-weight: 200;
   color: var(--text2);
   text-transform: uppercase;
-  letter-spacing: 0.25rem;
-
-  .group ~ .group {
-    padding-top: 2rem;
-  }
+  letter-spacing: 0.15rem;
 
   & .header {
     display: block;
-    text-align: center;
+    font-weight: 500;
   }
 
   & .items {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   & .counter {
-    font-weight: 200;
-    text-align: center;
+    font-size: clamp(1.5rem, 5cqi, 2rem);
 
     & .value {
-      display: block;
-      font-size: 2rem;
       text-transform: none;
     }
 
     & .legend {
-      position: relative;
-      bottom: 0.6rem;
-      font-size: 0.75rem;
+      font-size: 0.5em;
+    }
+  }
+
+  .group ~ .group,
+  .group ~ .header {
+    padding-top: 2ch;
+  }
+}
+
+@container counters (width > 55ch) {
+  .counters {
+    & .header {
+      text-align: center;
+    }
+
+    & .items {
+      flex-direction: row;
+      gap: 3ch;
+      justify-content: center;
     }
   }
 }

@@ -13,27 +13,27 @@ const existing_grades = computed(() =>
 <template>
   <section class="counters">
     <div class="group">
-      <span class="header">all time</span>
       <div class="items">
         <CounterItem
-          legend="ascents"
+          :legend="ascentStore.ascent_count == 1 ? 'ascent' : 'ascents'"
           :value="ascentStore.ascent_count"
         />
         <CounterItem
-          legend="crag visits"
-          :value="ascentStore.crag_visit_count"
+          legend="last year"
+          :value="ascentStore.ascent_last_year_count"
         />
       </div>
     </div>
     <div class="group">
-      <span class="header">last year</span>
       <div class="items">
         <CounterItem
-          legend="ascents"
-          :value="ascentStore.ascent_last_year_count"
+          :legend="
+            ascentStore.crag_visit_count == 1 ? 'crag visit' : 'crag visits'
+          "
+          :value="ascentStore.crag_visit_count"
         />
         <CounterItem
-          legend="crag visits"
+          legend="last year"
           :value="ascentStore.crag_visit_last_year_count"
         />
       </div>
