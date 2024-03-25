@@ -10,8 +10,8 @@ html {
 }
 
 body {
-  min-height: 100vh;
-  margin: 0 1rem 1rem;
+  max-width: clamp(1rem, 90%, 1024px);
+  margin-inline: auto;
   font-family:
     Inter,
     -apple-system,
@@ -30,11 +30,6 @@ body {
   transition:
     color 0.5s,
     background-color 0.5s;
-
-  @media (width >= 1024px) {
-    max-width: 1024px;
-    margin: auto;
-  }
 }
 
 a {
