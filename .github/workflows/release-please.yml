@@ -7,10 +7,12 @@ concurrency:
   cancel-in-progress: true
 name: release-please
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: google-github-actions/release-please-action@v4.1
