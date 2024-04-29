@@ -6,6 +6,7 @@ import VueMultiselect from "vue-multiselect";
 
 import FormFieldError from "@/components/layout/FormFieldError.vue";
 import FormInput from "@/components/layout/FormInput.vue";
+import GradeMultiselect from "@/components/logbook/forms/GradeMultiselect.vue";
 import router from "@/router";
 import { useLogbookRouteStore } from "@/stores";
 import { useLogbookGradeStore } from "@/stores/logbook/grade";
@@ -94,16 +95,9 @@ const submit = async function () {
     </VueMultiselect>
     <FormFieldError :field="v$.sector" />
     <RouterLink :to="{ name: 'logbook-sector-new' }">Add new sector</RouterLink>
-    <label for="id_grade">Grade</label>
-    <VueMultiselect
-      id="id_grade"
+    <GradeMultiselect
       v-model="form.grade"
-      :options="Object.values(stores.grade.grades)"
-      placeholder=""
-      label="fr_route"
-      :allow-empty="false"
-      :hide-selected="true"
-      track-by="id"
+      label="Grade"
     />
     <FormFieldError :field="v$.grade" />
     <FormInput

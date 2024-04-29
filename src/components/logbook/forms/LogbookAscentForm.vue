@@ -9,6 +9,7 @@ import FormDateShortcuts from "@/components/layout/FormDateShortcuts.vue";
 import FormFieldError from "@/components/layout/FormFieldError.vue";
 import FormInput from "@/components/layout/FormInput.vue";
 import AscentRepeatInfo from "@/components/logbook/forms/AscentRepeatInfo.vue";
+import GradeMultiselect from "@/components/logbook/forms/GradeMultiselect.vue";
 import { useRepeats } from "@/composables/logbook/useRepeats";
 import {
   useLogbookAscentStore,
@@ -168,16 +169,9 @@ watchEffect(() => {
       :validator="v$.date"
     />
     <FormDateShortcuts v-model="form.date" />
-    <label for="id_personal_grade">Personal grade</label>
-    <VueMultiselect
-      id="id_personal_grade"
+    <GradeMultiselect
       v-model="form.personal_grade"
-      :options="Object.values(stores.grade.grades)"
-      placeholder=""
-      label="fr_route"
-      :allow-empty="false"
-      :hide-selected="true"
-      track-by="id"
+      label="Personal grade"
     />
     <fieldset v-if="!isRepeat">
       <legend>Choose ascent style</legend>
