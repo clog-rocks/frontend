@@ -1,13 +1,18 @@
+name: release-please
+
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
+
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
-name: release-please
-permissions:
-  contents: read
+
 jobs:
   release-please:
     runs-on: ubuntu-latest
