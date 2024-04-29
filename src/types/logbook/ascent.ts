@@ -1,4 +1,4 @@
-import type { Grade, RouteTree, Style } from "../logbook.ts";
+import type { Grade, RouteMultiselect, RouteTree, Style } from "../logbook.ts";
 
 export type Ascent = {
   readonly id: number;
@@ -30,10 +30,7 @@ export type CreateAscentRequest = {
   personal_grade?: number;
 };
 
-export type PatchAscentRequest = Omit<CreateAscentRequest, "date" | "route"> & {
-  date?: string;
-  route?: number;
-};
+export type PatchAscentRequest = Partial<CreateAscentRequest>;
 
 export type AscentTree = Omit<Ascent, "personal_grade" | "style" | "route"> & {
   style: Style;
@@ -42,3 +39,12 @@ export type AscentTree = Omit<Ascent, "personal_grade" | "style" | "route"> & {
 };
 
 export type PersonalGradeFlag = "soft" | "hard";
+
+export type AscentForm = Omit<
+  PatchAscentRequest,
+  "route" | "date" | "personal_grade"
+> & {
+  route: RouteMultiselect | undefined;
+  date: string; // FIXME: Although not required by API form always has date.
+  personal_grade: Grade | undefined;
+};

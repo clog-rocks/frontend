@@ -16,11 +16,10 @@ import {
   useLogbookGradeStore,
   useLogbookRouteStore,
 } from "@/stores";
-import type { RouteMultiselect } from "@/types/logbook";
 import type {
   Ascent,
+  AscentForm,
   CreateAscentRequest,
-  PatchAscentRequest,
 } from "@/types/logbook/ascent";
 
 const props = defineProps<{
@@ -39,12 +38,7 @@ const stores = {
   grade: useLogbookGradeStore(),
 };
 
-type Form = Omit<PatchAscentRequest, "route"> & {
-  route: RouteMultiselect | undefined;
-  date: string; // FIXME: Although not required by API form always has date.
-};
-
-const form: Form = reactive({
+const form: AscentForm = reactive({
   comment: undefined,
   date: new Date().toISOString().split("T")[0],
   first_ascent: undefined,
