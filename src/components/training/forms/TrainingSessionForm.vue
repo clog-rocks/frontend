@@ -78,29 +78,37 @@ watch(
   { immediate: true },
 );
 
-async function submit() {
-  const formValid = await unref(v$).$validate();
-  if (formValid)
+const actions = {
+  submit: async () => {
+    const formValid = await unref(v$).$validate();
+    if (!formValid) return;
+    // TODO: Need to check if editing or creating new one.
+    const payload: TrainingSessionRequest = {
+      gym: form.gym!.id,
+      date: form.date,
+      comment: form.comment,
+      tags: form.tags.map((tag) => tag.name),
+    };
     try {
-      // Need to check if editing or creating new one.
-      const payload: TrainingSessionRequest = {
-        gym: form.gym!.id,
-        date: form.date,
-        comment: form.comment,
-        tags: form.tags.map((tag) => tag.name),
-      };
-
       if (editing.value) {
         await stores.session.update(session.id, payload);
       } else {
         await stores.session.create(payload);
       }
-
       router.push({ name: "training" });
     } catch (error) {
       console.log("something went wrong adding session: ", error);
     }
-}
+  },
+  delete: async (id: number) => {
+    try {
+      await stores.session.remove(id);
+      router.push({ name: "training" });
+    } catch (error) {
+      console.log("Something went wrong deleting training/session.", error);
+    }
+  },
+};
 
 function addTag(newTag: string) {
   const tag: Tag = { name: newTag };
@@ -169,8 +177,16 @@ function addTag(newTag: string) {
       :hide-selected="true"
       @tag="addTag"
     />
-    <button @click="submit()">
-      {{ editing ? "Save changes" : "Add new session" }}
-    </button>
+    <div class="buttons-group">
+      <button @click="actions.submit()">
+        {{ editing ? "Save changes" : "Add new session" }}
+      </button>
+      <button
+        v-if="editing"
+        @click="actions.delete(session.id)"
+      >
+        Delete session
+      </button>
+    </div>
   </form>
 </template>
