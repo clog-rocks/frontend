@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core";
 import { helpers, required } from "@vuelidate/validators";
-import { reactive, ref, unref, watch, watchEffect } from "vue";
+import { computed, reactive, ref, unref, watch, watchEffect } from "vue";
 import VueMultiselect from "vue-multiselect";
 import { useRouter } from "vue-router";
 
@@ -76,12 +76,12 @@ watch(
   { immediate: true },
 );
 
-const rules = {
+const rules = computed(() => ({
   route: { required: helpers.withMessage("Route is required", required) },
   date: { required: helpers.withMessage("Date is required", required) },
-};
+}));
 
-const v$ = useVuelidate(rules, { route: form.route, date: form.date });
+const v$ = useVuelidate(rules, form);
 
 const actions = {
   submit: async () => {
