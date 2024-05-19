@@ -27,9 +27,8 @@ const props = defineProps<{
   routeId?: number;
 }>();
 
-function getRoute(routeId: number) {
-  return stores.route.multiselect.find((route) => route.id == routeId);
-}
+const getRouteById = (id: number) =>
+  stores.route.multiselect.find((route) => route.id == id);
 
 const router = useRouter();
 const stores = {
@@ -46,7 +45,7 @@ const form: AscentForm = reactive({
   personal_grade_flag: undefined,
   quality: undefined,
   recommended: undefined,
-  route: props.routeId ? getRoute(props.routeId) : undefined,
+  route: props.routeId ? getRouteById(props.routeId) : undefined,
   second_go: undefined,
   style: 3,
 });
