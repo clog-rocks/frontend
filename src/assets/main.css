@@ -118,6 +118,12 @@ section ~ section {
   padding-top: 2rem;
 }
 
+.buttons-group {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0 0;
+}
+
 .loading {
   font-size: 1.5rem;
 }
