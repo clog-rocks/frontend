@@ -81,7 +81,7 @@ const rules = {
   date: { required: helpers.withMessage("Date is required", required) },
 };
 
-const v$ = useVuelidate(rules, { route: form.route, date: form.date });
+const v$ = useVuelidate(rules, form);
 
 const actions = {
   submit: async () => {
