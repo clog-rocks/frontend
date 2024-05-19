@@ -37,19 +37,19 @@ const v$ = useVuelidate(rules, form);
 
 const submit = async function () {
   const formValid = await unref(v$).$validate();
-  if (formValid)
-    try {
-      const newGym = await stores.gym.create({
-        name: form.name,
-        city: form.city!.id,
-      });
-      router.push({
-        name: "training-session-new",
-        params: { gymId: newGym.id },
-      });
-    } catch (error) {
-      console.log("Something went wrong submitting training/gym.", error);
-    }
+  if (!formValid) return;
+  try {
+    const newGym = await stores.gym.create({
+      name: form.name,
+      city: form.city!.id,
+    });
+    router.push({
+      name: "training-session-new",
+      params: { gymId: newGym.id },
+    });
+  } catch (error) {
+    console.log("Something went wrong submitting training/gym.", error);
+  }
 };
 </script>
 

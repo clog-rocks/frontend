@@ -46,22 +46,20 @@ const v$ = useVuelidate(rules, form);
 
 const submit = async function () {
   const formValid = await unref(v$).$validate();
-  if (formValid) {
-    const payload: RouteRequest = {
-      name: form.name,
-      sector: form.sector!.id,
-      grade: form.grade!.id,
-    };
-
-    try {
-      const newRoute = await stores.route.create(payload);
-      router.push({
-        name: "logbook-ascent-new",
-        params: { routeId: newRoute.id },
-      });
-    } catch (error) {
-      console.log("Something went wrong submitting logbook/route.", error);
-    }
+  if (!formValid) return;
+  const payload: RouteRequest = {
+    name: form.name,
+    sector: form.sector!.id,
+    grade: form.grade!.id,
+  };
+  try {
+    const newRoute = await stores.route.create(payload);
+    router.push({
+      name: "logbook-ascent-new",
+      params: { routeId: newRoute.id },
+    });
+  } catch (error) {
+    console.log("Something went wrong submitting logbook/route.", error);
   }
 };
 </script>

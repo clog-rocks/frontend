@@ -37,21 +37,19 @@ const v$ = useVuelidate(rules, form);
 
 async function submit() {
   const formValid = await unref(v$).$validate();
-  if (formValid) {
-    const payload: SectorRequest = {
-      name: form.name,
-      crag: form.crag!.id,
-    };
-
-    try {
-      const newSector = await stores.sector.create(payload);
-      router.push({
-        name: "logbook-route-new",
-        params: { sectorId: newSector.id },
-      });
-    } catch (error) {
-      console.log("Something went wrong submitting logbook/route.", error);
-    }
+  if (!formValid) return;
+  const payload: SectorRequest = {
+    name: form.name,
+    crag: form.crag!.id,
+  };
+  try {
+    const newSector = await stores.sector.create(payload);
+    router.push({
+      name: "logbook-route-new",
+      params: { sectorId: newSector.id },
+    });
+  } catch (error) {
+    console.log("Something went wrong submitting logbook/sector.", error);
   }
 }
 </script>

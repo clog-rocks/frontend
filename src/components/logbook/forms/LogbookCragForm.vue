@@ -32,21 +32,19 @@ const v$ = useVuelidate(rules, form);
 
 async function submit() {
   const formValid = await unref(v$).$validate();
-  if (formValid) {
-    const payload: CragRequest = {
-      name: form.name,
-      country: form.country!.id,
-    };
-
-    try {
-      const newCrag = await stores.crag.create(payload);
-      router.push({
-        name: "logbook-sector-new",
-        params: { cragId: newCrag.id },
-      });
-    } catch (error) {
-      console.log("Something went wrong submitting logbook/route.", error);
-    }
+  if (!formValid) return;
+  const payload: CragRequest = {
+    name: form.name,
+    country: form.country!.id,
+  };
+  try {
+    const newCrag = await stores.crag.create(payload);
+    router.push({
+      name: "logbook-sector-new",
+      params: { cragId: newCrag.id },
+    });
+  } catch (error) {
+    console.log("Something went wrong submitting logbook/crag.", error);
   }
 }
 </script>
