@@ -83,34 +83,41 @@ const rules = {
 
 const v$ = useVuelidate(rules, { route: form.route, date: form.date });
 
-const submit = async function () {
-  const formValid = await unref(v$).$validate();
-  if (formValid) {
+const actions = {
+  submit: async () => {
+    const formValid = await unref(v$).$validate();
+    if (!formValid) return;
+    const payload: CreateAscentRequest = {
+      comment: form.comment,
+      date: form.date,
+      first_ascent: form.first_ascent,
+      personal_grade: form.personal_grade?.id || undefined,
+      personal_grade_flag: form.personal_grade_flag,
+      quality: form.quality,
+      recommended: form.recommended,
+      route: form.route!.id,
+      second_go: form.second_go,
+      style: form.style,
+    };
     try {
-      const payload: CreateAscentRequest = {
-        comment: form.comment,
-        date: form.date,
-        first_ascent: form.first_ascent,
-        personal_grade: form.personal_grade,
-        personal_grade_flag: form.personal_grade_flag,
-        quality: form.quality,
-        recommended: form.recommended,
-        route: form.route!.id,
-        second_go: form.second_go,
-        style: form.style,
-      };
-
       if (editing.value && props.ascentId) {
         await stores.ascent.update(props.ascentId, payload);
       } else {
         await stores.ascent.create(payload);
       }
-
       router.push({ name: "logbook" });
     } catch (error) {
       console.log("Something went wrong submitting logbook/ascent.", error);
     }
-  }
+  },
+  delete: async (id: number) => {
+    try {
+      await stores.ascent.remove(id);
+      router.push({ name: "logbook" });
+    } catch (error) {
+      console.log("Something went wrong deleting logbook/ascent.", error);
+    }
+  },
 };
 
 const { repeats, isRepeat } = useRepeats(() => form.route?.id, props.ascentId);
@@ -226,8 +233,16 @@ watchEffect(() => {
       id="comment"
       v-model="form.comment"
     />
-    <button @click="submit()">
-      {{ editing ? "Save changes" : "Add new ascent" }}
-    </button>
+    <div class="buttons-group">
+      <button @click="actions.submit()">
+        {{ editing ? "Save changes" : "Add new ascent" }}
+      </button>
+      <button
+        v-if="editing"
+        @click="actions.delete(ascent.id)"
+      >
+        Delete ascent
+      </button>
+    </div>
   </form>
 </template>
