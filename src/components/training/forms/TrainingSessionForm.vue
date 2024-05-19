@@ -26,9 +26,8 @@ const props = defineProps<{
   gymId?: number;
 }>();
 
-function getGym(sessionId: number) {
-  return stores.gym.multiselect.find((gym) => gym.id == sessionId);
-}
+const getGymById = (sessionId: number) =>
+  stores.gym.multiselect.find((gym) => gym.id == sessionId);
 
 const router = useRouter();
 const stores = {
@@ -43,7 +42,7 @@ type Form = Omit<TrainingSessionRequest, "gym" | "tags"> & {
 };
 
 const form: Form = reactive({
-  gym: props.gymId ? getGym(props.gymId) : undefined,
+  gym: props.gymId ? getGymById(props.gymId) : undefined,
   date: new Date().toISOString().split("T")[0],
   comment: undefined,
   tags: [],
@@ -70,7 +69,7 @@ watch(
     session = stores.session.sessions[props.sessionId];
     if (!session) return;
     editing.value = true;
-    form.gym = getGym(session.gym);
+    form.gym = getGymById(session.gym);
     form.date = session.date;
     form.tags = session.tags.map((tag) => ({ name: tag }));
     form.comment = session.comment || undefined;
