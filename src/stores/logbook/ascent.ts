@@ -1,4 +1,3 @@
-import { differenceInDays } from "date-fns";
 import {
   filter,
   groupBy,
@@ -9,7 +8,6 @@ import {
   reduce,
   size,
   uniq,
-  uniqBy,
 } from "lodash-es";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
@@ -64,19 +62,6 @@ export const useLogbookAscentStore = defineStore("logbook/ascent", () => {
 
   const crag_visit_count = computed(
     () => uniq(map(ascents.value, "date")).length,
-  );
-
-  const ascent_last_year = computed(() =>
-    filter(
-      ascents.value,
-      (ascent: Ascent) => differenceInDays(ascent.date, new Date()) >= -365,
-    ),
-  );
-
-  const ascent_last_year_count = computed(() => ascent_last_year.value.length);
-
-  const crag_visit_last_year_count = computed(
-    () => uniqBy(ascent_last_year.value, "date").length,
   );
 
   const ascents_os = computed(() =>
@@ -191,10 +176,7 @@ export const useLogbookAscentStore = defineStore("logbook/ascent", () => {
     ascents_os,
     ascents_fl,
     ascents_rp,
-    // ascent_last_year, // TODO: should it be exposed?
-    ascent_last_year_count,
     crag_visit_count,
-    crag_visit_last_year_count,
     top_grades,
 
     // actions
