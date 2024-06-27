@@ -19,22 +19,10 @@ const existing_grades = computed(() =>
           :value="ascentStore.ascent_count"
         />
         <CounterItem
-          legend="last year"
-          :value="ascentStore.ascent_last_year_count"
-        />
-      </div>
-    </div>
-    <div class="group">
-      <div class="items">
-        <CounterItem
           :legend="
             ascentStore.crag_visit_count == 1 ? 'crag visit' : 'crag visits'
           "
           :value="ascentStore.crag_visit_count"
-        />
-        <CounterItem
-          legend="last year"
-          :value="ascentStore.crag_visit_last_year_count"
         />
       </div>
     </div>
