@@ -22,18 +22,17 @@ const showDay = !["Yesterday", "Today"].includes(display);
 </script>
 
 <template>
-  <div class="date-header">
+  <div class="ascent-date-group-header">
     <p>{{ display }}</p>
     <p v-if="showDay">{{ weekday[date.getDay()] }}</p>
   </div>
 </template>
 
 <style scoped>
-.date-header {
+.ascent-date-group-header {
   display: flex;
-  flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
-  padding-bottom: 0.5rem;
   letter-spacing: 1px;
 
   p:nth-of-type(2) {

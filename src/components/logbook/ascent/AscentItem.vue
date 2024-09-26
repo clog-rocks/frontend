@@ -33,17 +33,9 @@ const actions = {
 
 <template>
   <div class="ascent">
-    <div :class="['style', { repeat: props.ascent.repeat }]">
-      {{ props.ascent.repeat ? "repeat" : props.ascent.style.shorthand }}
-    </div>
     <div class="route-section">
-      <div class="location">
-        {{ props.ascent.route.sector.crag.country.name }} /
-        {{ props.ascent.route.sector.crag.name }} /
-        {{ props.ascent.route.sector.name }}
-      </div>
       <div class="route">
-        <div>{{ props.ascent.route.name }}</div>
+        <div class="route-name">{{ props.ascent.route.name }}</div>
         <span
           v-if="props.ascent.personal_grade"
           class="grade"
@@ -53,51 +45,33 @@ const actions = {
         <div :class="['grade', { striken: props.ascent.personal_grade }]">
           {{ props.ascent.route.grade.fr_route }}
         </div>
+        <div>
+          {{ props.ascent.repeat ? "R" : props.ascent.style.shorthand }}
+        </div>
         <span v-if="props.ascent.quality">
           {{ "&#9734;".repeat(props.ascent.quality) }}
         </span>
-        <span v-if="props.ascent.recommended"> &#9825; </span>
+        <span v-if="props.ascent.recommended">&#9825; </span>
         <span v-if="props.ascent.first_ascent">First ascent</span>
       </div>
+      <div
+        v-if="props.ascent.comment"
+        class="comment"
+      >
+        {{ props.ascent.comment }}
+      </div>
     </div>
-    <div class="comment">{{ props.ascent.comment }}</div>
     <div class="actions">
-      <button
-        class="button-small"
-        @click.exact="actions.repeat()"
-      >
-        repeat
-      </button>
-      <button
-        class="button-small"
-        @click.exact="actions.edit()"
-      >
-        edit
-      </button>
-      <button
-        class="button-small"
-        @click.alt="actions.delete()"
-      >
-        delete
-      </button>
+      <button @click.exact="actions.repeat()">repeat</button>
+      <button @click.exact="actions.edit()">edit</button>
+      <button @click.alt="actions.delete()">delete</button>
     </div>
   </div>
 </template>
 
 <style scoped>
 .ascent {
-  display: grid;
   gap: 1ch;
-  padding: 0.25em;
-
-  .style {
-    font-size: 1.15em;
-    font-weight: 300;
-
-    &.repeat {
-      font-size: 0.85em;
-    }
-  }
 
   .route-section {
     letter-spacing: 1px;
@@ -111,43 +85,42 @@ const actions = {
       flex-wrap: wrap;
       gap: 0 0.75em;
 
+      .route-name {
+        font-weight: 400;
+      }
+
       .grade {
         &.striken {
           text-decoration: line-through 1px;
         }
       }
     }
-  }
 
-  .actions {
-    font-size: 0.75em;
+    .comment {
+      font-size: 0.75rem;
+      font-style: italic;
+      font-weight: 300;
+      text-wrap: pretty;
+
+      &::before {
+        content: "\203A  ";
+      }
+    }
   }
 
   @container ascents (width >= 700px) {
-    grid-template-columns: 5ch 40ch auto auto;
-    align-items: center;
-
-    .style {
-      display: flex;
-      justify-content: center;
-    }
-
-    .comment {
-      text-wrap: pretty;
-    }
+    display: flex;
 
     .actions {
-      margin-inline: auto 0;
+      display: none;
     }
 
     &:hover,
     &:active {
-      background-color: var(--surface3);
+      .actions {
+        display: flex;
+      }
     }
   }
-}
-
-.ascent ~ .ascent {
-  margin-top: 1.5em;
 }
 </style>
