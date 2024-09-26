@@ -62,24 +62,9 @@ const actions = {
       </div>
     </div>
     <div class="actions">
-      <button
-        class="button-small"
-        @click.exact="actions.repeat()"
-      >
-        repeat
-      </button>
-      <button
-        class="button-small"
-        @click.exact="actions.edit()"
-      >
-        edit
-      </button>
-      <button
-        class="button-small"
-        @click.alt="actions.delete()"
-      >
-        delete
-      </button>
+      <button @click.exact="actions.repeat()">repeat</button>
+      <button @click.exact="actions.edit()">edit</button>
+      <button @click.alt="actions.delete()">delete</button>
     </div>
   </div>
 </template>
