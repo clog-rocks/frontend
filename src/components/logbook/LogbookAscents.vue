@@ -2,7 +2,7 @@
 import { groupBy, orderBy } from "lodash-es";
 import { computed } from "vue";
 
-import AscentGroup from "@/components/logbook/ascent/AscentGroup.vue";
+import AscentDateGroup from "@/components/logbook/ascent/AscentDateGroup.vue";
 import { useLogbookAscentStore } from "@/stores";
 
 const ascentStore = useLogbookAscentStore();
@@ -21,7 +21,7 @@ const sorted = computed(() =>
 <template>
   <section>
     <h1>Latest ascents</h1>
-    <AscentGroup
+    <AscentDateGroup
       v-for="ascents in sorted"
       :key="ascents[0].date"
       :ascents="ascents"
