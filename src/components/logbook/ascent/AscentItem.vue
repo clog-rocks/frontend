@@ -97,7 +97,6 @@ const actions = {
     }
 
     .comment {
-      text-wrap: pretty;
       font-size: 0.75rem;
       font-style: italic;
       font-weight: 300;
