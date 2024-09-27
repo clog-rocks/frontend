@@ -6,6 +6,8 @@ const AppView = () => import("@/views/AppView.vue");
 const AuthView = () => import("@/views/AuthView.vue");
 const LogbookSummaryView = () =>
   import("@/views/logbook/LogbookSummaryView.vue");
+const LogbookAscentsView = () =>
+  import("@/views/logbook/LogbookAscentsView.vue");
 const LogbookNewAscentButton = () =>
   import("@/components/logbook/LogbookNewAscentButton.vue");
 const LogbookAscentForm = () =>
@@ -85,6 +87,11 @@ const router = createRouter({
               component: LogbookCragForm,
             },
           ],
+        },
+        {
+          path: "ascents",
+          name: "ascents",
+          component: LogbookAscentsView,
         },
       ],
     },
