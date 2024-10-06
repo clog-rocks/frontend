@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   field: any;
 }>();
 </script>
