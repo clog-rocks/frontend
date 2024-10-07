@@ -22,6 +22,7 @@ const gradeStore = useLogbookGradeStore();
     label="fr_route"
     :allow-empty="false"
     :hide-selected="true"
+    :required="true"
     track-by="id"
   />
 </template>
