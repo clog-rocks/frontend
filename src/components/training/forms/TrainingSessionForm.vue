@@ -129,6 +129,7 @@ function addTag(newTag: string) {
       :allow-empty="false"
       :hide-selected="true"
       track-by="id"
+      :required="true"
       :options-limit="20"
     >
       <template
