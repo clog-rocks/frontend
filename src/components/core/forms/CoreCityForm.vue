@@ -57,6 +57,7 @@ async function submit() {
       label="name"
       :allow-empty="false"
       :hide-selected="true"
+      :required="true"
       track-by="id"
     />
     <FormFieldError :field="v$.country" />
